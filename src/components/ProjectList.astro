@@ -19,8 +19,8 @@ const { projects } = Astro.props
                 <span
                   class='border border-zinc-300 dark:border-zinc-700 rounded-2xl
                     text-sm text-zinc-700 dark:text-zinc-300 no-underline px-2 py-0.5
-                    transition-all duration-700
-                  hover:border-zinc-700 dark:hover:border-zinc-300'
+                    transition-all duration-200
+                  hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:border-zinc-700 dark:hover:border-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100'
                   >
                   {tag}
                 </span>
@@ -35,8 +35,8 @@ const { projects } = Astro.props
                 target="_blank"
                 class='border border-zinc-300 dark:border-zinc-700 rounded-2xl
                     text-xs text-zinc-700 dark:text-zinc-300 no-underline px-2 py-0.5
-                    transition-all duration-700
-                  hover:border-zinc-700 dark:hover:border-zinc-300
+                    transition-all duration-200
+                  hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:border-zinc-700 dark:hover:border-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100
                     flex items-center gap-1
               '>
                 <Image src={GithubBlack} height={12} class='dark:hidden' alt='Github stars' />
