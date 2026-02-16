@@ -35,9 +35,12 @@ const menu = [
 	<div class='container'>
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<h2 class='m-0'>
-				<a href='/' class='flex gap-4 items-center text-xl font-black uppercase'>
+				<a href='/' class='group flex gap-4 items-center text-xl font-black uppercase'>
 					<!-- You can use your site logo, rounded ava or simply your site name here-->
           <Image src={AvaLogo} alt='Your site name' class="rounded-full w-11 border-white border-2 shadow-lg"/> 
+          <span class="text-sm font-mono font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-typing">
+            <span class="text-zinc-500">&gt;</span> Leandro de Oliveira Barbosa
+          </span>
 					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>

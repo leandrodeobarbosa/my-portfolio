@@ -4,6 +4,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .animate-typing {
+    animation: typing 1s steps(30) forwards;
+    width: 0;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+}
+
 @layer base {
 	/* Light mode color tokens */
 	:root {
