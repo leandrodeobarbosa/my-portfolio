@@ -6,7 +6,7 @@
 
 @layer utilities {
   .animate-typing {
-    animation: typing 1s steps(30) forwards;
+    animation: typing 1s steps(55) forwards;
     width: 0;
   }
 

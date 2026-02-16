@@ -1,7 +1,8 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { Image } from 'astro:assets';
-import AvaLogo from '@src/assets/img/small-ava.jpg';
+import AvaLogo from '@src/assets/img/leandro-img.png';
+import BrasilFlag from '@src/assets/img/brasil.png';
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
 import LinkedinWhite from '@src/assets/img/linkedin-white.svg';
@@ -35,13 +36,13 @@ const menu = [
 	<div class='container'>
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<h2 class='m-0'>
-				<a href='/' class='group flex gap-4 items-center text-xl font-black uppercase'>
+				<a href='/' class='group flex gap-4 items-center text-xl font-black uppercase no-underline'>
 					<!-- Professional avatar logo with refined styling -->
           <div class="relative w-11 h-11 rounded-lg overflow-hidden bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 border border-zinc-200/50 dark:border-zinc-700/50 shadow-sm">
             <Image src={AvaLogo} alt='Leandro de Oliveira Barbosa' class="w-full h-full object-cover"/>
           </div> 
-          <span class="text-sm font-mono font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-typing">
-            <span class="text-zinc-500">&gt;</span> Leandro de Oliveira Barbosa
+          <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap overflow-hidden md:opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-300 md:group-hover:animate-typing">
+            <span class="text-zinc-500">$</span><span class="text-zinc-600 dark:text-zinc-500"> </span><span class="lowercase"> echo</span> <span class="text-zinc-600 dark:text-zinc-500"> </span>"<span class="text-zinc-800 dark:text-zinc-200">Leandro<span class="text-zinc-400 dark:text-zinc-600"> · </span><Image src={BrasilFlag} alt="BR" class="inline w-4 h-3 -mt-0.5" /> Rio de Janeiro</span>"
           </span>
 					<!-- {SITE_TITLE} -->
 				</a>
