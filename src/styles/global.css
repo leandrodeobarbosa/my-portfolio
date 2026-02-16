@@ -52,8 +52,8 @@
 		--color-text-tertiary: #71717A;
 		
 		/* Accent */
-		--color-accent: #2DD4BF;
-		--color-accent-hover: #5EEAD4;
+		--color-accent: #14B8A6;
+		--color-accent-hover: #0D9488;
 		
 		/* Code */
 		--color-code-bg: #27272A;
@@ -112,6 +112,11 @@
 	a:hover {
 		color: var(--color-accent-hover);
 		text-decoration: underline;
+	}
+
+	/* Override for buttons/links that should not have hover underline */
+	a.no-underline:hover {
+		text-decoration: none;
 	}
 
 	/* Focus styles for accessibility */

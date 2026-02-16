@@ -4,6 +4,10 @@ import { Image } from 'astro:assets';
 import AvaLogo from '@src/assets/img/small-ava.jpg';
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
+import LinkedinWhite from '@src/assets/img/linkedin-white.svg';
+import LinkedinBlack from '@src/assets/img/linkedin.svg';
+import XWhite from '@src/assets/img/x-white.svg';
+import XBlack from '@src/assets/img/x.svg';
 
 
 const menu = [
@@ -18,10 +22,6 @@ const menu = [
 	{
 		link: '/projects/',
 		label: 'Projects'
-	},
-	{
-		link: '/tags/',
-		label: 'Tags'
 	},
 ];
 ---
@@ -41,14 +41,22 @@ const menu = [
 					<!-- {SITE_TITLE} -->
 				</a>
 			</h2>
-			<div class='flex'>
-				<a class='p-3 dark:hidden' href='https://github.com/devaradise/devolio' target='_blank'
+			<div class='flex items-center'>
+				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' href='https://linkedin.com/in/leandrodeobarbosa' target='_blank' aria-label='LinkedIn'>
+					<Image class='w-5 h-5 dark:hidden' src={LinkedinBlack} width={20} height={20} alt='LinkedIn logo' />
+					<Image class='w-5 h-5 hidden dark:block' src={LinkedinWhite} width={20} height={20} alt='LinkedIn logo' />
+				</a>
+				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' href='https://x.com/leandrodeb' target='_blank' aria-label='X/Twitter'>
+					<Image class='w-5 h-5 dark:hidden' src={XBlack} width={20} height={20} alt='X logo' />
+					<Image class='w-5 h-5 hidden dark:block' src={XWhite} width={20} height={20} alt='X logo' />
+				</a>
+				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200 dark:hidden' href='https://github.com/devaradise/devolio' target='_blank' aria-label='GitHub'
 					><Image src={GithubBlack} width={24} height={24} alt='Github logo' /></a
 				>
-				<a class='p-3 hidden dark:block' href='https://github.com/devaradise/devolio' target='_blank'
+				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200 hidden dark:block' href='https://github.com/devaradise/devolio' target='_blank' aria-label='GitHub'
 					><Image src={GithubWhite} width={24} height={24} alt='Github logo' /></a
 				>
-				<button class='p-3' id='themeToggle' aria-label='Theme mode'>
+				<button class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' id='themeToggle' aria-label='Theme mode'>
 					<svg
 						class='sun'
 						xmlns='http://www.w3.org/2000/svg'

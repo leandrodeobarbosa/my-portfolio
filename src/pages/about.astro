@@ -19,12 +19,63 @@ import Prose from '../components/Prose.astro';
             <Prose>
               <div class="text-lg">
                 <p>I am a Front-end Engineer from Indonesia. I love sharing what i know on <a href="https://devaradise.com" target="_blank">devaradise.com</a>, and sometime i also share freebies like this. I'm also active on <a href="https://dev.to/syakirurahman" target="_blank">dev.to</a> and <a href="https://x.com/syakirurahman" target="_blank">twitter</a>.</p>
-                <p>I made Devolio to help you easily set up your own blog and portfolio website. It's a static site built with Astro and Tailwind CSS, and you can deploy it on platforms like <a href="https://app.netlify.com/start/deploy?repository=https://github.com/devaradise/devolio" target="_blank" rel="nofollow noopener">Netlify</a>, <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdevaradise%2Fdevolio" target="_blank" rel="nofollow noopener">Vercel</a>, or <a href="https://pages.cloudflare.com/" target="_blank" rel="nofollow noopener">Cloudflare Pages</a>.</p>  
+                <p>I made Devolio to help you easily set up your own blog and portfolio website. It's a static site built with Astro and Tailwind CSS, and you can deploy it on platforms like <a href="https://app.netlify.com/start/deploy?repository=https://github.com/devaradise/devolio" target="_blank" rel="nofollow noopener">Netlify</a>, <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdevaradise%2Fdevolio" target="_blank" rel="nofollow noopener">Vercel</a>, or <a href="https://pages.cloudflare.com/" target="_blank" rel="nofollow noopener">Cloudflare Pages</a>.</p>
+                <a 
+                  href="/cv.pdf" 
+                  download
+                  class="inline-flex items-center gap-2 px-4 py-2 mt-2 rounded-lg bg-[var(--color-accent)] text-white hover:!text-white hover:bg-[var(--color-accent-hover)] transition-colors duration-200 no-underline font-medium"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                  Download CV
+                </a>
               </div>
             </Prose>
           </div>
           <Image src={Ava} alt="Muhammad Syakirurohman" width={300}  class="rounded-3xl rotate-3 mx-4 md:mx-0"/>
-        </div>     
+        </div>
+
+        <!-- Certifications Section -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold mb-6">Certifications</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="border border-[var(--color-border-subtle)] rounded-xl p-4 hover:border-[var(--color-accent)] transition-all duration-200 bg-[var(--color-bg-secondary)]">
+              <h3 class="font-semibold">AWS Certified Solutions Architect</h3>
+              <p class="text-sm text-[var(--color-text-secondary)]">Amazon Web Services • 2024</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Professional Experience Section -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold mb-6">Professional Experience</h2>
+          <div class="space-y-6">
+            <div class="border-l-4 border-[var(--color-border)] pl-6 py-2">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+                <h3 class="font-semibold text-lg">Senior Front-End Engineer</h3>
+                <span class="text-sm text-[var(--color-text-tertiary)]">• TechCorp Indonesia</span>
+                <span class="text-sm text-[var(--color-text-tertiary)]">2022 - Present</span>
+              </div>
+              <p class="text-[var(--color-text-secondary)]">Leading the front-end team in building scalable web applications using React, TypeScript, and Astro. Mentoring junior developers and implementing best practices for code quality and performance.</p>
+            </div>
+            <div class="border-l-4 border-[var(--color-border)] pl-6 py-2">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+                <h3 class="font-semibold text-lg">Front-End Developer</h3>
+                <span class="text-sm text-[var(--color-text-tertiary)]">• StartupXYZ</span>
+                <span class="text-sm text-[var(--color-text-tertiary)]">2020 - 2022</span>
+              </div>
+              <p class="text-[var(--color-text-secondary)]">Developed responsive web applications and contributed to the company's design system. Collaborated with UX designers to implement pixel-perfect interfaces.</p>
+            </div>
+            <div class="border-l-4 border-[var(--color-border)] pl-6 py-2">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
+                <h3 class="font-semibold text-lg">Junior Web Developer</h3>
+                <span class="text-sm text-[var(--color-text-tertiary)]">• Digital Agency Co.</span>
+                <span class="text-sm text-[var(--color-text-tertiary)]">2018 - 2020</span>
+              </div>
+              <p class="text-[var(--color-text-secondary)]">Built and maintained client websites using HTML, CSS, JavaScript, and WordPress. Gained experience with various web technologies and agile methodologies.</p>
+            </div>
+          </div>
+        </section>
+
         <div>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
