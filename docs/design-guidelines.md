@@ -1,6 +1,6 @@
 # Design Guidelines
 
-This project is a technical blog and professional portfolio built with Astro (based on the Devolio template). 
+This project is a technical blog and professional portfolio built with Astro (based on a personal portfolio template). 
 The target audience consists primarily of technical recruiters, engineering managers, DevOps professionals, and software engineers.
 
 

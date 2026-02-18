@@ -17,30 +17,29 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 	<div class='container'>
 		<div class='w-full mb-24'>
 			<!-- Hero Section: Editorial / Technical -->
-			<div class="max-w-4xl">
+			<div class="max-w-5xl">
 				<!-- Name --> 
-				<h1 class="text-5xl sm:text-6xl font-semibold tracking-tighter mb-6 text-zinc-900 dark:text-zinc-50">
+				<h1 class="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight mb-8 text-zinc-900 dark:text-zinc-50">
 					Leandro de Oliveira Barbosa
 				</h1>
 				
 				<!-- Role - Stronger hierarchy -->
-				<p class="text-lg sm:text-xl font-medium mb-12 text-zinc-600 dark:text-zinc-400">
-					DevOps · SRE · DevSecOps
+				<p class="text-lg sm:text-xl font-medium mb-10 text-zinc-600 dark:text-zinc-400">
+					DevOps Engineer · Cloud & Automation
 				</p>
 
+				<!-- Strategic Sentence - Positioning Statement -->
+				<p class="text-2xl sm:text-3xl font-normal leading-snug mb-6 text-zinc-700 dark:text-zinc-200/90 max-w-2xl">
+					<span class="font-semibold hero-emphasis">Construo</span> <span class="hero-keyword-typing">plataformas</span> e <span class="hero-keyword-typing pipelines">pipelines</span> que transformam complexidade em capacidade de entrega, com foco em automação e confiabilidade.
+				</p>
 				<!-- Skills - Subtle, editorial style -->
-				<div class="flex flex-wrap gap-x-6 gap-y-3 mb-12">
+				<div class="flex flex-wrap gap-x-6 gap-y-3">
 					<span class="keyword-badge">Cloud</span>
-					<span class="keyword-badge">IaC</span>
 					<span class="keyword-badge">CI/CD</span>
-					<span class="keyword-badge">Observability</span>
-					<span class="keyword-badge">DevSecOps</span>
+					<span class="keyword-badge">Linux</span>
+					<span class="keyword-badge">Infrastructure as Code</span>
+					<span class="keyword-badge">System Integration</span>
 				</div>
-
-				<!-- Brief Summary - Narrower for readability -->
-				<p class="text-base text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg">
-					Building infrastructure that enables engineering teams to ship faster with confidence.
-				</p>
 			</div>
 		</div>
 		<main>
@@ -50,7 +49,7 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 						<h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Recent Posts</h2>
 						<p class="text-sm text-zinc-500 dark:text-zinc-500 mt-1">Thoughts on infrastructure, automation, and operations</p>
 					</div>
-					<a href="/posts/" class="inline-block py-1 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 underline underline-offset-4">View all</a>
+					<a href="/posts/" class="inline-block py-1 text-sm text-zinc-500 dark:text-zinc-400 hover:text-[var(--color-accent)] underline underline-offset-4 transition-colors">View all</a>
 				</div>
 				<div class="space-y-1">
 					{
@@ -63,9 +62,9 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 			<div>
 				<div class="flex justify-between gap-2 mb-1">
 					<h2 class="text-lg font-bold mb-3">My Projects</h2>
-					<a href="/projects/" class="inline-block py-2 underline dark:prose-invert">All projects &raquo;</a>
+					<a href="/projects/" class="inline-block py-2 underline hover:text-[var(--color-accent)] transition-colors dark:prose-invert">All projects &raquo;</a>
 				</div>
-				<ProjectList projects={top6Projects}/>
+				<ProjectList projects={top6Projects} featured={true}/>
 			</div>
 		</main>
 	</div>

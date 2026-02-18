@@ -9,65 +9,195 @@ import OracleOCI from '@src/assets/img/oracle-oci.svg';
 	title="About Me"
 	description="Lorem ipsum dolor sit amet"
 >
+  <style>
+    .about-hero-line {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 450ms ease-out, transform 450ms ease-out;
+    }
+    
+    .about-hero-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const lines = document.querySelectorAll('.about-hero-line');
+              lines.forEach((line) => {
+                line.classList.add('visible');
+              });
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      const heroSection = document.querySelector('.about-hero-line');
+      if (heroSection) {
+        observer.observe(heroSection);
+      }
+    });
+  </script>
+
   <div class='container'>
 		<main class='prose text-lg dark:prose-invert'>
       <article>
         <div class='w-full mb-24'>
-          <div class="max-w-4xl">
+          <div class="max-w-5xl">
             <!-- Name --> 
-            <h1 class="text-5xl sm:text-6xl font-semibold tracking-tighter mb-6 text-zinc-900 dark:text-zinc-50">
+            <h1 class="about-hero-line text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight mb-8 text-zinc-900 dark:text-zinc-50 opacity-0 translate-y-4">
               Leandro de Oliveira Barbosa
             </h1>
             
             <!-- Role - Stronger hierarchy -->
-            <p class="text-lg sm:text-xl font-medium mb-12 text-zinc-600 dark:text-zinc-400">
-              DevOps · SRE · DevSecOps
+            <p class="about-hero-line text-base sm:text-lg font-medium mb-12 text-zinc-600 dark:text-zinc-400 opacity-0 translate-y-3">
+              DevOps Engineer · Cloud & Automation
             </p>
 
-            <!-- Skills - Subtle, editorial style -->
-            <div class="flex flex-wrap gap-x-6 gap-y-3 mb-12">
-              <span class="keyword-badge">Cloud</span>
-              <span class="keyword-badge">IaC</span>
-              <span class="keyword-badge">CI/CD</span>
-              <span class="keyword-badge">Observability</span>
-              <span class="keyword-badge">DevSecOps</span>
+            <!-- Career Narrative - Single natural paragraph -->
+            <p class="about-hero-line text-lg sm:text-xl font-light leading-loose text-zinc-700 dark:text-zinc-200/90 max-w-[65ch] mb-16 opacity-0 translate-y-3">
+              Minha carreira começou no desenvolvimento de software e evoluiu para automação, integração de sistemas e engenharia de infraestrutura — sempre com foco em confiabilidade e entrega sustentável.
+            </p>
+
+            <!-- Skills + CTA - Horizontal layout on desktop -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+              <div class="about-hero-line flex flex-wrap gap-x-6 gap-y-3 opacity-0 translate-y-3">
+                <span class="keyword-badge">Cloud</span>
+                <span class="keyword-badge">CI/CD</span>
+                <span class="keyword-badge">Linux</span>
+                <span class="keyword-badge">Infrastructure as Code</span>
+                <span class="keyword-badge">System Integration</span>
+              </div>
+              
+              <!-- CV Download - Secondary action, aligned with skills -->
+              <a href="/cv.pdf" download class="about-hero-line group inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)] hover:bg-[var(--color-accent)]/5 dark:hover:bg-[var(--color-accent)]/10 transition-all duration-200 no-underline font-medium opacity-0 translate-y-3">
+                <svg class="w-[18px] h-[18px] transition-transform duration-200 group-hover:-translate-y-0.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                Download CV
+              </a>
             </div>
 
-            <!-- Brief Summary -->
-            <p class="text-base text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg">
-              Building infrastructure that enables engineering teams to ship faster with confidence.
-            </p>
+        <!-- Experience Highlights Section -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold mb-4">Experience Highlights</h2>
+          <p class="text-base text-[var(--color-text-secondary)] mb-8 max-w-[60ch]">
+            Bridging development and operations through automation and reliability.
+          </p>
+          
+          <!-- Grouped Experience Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Platform & Cloud -->
+            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+                Platform & Cloud
+              </h3>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>OpenShift e ambientes Linux enterprise</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Dockerização e automação de deploy</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Fundamentos de cloud architecture (OCI Certified)</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- CI/CD & Automation -->
+            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+                CI/CD & Automation
+              </h3>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Automação com scripts e pipelines</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Experiência com Azure DevOps e GitHub Actions</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Versionamento e colaboração com Git</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Development & Integration -->
+            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+                Development & Integration
+              </h3>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>APIs REST com JavaScript / TypeScript</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Integração com Active Directory (LDAP)</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Integração entre sistemas legados e modernos</span>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Operations & Reliability -->
+            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
+              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+                Operations & Reliability
+              </h3>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Troubleshooting em produção</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Conceitos de redes, segurança e OWASP</span>
+                </li>
+                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
+                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                  <span>Experiência em ambientes corporativos complexos</span>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-
-        <!-- CV Download -->
-        <div class="mb-16">
-          <a href="/cv.pdf" download class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white hover:!text-white hover:bg-[var(--color-accent-hover)] transition-colors duration-200 no-underline font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-            Download CV
-          </a>
-        </div>
+        </section>
 
         <!-- Certifications Section -->
         <section class="mb-12">
           <h2 class="text-2xl font-bold mb-6">Certifications</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[var(--color-border-subtle)] border border-[var(--color-border-subtle)]">
             <!-- Oracle OCI Certification -->
-            <a href="https://www.oracle.com/education/certification/" target="_blank" rel="noopener noreferrer" class="border border-[var(--color-border-subtle)] rounded-xl p-4 hover:border-[#F80000] transition-all duration-200 bg-[var(--color-bg-secondary)] group no-underline block">
+            <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=5DC65FD63A2330B5A7116E8EDD416E22DAFC4BB89EF9F91039D0751FAEB91832" target="_blank" rel="noopener noreferrer" class="card-certification bg-[var(--color-bg-primary)] group no-underline block">
               <div class="flex items-center gap-3 mb-2">
                 <Image src={OracleOCI} alt="Oracle Cloud Infrastructure" width={48} height={48} class="flex-shrink-0" />
-                <h3 class="font-semibold text-base">Oracle Cloud Infrastructure Fundamentals</h3>
+                <h3 class="font-semibold text-base text-[var(--color-text-primary)]">Oracle Cloud Infrastructure Fundamentals</h3>
               </div>
               <p class="text-sm text-[var(--color-text-secondary)] flex items-center justify-between">
                 <span>Oracle • 2024</span>
-                <span class="text-[#F80000] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs">
+                <span class="text-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs">
                   Verify <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 </span>
               </p>
             </a>
             <!-- AWS Certification -->
-            <div class="border border-[var(--color-border-subtle)] rounded-xl p-4 hover:border-[var(--color-accent)] transition-all duration-200 bg-[var(--color-bg-secondary)]">
-              <h3 class="font-semibold">AWS Certified Solutions Architect</h3>
+            <div class="card-certification bg-[var(--color-bg-primary)]">
+              <h3 class="font-semibold text-[var(--color-text-primary)]">AWS Certified Solutions Architect</h3>
               <p class="text-sm text-[var(--color-text-secondary)]">Amazon Web Services • 2024</p>
             </div>
           </div>
