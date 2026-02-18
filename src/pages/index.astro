@@ -6,6 +6,7 @@ import type { CollectionEntry } from 'astro:content';
 import { projects } from './projects/projects';
 import ProjectList from '../components/ProjectList.astro'
 import PostItem from '../components/PostItem.astro';
+import { Image } from 'astro:assets';
 
 type BlogPost = CollectionEntry<'blog'>;
 
@@ -15,56 +16,88 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 
 <BaseLayout title={SITE_TITLE + ' - ' + SITE_TAGLINE} description={SITE_DESCRIPTION}>
 	<div class='container'>
-		<div class='w-full mb-24'>
-			<!-- Hero Section: Editorial / Technical -->
-			<div class="max-w-5xl">
-				<!-- Name --> 
-				<h1 class="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight mb-8 text-zinc-900 dark:text-zinc-50">
-					Leandro de Oliveira Barbosa
-				</h1>
+		<main>
+			<!-- Documentation Style Hero Section -->
+			<div class='max-w-4xl mb-16'>
+				<!-- Name, Seniority Micro-signal, and Keywords -->
+				<div class='flex-1 min-w-0 pt-1'>
+					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono mb-2'>
+						Leandro de Oliveira Barbosa
+					</h1>
+					<!-- Seniority Micro-signal -->
+					<p class='text-xs text-zinc-400 dark:text-zinc-500 font-mono mb-3 tracking-tight'>
+						<span>OCI Certified</span>
+						<span class='mx-1'>•</span>
+						<span>SRE Mindset</span>
+					</p>
+			
+			<!-- Introduction -->
+			<p class='text-lg sm:text-xl leading-relaxed mb-8 text-zinc-700 dark:text-zinc-200/90 max-w-[65ch]'>
+				<span class='font-semibold text-[var(--color-accent)]'>Engenheiro DevOps</span> com base em
+				<span class='font-medium'> Desenvolvimento de Software</span> e foco em
+				<span class='font-medium'> Plataforma,</span>
+				<span class='font-medium'> Cloud</span> e 
+				<span class='font-medium'> Automação</span>. Construo pipelines e ambientes confiáveis que transformam código em entrega sustentável.
+			</p>
+			</div>
+			
+			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+			
+			<!-- Projects - Markdown Style Header -->
+			<div class='mb-12'>
+				<div class='flex justify-between gap-2 mb-6'>
+					<h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100'>## Projects</h2>
+					<a href='/projects/' class='text-sm text-zinc-500 dark:text-zinc-400 hover:text-[var(--color-accent)] no-underline font-mono'>[ All projects ]</a>
+				</div>
+				<ProjectList projects={top6Projects} featured={true}/>
+			</div>
+			
+			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+			
+			<!-- Tech Stack - Markdown Style Header -->
+			<div class='mb-12'>
+				<h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-4 mt-10'>## Tech Stack</h2>
 				
-				<!-- Role - Stronger hierarchy -->
-				<p class="text-lg sm:text-xl font-medium mb-10 text-zinc-600 dark:text-zinc-400">
-					DevOps Engineer · Cloud & Automation
-				</p>
-
-				<!-- Strategic Sentence - Positioning Statement -->
-				<p class="text-2xl sm:text-3xl font-normal leading-snug mb-6 text-zinc-700 dark:text-zinc-200/90 max-w-2xl">
-					<span class="font-semibold hero-emphasis">Construo</span> <span class="hero-keyword-typing">plataformas</span> e <span class="hero-keyword-typing pipelines">pipelines</span> que transformam complexidade em capacidade de entrega, com foco em automação e confiabilidade.
-				</p>
-				<!-- Skills - Subtle, editorial style -->
-				<div class="flex flex-wrap gap-x-6 gap-y-3">
-					<span class="keyword-badge">Cloud</span>
-					<span class="keyword-badge">CI/CD</span>
-					<span class="keyword-badge">Linux</span>
-					<span class="keyword-badge">Infrastructure as Code</span>
-					<span class="keyword-badge">System Integration</span>
+				<!-- Skills Grid -->
+				<div class='grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-3 mb-8'>
+					<div class='flex items-center gap-2'>
+						<span class='text-[var(--color-accent)]'>▸</span>
+						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Infrastrucure as Code</span>
+					</div>
+					<div class='flex items-center gap-2'>
+						<span class='text-[var(--color-accent)]'>▸</span>
+						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Containerization & Orchestration</span>
+					</div>
+					<div class='flex items-center gap-2'>
+						<span class='text-[var(--color-accent)]'>▸</span>
+						<span class='text-sm text-zinc-600 dark:text-zinc-300'>CI/CD & Automation</span>
+					</div>
+					<div class='flex items-center gap-2'>
+						<span class='text-[var(--color-accent)]'>▸</span>
+						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Linux Systems</span>
+					</div>
+					<div class='flex items-center gap-2'>
+						<span class='text-[var(--color-accent)]'>▸</span>
+						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Identity & Integrations</span>
+					</div>
 				</div>
 			</div>
-		</div>
-		<main>
-			<div class='mb-20'>
-				<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-zinc-200 dark:border-b-zinc-800 pb-4 mb-10">
-					<div>
-						<h2 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Recent Posts</h2>
-						<p class="text-sm text-zinc-500 dark:text-zinc-500 mt-1">Thoughts on infrastructure, automation, and operations</p>
-					</div>
-					<a href="/posts/" class="inline-block py-1 text-sm text-zinc-500 dark:text-zinc-400 hover:text-[var(--color-accent)] underline underline-offset-4 transition-colors">View all</a>
+			
+			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+			
+			<!-- Recent Posts - Markdown Style Header -->
+			<div class='mb-12'>
+				<div class='flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6'>
+					<h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100'>## Recent Posts</h2>
+					<a href='/posts/' class='text-sm text-zinc-500 dark:text-zinc-400 hover:text-[var(--color-accent)] no-underline font-mono'>[ View all ]</a>
 				</div>
-				<div class="space-y-1">
+				<div class='space-y-0'>
 					{
 						posts.map((post: BlogPost) => (
 							<PostItem post={post} />
 						))
 					}      
 				</div>
-			</div>
-			<div>
-				<div class="flex justify-between gap-2 mb-1">
-					<h2 class="text-lg font-bold mb-3">My Projects</h2>
-					<a href="/projects/" class="inline-block py-2 underline hover:text-[var(--color-accent)] transition-colors dark:prose-invert">All projects &raquo;</a>
-				</div>
-				<ProjectList projects={top6Projects} featured={true}/>
 			</div>
 		</main>
 	</div>

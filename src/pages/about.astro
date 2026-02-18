@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import OracleOCI from '@src/assets/img/oracle-oci.svg';
+import { Image } from 'astro:assets';
+import leandroImg from '@src/assets/img/leandro-img.png';
 
 ---
 
@@ -19,6 +19,13 @@ import OracleOCI from '@src/assets/img/oracle-oci.svg';
     .about-hero-line.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Documentation style - Remove card borders and shadows */
+    .doc-section {
+      background-color: transparent;
+      border: none;
+      padding: 0;
     }
   </style>
 
@@ -47,195 +54,227 @@ import OracleOCI from '@src/assets/img/oracle-oci.svg';
   </script>
 
   <div class='container'>
-		<main class='prose text-lg dark:prose-invert'>
+		<main class='prose text-lg dark:prose-invert max-w-4xl'>
       <article>
-        <div class='w-full mb-24'>
-          <div class="max-w-5xl">
-            <!-- Name --> 
-            <h1 class="about-hero-line text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight mb-8 text-zinc-900 dark:text-zinc-50 opacity-0 translate-y-4">
-              Leandro de Oliveira Barbosa
-            </h1>
+        <!-- Name with badge and intro -->
+        <div class='mb-12'>
+          <div class='flex flex-col sm:flex-row sm:items-start gap-8'>
+            <!-- Photo - Documentation style avatar -->
+            <div class='shrink-0 self-start'>
+              <div class='about-hero-line w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[var(--color-border-subtle)] shadow-lg opacity-0 -translate-y-4' style='font-size: 0;'>
+                <Image 
+                  src={leandroImg} 
+                  alt='Leandro de Oliveira Barbosa' 
+                  width={128} 
+                  height={128}
+                  class='w-full h-full object-cover'
+                  loading='eager'
+                />
+              </div>
+            </div>
             
-            <!-- Role - Stronger hierarchy -->
-            <p class="about-hero-line text-base sm:text-lg font-medium mb-12 text-zinc-600 dark:text-zinc-400 opacity-0 translate-y-3">
-              DevOps Engineer · Cloud & Automation
-            </p>
+            <!-- Name, badge, and intro content -->
+            <div class='flex-1 min-w-0 pt-1'>
+              <!-- Name - Primary hero element -->
+              <h1 class='about-hero-line text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono opacity-0 translate-y-4 mb-3 sm:mb-4'>
+                Leandro de Oliveira Barbosa
+              </h1>
+              
+              <!-- Role badges row -->
+              <div class='flex flex-wrap items-center gap-4 mb-5'>
+                <span class='inline-flex items-center px-3 py-1 rounded-md text-sm font-mono bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20'>
+                  DevOps & Platform Engineer
+                </span>
+              </div>
 
-            <!-- Career Narrative - Single natural paragraph -->
-            <p class="about-hero-line text-lg sm:text-xl font-light leading-loose text-zinc-700 dark:text-zinc-200/90 max-w-[65ch] mb-16 opacity-0 translate-y-3">
-              Minha carreira começou no desenvolvimento de software e evoluiu para automação, integração de sistemas e engenharia de infraestrutura — sempre com foco em confiabilidade e entrega sustentável.
-            </p>
-
-            <!-- Skills + CTA - Horizontal layout on desktop -->
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-              <div class="about-hero-line flex flex-wrap gap-x-6 gap-y-3 opacity-0 translate-y-3">
-                <span class="keyword-badge">Cloud</span>
-                <span class="keyword-badge">CI/CD</span>
-                <span class="keyword-badge">Linux</span>
-                <span class="keyword-badge">Infrastructure as Code</span>
-                <span class="keyword-badge">System Integration</span>
+              <!-- Career Narrative -->
+              <div class='about-hero-line opacity-0 translate-y-3 mb-6'>
+                <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch] mb-4'>
+                  Tenho base sólida em Linux e experiência prática com containerização (Docker). Atuo na automação de processos, padronização de ambientes e suporte a pipelines de entrega contínua.
+                </p>
+                
+                <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch] mb-4'>
+                  Direciono minha evolução técnica para cloud computing e orquestração de containers. Tenho interesse especial em engenharia de plataformas, confiabilidade e eficiência operacional.
+                </p>
+                
+                <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch]'>
+                  Busco contribuir em ambientes que valorizem boas práticas de engenharia. Colaboração entre times e melhoria contínua são pilares do meu trabalho, apoiando a construção de sistemas estáveis, escaláveis e bem estruturados.
+                </p>
               </div>
               
-              <!-- CV Download - Secondary action, aligned with skills -->
-              <a href="/cv.pdf" download class="about-hero-line group inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)] hover:bg-[var(--color-accent)]/5 dark:hover:bg-[var(--color-accent)]/10 transition-all duration-200 no-underline font-medium opacity-0 translate-y-3">
-                <svg class="w-[18px] h-[18px] transition-transform duration-200 group-hover:-translate-y-0.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-                Download CV
+              <!-- Skills tags - Modern discrete badges with increased spacing -->
+              <div class='flex flex-wrap gap-6 mb-6'>
+                <span class='skill-badge font-mono text-xs'>Cloud</span>
+                <span class='skill-badge font-mono text-xs'>Observability</span>
+                <span class='skill-badge font-mono text-xs'>Kubernetes</span>
+                <span class='skill-badge font-mono text-xs'>CI/CD</span>
+                <span class='skill-badge font-mono text-xs'>Linux</span>
+                <span class='skill-badge font-mono text-xs'>Infrastructure as Code</span>
+                <span class='skill-badge font-mono text-xs'>System Integration</span>
+              </div>
+              
+              <!-- CV Download -->
+              <a href='/cv.pdf' download class='group inline-flex items-center gap-2.5 px-4 py-2.5 font-mono text-sm border border-[var(--color-border-subtle)] text-zinc-600 dark:text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)] transition-all duration-200 no-underline'>
+                <svg class='w-[18px] h-[18px] transition-transform duration-200 group-hover:-translate-y-0.5' xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' x1='12' y1='15' y2='3'/></svg>
+                [ Download CV ]
               </a>
-            </div>
 
-        <!-- Experience Highlights Section -->
-        <section class="mb-12">
-          <h2 class="text-2xl font-bold mb-4">Experience Highlights</h2>
-          <p class="text-base text-[var(--color-text-secondary)] mb-8 max-w-[60ch]">
-            Bridging development and operations through automation and reliability.
-          </p>
+              <!-- Open to Opportunities - Subtle inline indicator -->
+              <p class='mt-6 font-mono text-sm text-zinc-500 dark:text-zinc-400'>
+                <span class='text-[var(--color-accent)]'>Aberto a oportunidades</span> em DevOps, Platform Engineering e SRE, com foco em ambientes colaborativos e orientados a boas práticas.
+              </p>
+          </div>
+        </div>
+
+        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+
+        <!-- Technical Skills Section - Markdown Style -->
+        <section class='mb-12'>
+          <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-8'>## Technical Skills</h2>
           
-          <!-- Grouped Experience Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Grouped Skills - No cards, just clean layout with generous whitespace -->
+          <div class='grid grid-cols-1 md:grid-cols-2 gap-8'>
             <!-- Platform & Cloud -->
-            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+            <div class='doc-section'>
+              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
                 Platform & Cloud
               </h3>
-              <ul class="space-y-2">
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
-                  <span>OpenShift e ambientes Linux enterprise</span>
+              <ul class='space-y-3.5'>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
+                  <span>OpenShift e Ambientes Linux Enterprise</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
-                  <span>Dockerização e automação de deploy</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
+                  <span>Dockerização e Automação de Deploy</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
-                  <span>Fundamentos de cloud architecture (OCI Certified)</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
+                  <span>Cloud Architecture (AWS/OCI)</span>
                 </li>
               </ul>
             </div>
             
             <!-- CI/CD & Automation -->
-            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+            <div class='doc-section'>
+              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
                 CI/CD & Automation
               </h3>
-              <ul class="space-y-2">
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
-                  <span>Automação com scripts e pipelines</span>
+              <ul class='space-y-3.5'>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
+                  <span>Automação com Scripts e Pipelines</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
                   <span>Experiência com Azure DevOps e GitHub Actions</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
                   <span>Versionamento e colaboração com Git</span>
                 </li>
               </ul>
             </div>
             
             <!-- Development & Integration -->
-            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+            <div class='doc-section'>
+              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
                 Development & Integration
               </h3>
-              <ul class="space-y-2">
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+              <ul class='space-y-3.5'>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
                   <span>APIs REST com JavaScript / TypeScript</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
                   <span>Integração com Active Directory (LDAP)</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
                   <span>Integração entre sistemas legados e modernos</span>
                 </li>
               </ul>
             </div>
             
             <!-- Operations & Reliability -->
-            <div class="bg-[var(--color-bg-secondary)] dark:bg-zinc-800/50 rounded-lg p-5 border border-[var(--color-border-subtle)]">
-              <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-3">
+            <div class='doc-section'>
+              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
                 Operations & Reliability
               </h3>
-              <ul class="space-y-2">
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
-                  <span>Troubleshooting em produção</span>
+              <ul class='space-y-3.5'>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
+                  <span>Troubleshooting em Produção</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
-                  <span>Conceitos de redes, segurança e OWASP</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
+                  <span>Conceitos de Redes, Segurança e OWASP</span>
                 </li>
-                <li class="flex items-start gap-2 text-sm text-[var(--color-text-primary)]">
-                  <span class="text-[var(--color-accent)] mt-0.5">▹</span>
-                  <span>Experiência em ambientes corporativos complexos</span>
+                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
+                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
+                  <span>Experiência em Ambientes Corporativos Complexos</span>
                 </li>
               </ul>
             </div>
           </div>
         </section>
 
+        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+
         <!-- Certifications Section -->
-        <section class="mb-12">
-          <h2 class="text-2xl font-bold mb-6">Certifications</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-[var(--color-border-subtle)] border border-[var(--color-border-subtle)]">
+        <section class='mb-12'>
+          <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-8'>## Certifications</h2>
+          <div class='space-y-4'>
             <!-- Oracle OCI Certification -->
-            <a href="https://catalog-education.oracle.com/pls/certview/sharebadge?id=5DC65FD63A2330B5A7116E8EDD416E22DAFC4BB89EF9F91039D0751FAEB91832" target="_blank" rel="noopener noreferrer" class="card-certification bg-[var(--color-bg-primary)] group no-underline block">
-              <div class="flex items-center gap-3 mb-2">
-                <Image src={OracleOCI} alt="Oracle Cloud Infrastructure" width={48} height={48} class="flex-shrink-0" />
-                <h3 class="font-semibold text-base text-[var(--color-text-primary)]">Oracle Cloud Infrastructure Fundamentals</h3>
-              </div>
-              <p class="text-sm text-[var(--color-text-secondary)] flex items-center justify-between">
+            <a href='https://catalog-education.oracle.com/pls/certview/sharebadge?id=5DC65FD63A2330B5A7116E8EDD416E22DAFC4BB89EF9F91039D0751FAEB91832' target='_blank' rel='noopener noreferrer' class='group block no-underline py-2'>
+              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-2'>
+                Oracle Cloud Infrastructure
+              </h3>
+              <p class='font-semibold text-base text-zinc-900 dark:text-zinc-100 mb-1'>Oracle Cloud Infrastructure Fundamentals</p>
+              <p class='text-sm text-zinc-500 dark:text-zinc-400 flex items-center gap-2'>
                 <span>Oracle • 2024</span>
-                <span class="text-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs">
-                  Verify <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                <span class='opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs text-[var(--color-accent)]'>
+                  [ Verify <svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/><polyline points='15 3 21 3 21 9'/><line x1='10' x1='14' x2='21' y2='3'/></svg> ]
                 </span>
               </p>
             </a>
-            <!-- AWS Certification -->
-            <div class="card-certification bg-[var(--color-bg-primary)]">
-              <h3 class="font-semibold text-[var(--color-text-primary)]">AWS Certified Solutions Architect</h3>
-              <p class="text-sm text-[var(--color-text-secondary)]">Amazon Web Services • 2024</p>
-            </div>
           </div>
         </section>
 
+        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+
         <!-- Professional Experience Section -->
-        <section class="mb-12">
-          <h2 class="text-2xl font-bold mb-6">Professional Experience</h2>
-          <div class="space-y-6">
-            <div class="border-l-4 border-[var(--color-border)] pl-6 py-2">
-              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
-                <h3 class="font-semibold text-lg">Senior Front-End Engineer</h3>
-                <span class="text-sm text-[var(--color-text-tertiary)]">• TechCorp Indonesia</span>
-                <span class="text-sm text-[var(--color-text-tertiary)]">2022 - Present</span>
+        <section class='mb-12'>
+          <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-8'>## Professional Experience</h2>
+          <div class='space-y-8'>
+            <div class='py-2'>
+              <div class='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2'>
+                <h3 class='font-semibold text-lg text-zinc-900 dark:text-zinc-100'>Senior Front-End Engineer</h3>
+                <span class='text-sm text-zinc-500 dark:text-zinc-500'>• TechCorp Indonesia</span>
+                <span class='text-sm text-zinc-500 dark:text-zinc-500 font-mono'>2022 - Present</span>
               </div>
-              <p class="text-[var(--color-text-secondary)]">Leading the front-end team in building scalable web applications using React, TypeScript, and Astro. Mentoring junior developers and implementing best practices for code quality and performance.</p>
+              <p class='text-zinc-600 dark:text-zinc-400 leading-relaxed'>Leading the front-end team in building scalable web applications using React, TypeScript, and Astro. Mentoring junior developers and implementing best practices for code quality and performance.</p>
             </div>
-            <div class="border-l-4 border-[var(--color-border)] pl-6 py-2">
-              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
-                <h3 class="font-semibold text-lg">Front-End Developer</h3>
-                <span class="text-sm text-[var(--color-text-tertiary)]">• StartupXYZ</span>
-                <span class="text-sm text-[var(--color-text-tertiary)]">2020 - 2022</span>
+            <div class='py-2'>
+              <div class='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2'>
+                <h3 class='font-semibold text-lg text-zinc-900 dark:text-zinc-100'>Front-End Developer</h3>
+                <span class='text-sm text-zinc-500 dark:text-zinc-500'>• StartupXYZ</span>
+                <span class='text-sm text-zinc-500 dark:text-zinc-500 font-mono'>2020 - 2022</span>
               </div>
-              <p class="text-[var(--color-text-secondary)]">Developed responsive web applications and contributed to the company's design system. Collaborated with UX designers to implement pixel-perfect interfaces.</p>
+              <p class='text-zinc-600 dark:text-zinc-400 leading-relaxed'>Developed responsive web applications and contributed to the company's design system. Collaborated with UX designers to implement pixel-perfect interfaces.</p>
             </div>
-            <div class="border-l-4 border-[var(--color-border)] pl-6 py-2">
-              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
-                <h3 class="font-semibold text-lg">Junior Web Developer</h3>
-                <span class="text-sm text-[var(--color-text-tertiary)]">• Digital Agency Co.</span>
-                <span class="text-sm text-[var(--color-text-tertiary)]">2018 - 2020</span>
+            <div class='py-2'>
+              <div class='flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2'>
+                <h3 class='font-semibold text-lg text-zinc-900 dark:text-zinc-100'>Junior Web Developer</h3>
+                <span class='text-sm text-zinc-500 dark:text-zinc-500'>• Digital Agency Co.</span>
+                <span class='text-sm text-zinc-500 dark:text-zinc-500 font-mono'>2018 - 2020</span>
               </div>
-              <p class="text-[var(--color-text-secondary)]">Built and maintained client websites using HTML, CSS, JavaScript, and WordPress. Gained experience with various web technologies and agile methodologies.</p>
+              <p class='text-zinc-600 dark:text-zinc-400 leading-relaxed'>Built and maintained client websites using HTML, CSS, JavaScript, and WordPress. Gained experience with various web technologies and agile methodologies.</p>
             </div>
           </div>
         </section>
         </article>
-      </article>
-    </main>
-  </div>
+      </main>
+    </div>
 </BaseLayout>
-

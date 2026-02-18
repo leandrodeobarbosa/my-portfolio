@@ -152,27 +152,25 @@
 }
 
 @layer components {
-	/* Editorial Card - Minimal, flat, technical aesthetic */
+	/* Documentation Style - Cards without borders and shadows */
 	.card {
 		background-color: transparent;
-		border: 1px solid var(--color-border-subtle);
+		border: none;
 		border-radius: 0;
-		padding: 1.25rem;
-		transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+		padding: 0;
 	}
 
 	.card:hover {
-		border-color: var(--color-border);
-		background-color: var(--color-bg-secondary);
+		border-color: transparent;
+		box-shadow: none;
 	}
 
-	/* Project Card - Editorial style */
+	/* Project Card - Documentation style (no borders, no shadows) */
 	.card-project {
 		background-color: transparent;
-		border: 1px solid var(--color-border-subtle);
+		border: none;
 		border-radius: 0;
-		padding: 1.25rem;
-		transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+		padding: 0;
 		display: flex;
 		flex-direction: column;
 		height: 100%;
@@ -181,14 +179,17 @@
 	}
 
 	.card-project:hover {
-		border-color: var(--color-border);
-		background-color: var(--color-bg-secondary);
-		transform: translateY(-2px);
+		border-color: transparent;
+		box-shadow: none;
 	}
 
-	/* Featured Project Card - Distinguished with accent left border and glow */
+	.dark .card-project:hover {
+		box-shadow: none;
+	}
+
+	/* Featured Project Card - Documentation style */
 	.card-project.featured {
-		border-left: 3px solid var(--color-accent);
+		border-left: none;
 	}
 
 	.card-project.featured::before {
@@ -196,17 +197,16 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 3px;
-		height: 100%;
-		background: linear-gradient(180deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+		width: 0;
+		height: 0;
 	}
 
 	.card-project.featured:hover {
-		box-shadow: 0 0 20px rgba(13, 148, 136, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+		box-shadow: none;
 	}
 
 	.dark .card-project.featured:hover {
-		box-shadow: 0 0 20px rgba(20, 184, 166, 0.2), 0 4px 12px rgba(0, 0, 0, 0.3);
+		box-shadow: none;
 	}
 
 	/* Featured badge */
@@ -231,18 +231,21 @@
 		color: white;
 	}
 
-	/* Certification Card - Minimal */
+	/* Certification Card - Documentation style (no borders) */
 	.card-certification {
 		background-color: transparent;
-		border: 1px solid var(--color-border-subtle);
+		border: none;
 		border-radius: 0;
-		padding: 1rem;
-		transition: border-color 150ms ease, background-color 150ms ease;
+		padding: 0;
 	}
 
 	.card-certification:hover {
-		border-color: var(--color-border);
-		background-color: var(--color-bg-secondary);
+		border-color: transparent;
+		box-shadow: none;
+	}
+
+	.dark .card-certification:hover {
+		box-shadow: none;
 	}
 
 	/* Tag - Minimal, text-like with accent hover */
@@ -387,6 +390,32 @@
 		text-decoration-color: var(--color-accent);
 	}
 
+	/* Skill badge - Modern discrete pill badges with subtle hover */
+	.skill-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.2rem 0.625rem;
+		font-size: 0.6875rem;
+		font-weight: 500;
+		font-family: "IBM Plex Sans", system-ui, sans-serif;
+		background-color: var(--color-bg-secondary);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: 9999px;
+		color: var(--color-text-tertiary);
+		transition: all 200ms ease;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		opacity: 0.85;
+	}
+
+	.skill-badge:hover {
+		color: var(--color-accent);
+		border-color: var(--color-accent);
+		background-color: rgba(13, 148, 136, 0.08);
+		opacity: 1;
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.keyword-badge {
 			transition: none;
@@ -394,6 +423,17 @@
 		.keyword-badge:hover {
 			color: var(--color-text-tertiary);
 			text-decoration: none;
+		}
+
+		.skill-badge {
+			transition: none;
+			opacity: 0.85;
+		}
+		.skill-badge:hover {
+			color: var(--color-text-tertiary);
+			border-color: var(--color-border-subtle);
+			background-color: var(--color-bg-secondary);
+			opacity: 1;
 		}
 	}
 

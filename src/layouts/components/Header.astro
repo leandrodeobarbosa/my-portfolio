@@ -1,8 +1,6 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 import { Image } from 'astro:assets';
-import AvaLogo from '@src/assets/img/leandro-img.png';
-import BrasilFlag from '@src/assets/img/brasil.png';
 import GithubWhite from '@src/assets/img/github-mark-white.svg';
 import GithubBlack from '@src/assets/img/github-mark.svg';
 import LinkedinWhite from '@src/assets/img/linkedin-white.svg';
@@ -10,111 +8,111 @@ import LinkedinBlack from '@src/assets/img/linkedin.svg';
 import XWhite from '@src/assets/img/x-white.svg';
 import XBlack from '@src/assets/img/x.svg';
 
-
 const menu = [
-  {
-		link: '/about/',
-		label: 'About'
-	},
-	{
-		link: '/posts/',
-		label: 'Posts'
-	},
-	{
-		link: '/projects/',
-		label: 'Projects'
-	},
-];
+		{
+			link: '/',
+			label: ''
+		},
+		{
+			link: '/projects/',
+			label: 'Projects'
+		},
+		{
+			link: '/posts/',
+			label: 'Posts'
+		},
+		{
+			link: '/about/',
+			label: 'About'
+		},
+	];
 ---
 
 <header
 	id='site-header'
 	class:list={[
-		'flex items-center w-full transition duration-300 z-[999] border-[var(--soft-border-color)]'
+		'fixed top-0 left-0 right-0 flex items-center w-full transition duration-300 z-[999] bg-[var(--color-bg-primary)]/95 dark:bg-[var(--color-bg-primary)]/95 backdrop-blur-sm'
 	]}
 >
 	<div class='container'>
 		<nav class='flex gap-4 items-center justify-between py-3'>
+			<!-- Logo Section (Left) -->
 			<h2 class='m-0'>
-				<a href='/' class='group flex gap-4 items-center text-xl font-black uppercase no-underline'>
-					<!-- Professional avatar logo with refined styling -->
-          <div class="relative w-11 h-11 rounded-lg overflow-hidden bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 border border-zinc-200/50 dark:border-zinc-700/50 shadow-sm">
-            <Image src={AvaLogo} alt='Leandro de Oliveira Barbosa' class="w-full h-full object-cover"/>
-          </div> 
-          <span class="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap overflow-hidden md:opacity-0 md:group-hover:opacity-100 md:transition-opacity md:duration-300 md:group-hover:animate-typing">
-            <span class="text-zinc-500">$</span><span class="text-zinc-600 dark:text-zinc-500"> </span><span class="lowercase"> echo</span> <span class="text-zinc-600 dark:text-zinc-500"> </span>"<span class="text-zinc-800 dark:text-zinc-200">Leandro<span class="text-zinc-400 dark:text-zinc-600"> · </span><Image src={BrasilFlag} alt="BR" class="inline w-4 h-3 -mt-0.5" /> Rio de Janeiro</span>"
-          </span>
-					<!-- {SITE_TITLE} -->
+				<a href='/' class='group flex gap-3 items-center text-xl font-bold uppercase no-underline font-mono'>
+					<span class="text-[var(--color-accent)]">~/</span>
+					<span class="text-zinc-800 dark:text-zinc-200 hidden md:block">portfolio</span>
 				</a>
 			</h2>
-			<div class='flex items-center'>
-				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' href='https://linkedin.com/in/leandrodeobarbosa' target='_blank' aria-label='LinkedIn'>
-					<Image class='w-5 h-5 dark:hidden' src={LinkedinBlack} width={20} height={20} alt='LinkedIn logo' />
-					<Image class='w-5 h-5 hidden dark:block' src={LinkedinWhite} width={20} height={20} alt='LinkedIn logo' />
+
+			<!-- Navigation Links (Terminal Style - File Directory Tabs) -->
+			<div class='hidden sm:flex items-center gap-1 font-mono text-sm'>
+				{
+					menu.map((item) => (
+						<HeaderLink class="px-2 py-1.5 text-zinc-500 dark:text-zinc-400 hover:text-[var(--color-accent)] transition-colors" href={item.link}>
+							<span class="text-[var(--color-accent)] opacity-50">/</span>{item.label}
+						</HeaderLink>
+					))
+				}
+			</div>
+
+			<!-- Social Icons & Theme Toggle (Right) -->
+			<div class='flex items-center gap-1'>
+				<!-- Mobile: Show nav menu as icons -->
+				<div class='flex sm:hidden items-center gap-1'>
+					<HeaderLink class="p-2 text-zinc-600 dark:text-zinc-400" href="/" aria-label="Home">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+					</HeaderLink>
+					{
+						menu.map((item) => (
+							<HeaderLink class="p-2 text-zinc-600 dark:text-zinc-400" href={item.link} aria-label={item.label}>
+								{item.label}
+							</HeaderLink>
+						))
+					}
+				</div>
+
+				<!-- Social Icons: Small, monochrome, visible on mobile -->
+				<a class='p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' href='https://github.com/leandrodeobarbosa' target='_blank' aria-label='GitHub'>
+					<Image class='w-4 h-4 dark:hidden opacity-60 hover:opacity-100' src={GithubBlack} width={16} height={16} alt='Github logo' />
+					<Image class='w-4 h-4 hidden dark:block opacity-60 hover:opacity-100' src={GithubWhite} width={16} height={16} alt='Github logo' />
 				</a>
-				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' href='https://x.com/leandrodeobarbosa' target='_blank' aria-label='X/Twitter'>
-					<Image class='w-5 h-5 dark:hidden' src={XBlack} width={20} height={20} alt='X logo' />
-					<Image class='w-5 h-5 hidden dark:block' src={XWhite} width={20} height={20} alt='X logo' />
+				<a class='p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' href='https://linkedin.com/in/leandrodeobarbosa' target='_blank' aria-label='LinkedIn'>
+					<Image class='w-4 h-4 dark:hidden opacity-60 hover:opacity-100' src={LinkedinBlack} width={16} height={16} alt='LinkedIn logo' />
+					<Image class='w-4 h-4 hidden dark:block opacity-60 hover:opacity-100' src={LinkedinWhite} width={16} height={16} alt='LinkedIn logo' />
 				</a>
-				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200 dark:hidden' href='https://github.com/leandrodeobarbosa' target='_blank' aria-label='GitHub'
-					><Image src={GithubBlack} width={24} height={24} alt='Github logo' /></a
-				>
-				<a class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200 hidden dark:block' href='https://github.com/leandrodeobarbosa' target='_blank' aria-label='GitHub'
-					><Image src={GithubWhite} width={24} height={24} alt='Github logo' /></a
-				>
-				<button class='p-3 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' id='themeToggle' aria-label='Theme mode'>
+				<a class='p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' href='https://x.com/leandrodeobarbosa' target='_blank' aria-label='X/Twitter'>
+					<Image class='w-4 h-4 dark:hidden opacity-60 hover:opacity-100' src={XBlack} width={16} height={16} alt='X logo' />
+					<Image class='w-4 h-4 hidden dark:block opacity-60 hover:opacity-100' src={XWhite} width={16} height={16} alt='X logo' />
+				</a>
+				<button class='p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors duration-200' id='themeToggle' aria-label='Theme mode'>
 					<svg
-						class='sun'
+						class='sun w-4 h-4'
 						xmlns='http://www.w3.org/2000/svg'
-						width='24'
-						height='24'
 						viewBox='0 0 24 24'
 						fill='none'
 						stroke='currentColor'
 						stroke-width='2'
 						stroke-linecap='round'
 						stroke-linejoin='round'
-						class='lucide lucide-sun'
 						><circle cx='12' cy='12' r='4'></circle><path d='M12 2v2'></path><path d='M12 20v2'></path><path d='m4.93 4.93 1.41 1.41'
 						></path><path d='m17.66 17.66 1.41 1.41'></path><path d='M2 12h2'></path><path d='M20 12h2'></path><path
 							d='m6.34 17.66-1.41 1.41'></path><path d='m19.07 4.93-1.41 1.41'></path></svg
 					>
 					<svg
-						class='moon'
+						class='moon w-4 h-4'
 						xmlns='http://www.w3.org/2000/svg'
-						width='24'
-						height='24'
 						viewBox='0 0 24 24'
 						fill='none'
 						stroke='currentColor'
 						stroke-width='2'
 						stroke-linecap='round'
 						stroke-linejoin='round'
-						class='lucide lucide-moon'
 					>
 						<path d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z'></path></svg
 					>
 				</button>
 			</div>
 		</nav>
-    <div class='fixed top-3 w-auto max-w-full px-3 left-1/2 -translate-x-1/2 z-[999]'>
-      <div class="flex px-2.5 bg-[var(--color-bg-secondary)]/90 dark:bg-[var(--color-bg-secondary)]/75 backdrop-blur-md leading-tight rounded-full border border-[var(--color-border-subtle)]">
-        <div class="px-2.5 text-sm">
-          <HeaderLink class="py-3 flex items-center" href="/" aria-label="Home">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-          </HeaderLink>
-        </div>
-        {
-          menu.map((item) => (
-            <div class='px-2.5 text-sm'>
-              <HeaderLink class="py-3 flex items-center" href={item.link}>
-                {item.label}
-              </HeaderLink>
-            </div>
-          ))
-        }
-      </div>
-    </div>
 	</div>
 
 	<style is:global>
