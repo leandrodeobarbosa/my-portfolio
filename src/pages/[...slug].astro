@@ -20,14 +20,23 @@ export async function getStaticPaths() {
 	}));
 }
 type Props = CollectionEntry<'blog'>;
-const post = Astro.props;
+const post = Astro.props as Props & { slug?: string };
+const postSlug = post.slug || post.id;
 const {
 	data: { title, seoTitle, description, coverImage, pubDate, updatedDate, tags }
 } = post;
 const { Content, headings } = await render(post);
 ---
 
-<BaseLayout title={seoTitle || title} description={description} image={coverImage?.src || undefined} pubDate={pubDate}>
+<BaseLayout 
+	title={seoTitle || title} 
+	description={description} 
+	image={coverImage?.src || undefined} 
+	pubDate={pubDate}
+	updatedDate={updatedDate}
+	type='blogPost'
+	slug={`/posts/${postSlug}`}
+>
 	<div class='container lg:flex gap-10'>
 		<main
 			class='overflow-hidden grow'

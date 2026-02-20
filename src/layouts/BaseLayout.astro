@@ -1,17 +1,37 @@
 ---
 import BaseHead from './components/BaseHead.astro';
+import StructuredData from './components/StructuredData.astro';
 import Header from './components/Header.astro';
 import Footer from './components/Footer.astro';
 import { loadEnv } from 'vite';
 
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	pubDate?: Date;
+	updatedDate?: Date;
+	type?: 'website' | 'person' | 'blogPost' | 'about' | 'projects';
+	slug?: string;
+}
+
 const { GTAG_MEASUREMENT_ID } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), '');
-const { title, description, image } = Astro.props;
+const { title, description, image, pubDate, updatedDate, type = 'website', slug } = Astro.props;
 ---
 
 <!doctype html>
 <html lang='en'>
 	<head>
 		<BaseHead title={title} description={description} image={image} />
+		<StructuredData 
+			type={type}
+			title={title}
+			description={description}
+			image={image}
+			slug={slug}
+			pubDate={pubDate}
+			updatedDate={updatedDate}
+		/>
 	</head>
 	<body
 		class="bg-[var(--color-bg-primary)] dark:bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] pt-16"
