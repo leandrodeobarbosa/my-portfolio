@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import leandroImg from '@src/assets/img/leandro-img.png';
+import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
 ---
 
 <BaseLayout
 	title="About Me"
-	description="Lorem ipsum dolor sit amet"
+	description={SITE_ABOUT_DESCRIPTION}
 >
   <style>
     .about-hero-line {

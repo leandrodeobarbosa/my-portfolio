@@ -2,12 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectList from '../../components/ProjectList.astro';
 import { projects } from './projects';
+import { SITE_PROJECTS_DESCRIPTION } from '../../consts';
 
 ---
 
 <BaseLayout
 	title="All My Projects"
-	description="All my project portfolio from real projects to open source projects."
+	description={SITE_PROJECTS_DESCRIPTION}
 >
   <div class='container'>
     <div class='mb-10'>
