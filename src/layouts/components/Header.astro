@@ -7,41 +7,32 @@ import LinkedinWhite from '@src/assets/img/linkedin-white.svg';
 import LinkedinBlack from '@src/assets/img/linkedin.svg';
 import XWhite from '@src/assets/img/x-white.svg';
 import XBlack from '@src/assets/img/x.svg';
+import { NAV_ROUTES } from '@src/domains/navigation/routes';
+import { BLOG_CATEGORIES } from '@src/domains/blog/categories';
 
-const menu = [
-	{
-		link: '/',
-		label: '~/início'
-	},
-	{
-		link: '/projects/',
-		label: '~/projetos'
-	},
-	{
-		link: '/posts/',
-		label: '~/posts'
-	},
-	{
-		link: '/about/',
-		label: '~/sobre'
-	},
-];
+// Menu built from domain (Single Source of Truth)
+const menu = NAV_ROUTES.map((route) => ({
+	link: route.path,
+	label: route.label,
+}));
 
 	// Get current path for terminal PWD display
 	const currentPath = Astro.url.pathname;
 	const normalizedPath = currentPath.replace(/\/$/, '').slice(1) || '';
 	const pathSegments = normalizedPath.split('/').filter(Boolean);
-	
-	// Map URL paths to Portuguese labels for terminal display
-	const pathLabels: Record<string, string> = {
-		'projects': 'projetos',
-		'posts': 'posts',
-		'about': 'sobre',
-		// Blog categories
-		'editorial': 'editorial',
-		'tutoriais': 'tutoriais',
-		'projetos-blog': 'projetos'
+
+	// Build labels from domains (Single Source of Truth)
+	const navLabels: Record<string, string> = {
+		'/': '~', // UI-specific override for root
+		...Object.fromEntries(
+			NAV_ROUTES.map(route => [route.path, route.label])
+		),
 	};
+
+	// Add blog categories from domain
+	for (const [key, cat] of Object.entries(BLOG_CATEGORIES)) {
+		navLabels[key] = cat.label.toLowerCase();
+	}
 	
 	interface NavItem {
 		label: string;
@@ -57,7 +48,10 @@ const menu = [
 		
 		pathSegments.forEach((segment, index) => {
 			accumulatedPath += `/${segment}`;
-			const translatedLabel = pathLabels[segment] || segment;
+			// Ensure we look up with trailing slash for routes
+			const lookupPath = accumulatedPath.endsWith('/') ? accumulatedPath : `${accumulatedPath}/`;
+			// Use navLabels from domains, fallback to segment
+			const translatedLabel = navLabels[lookupPath] || navLabels[accumulatedPath] || navLabels[segment] || segment;
 			const isLast = index === pathSegments.length - 1;
 			hierarchy.push({
 				label: translatedLabel,

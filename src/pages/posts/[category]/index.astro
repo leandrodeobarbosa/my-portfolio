@@ -4,29 +4,9 @@ import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PostsByYear from '../../../components/PostsByYear.astro';
 import { slugify } from '../../../utils';
+import { BLOG_CATEGORIES, DEFAULT_CATEGORY_ICON, type CategorySlug } from '@src/domains/blog/categories';
 
 type BlogPost = CollectionEntry<'blog'>;
-
-// Map category slugs to display names
-const categoryNames: Record<string, string> = {
-  'editorial': 'Editorial',
-  'tutoriais': 'Tutoriais',
-  'projetos-blog': 'Projetos',
-};
-
-// Map category slugs to descriptions
-const categoryDescriptions: Record<string, string> = {
-  'editorial': 'Artigos de opinião, reflexões e análises sobre tecnologia, desenvolvimento de software e carreira. Compartilho minha visão e experiências sobre o universo tech.',
-  'tutoriais': 'Guias práticos e passo a passo sobre ferramentas, tecnologias e técnicas de desenvolvimento. Aprenda com exemplos reais e aplicados.',
-  'projetos-blog': 'Apresentação e documentação de projetos pessoais e contribuições open source. Veja como transformo ideias em soluções funcionais.',
-};
-
-// Category icons (emoji as fallback)
-const categoryIcons: Record<string, string> = {
-  'editorial': `<svg xmlns='http://www.w3.org/2000/svg' class='w-7 h-7' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/><path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'/></svg>`,
-  'tutoriais': `<svg xmlns='http://www.w3.org/2000/svg' class='w-7 h-7' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'/><path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'/></svg>`,
-  'projetos-blog': `<svg xmlns='http://www.w3.org/2000/svg' class='w-7 h-7' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polygon points='12 2 2 7 12 12 22 7 12 2'/><polyline points='2 17 12 22 22 17'/><polyline points='2 12 12 17 22 12'/></svg>`,
-};
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -51,10 +31,11 @@ interface Props {
 const { category, posts } = Astro.props;
 const sortedPosts = posts.sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-// Get display name and description for the category
-const categoryDisplayName = categoryNames[category] || category;
-const categoryDescription = categoryDescriptions[category] || `Todos os posts sobre ${category}`;
-const categoryIcon = categoryIcons[category] || `<svg xmlns='http://www.w3.org/2000/svg' class='w-7 h-7' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/><polyline points='14 2 14 8 20 8'/></svg>`;
+// Get category data from domain (Single Source of Truth)
+const categoryData = BLOG_CATEGORIES[category as CategorySlug];
+const categoryDisplayName = categoryData?.label || category;
+const categoryDescription = categoryData?.description || `Todos os posts sobre ${category}`;
+const categoryIcon = categoryData?.icon || DEFAULT_CATEGORY_ICON;
 
 const postCount = sortedPosts.length;
 const title = `${categoryDisplayName}`;
