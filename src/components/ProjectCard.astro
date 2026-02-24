@@ -32,7 +32,6 @@ const techIcons: Record<string, string> = {
   actions: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg',
   aws: 'https://img.icons8.com/color/48/amazon-web-services.png',
   oci: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg',
-  oracle: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg',
   astro: 'https://api.iconify.design/skill-icons:astro.svg',
   tailwind: 'https://img.icons8.com/color/48/tailwindcss.png',
   html: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
@@ -85,7 +84,7 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
   {/* Tech Icons - Clean row without label */}
   {(project.techIcons || []).length > 0 && (
     <div class="project-card__tech">
-      {project.techIcons.slice(0, variant === 'featured' ? 6 : 4).map((iconName: string) => {
+      {project.techIcons.map((iconName: string) => {
         const iconUrl = techIcons[iconName.toLowerCase()];
         return iconUrl ? (
           <img 
@@ -98,9 +97,6 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
           />
         ) : null;
       })}
-      {(project.techIcons.length > (variant === 'featured' ? 6 : 4)) && (
-        <span class="project-card__tech-more">+{project.techIcons.length - (variant === 'featured' ? 6 : 4)}</span>
-      )}
     </div>
   )}
   
