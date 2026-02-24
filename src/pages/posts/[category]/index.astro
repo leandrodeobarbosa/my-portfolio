@@ -23,11 +23,6 @@ export async function getStaticPaths() {
   }));
 }
 
-interface Props {
-  category: string;
-  posts: BlogPost[];
-}
-
 const { category, posts } = Astro.props;
 const sortedPosts = posts.sort((a: BlogPost, b: BlogPost) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 

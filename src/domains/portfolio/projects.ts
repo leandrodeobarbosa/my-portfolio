@@ -1,16 +1,20 @@
-import { getRepositoryDetails } from "../../utils";
+/**
+ * Portfolio Domain - Projects Configuration
+ * Single Source of Truth for project data
+ */
 
 export interface Project {
   name: string;
   demoLink: string;
-  tags?: string[],
-  description?: string;
+  tags: string[];
+  description: string;
   postLink?: string;
   demoLinkRel?: string;
+  techIcons: string[];
   [key: string]: any;
 }
 
-export const projects: Project[] = [
+export const PROJECTS: Project[] = [
   {
     name: 'Fedora Sway',
     description: 'A customized Fedora Linux rice with Sway window manager',
@@ -67,4 +71,4 @@ export const projects: Project[] = [
     tags: ['Cloud', 'DevOps'],
     techIcons: ['oci', 'terraform', 'docker']
   }
-]
+];

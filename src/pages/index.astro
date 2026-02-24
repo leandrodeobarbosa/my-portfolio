@@ -3,10 +3,9 @@ import { SITE_TITLE, SITE_TAGLINE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
-import { projects } from './projects/projects';
+import { PROJECTS as projects } from '../domains/portfolio/projects';
 import ProjectList from '../components/ProjectList.astro'
 import PostItem from '../components/PostItem.astro';
-import { Image } from 'astro:assets';
 
 type BlogPost = CollectionEntry<'blog'>;
 

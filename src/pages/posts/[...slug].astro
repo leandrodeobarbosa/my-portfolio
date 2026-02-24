@@ -38,7 +38,6 @@ export async function getStaticPaths() {
 
 type Props = { post: CollectionEntry<'blog'>; urlSlug: string };
 const { post, urlSlug } = Astro.props as Props;
-const postSlug = post.data.slug || post.id;
 const {
 	data: { title, seoTitle, description, coverImage, pubDate, updatedDate, tags }
 } = post;

@@ -156,4 +156,4 @@ const generateJsonLd = () => {
 const jsonLd = generateJsonLd();
 ---
 
-<script type='application/ld+json' set:html={JSON.stringify(jsonLd, null, 2)} />
+<script is:inline type='application/ld+json' set:html={JSON.stringify(jsonLd, null, 2)} />

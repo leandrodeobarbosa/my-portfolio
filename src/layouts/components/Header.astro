@@ -65,7 +65,6 @@ const menu = NAV_ROUTES.map((route) => ({
 	};
 	
 	const navHierarchy = buildNavHierarchy();
-	const isDeepPath = pathSegments.length > 2;
 ---
 
 <header
@@ -420,11 +419,10 @@ const menu = NAV_ROUTES.map((route) => ({
 	});
 
 	// Handle scroll: add border on scroll for better visual hierarchy
-	let lastScroll = 0;
 	const header = document.getElementById('site-header');
 
 	window.addEventListener('scroll', () => {
-		const currentScroll = window.pageYOffset;
+		const currentScroll = window.scrollY;
 		
 		if (currentScroll > 10) {
 			header?.classList.add('border-b', 'border-[var(--color-border-subtle)]');
@@ -432,6 +430,5 @@ const menu = NAV_ROUTES.map((route) => ({
 			header?.classList.remove('border-b', 'border-[var(--color-border-subtle)]');
 		}
 		
-		lastScroll = currentScroll;
 	}, { passive: true });
 </script>
