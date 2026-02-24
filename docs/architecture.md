@@ -34,6 +34,7 @@ src/
   domains/
     navigation/
     blog/
+    portfolio/
     seo/
 ```
 
@@ -41,6 +42,7 @@ Each domain owns its responsibility:
 
 * `navigation` → site routes and menu structure
 * `blog` → content taxonomy and schema contracts
+* `portfolio` → projects configuration and type contracts
 * `seo` → metadata and structured data
 
 No domain leaks internal implementation details into another.
@@ -53,6 +55,7 @@ Configuration objects such as:
 
 * `NAV_ROUTES`
 * `BLOG_CATEGORIES`
+* `PROJECTS`
 
 are defined once and derived into types using `as const`.
 
@@ -110,6 +113,24 @@ The blog domain contains:
 Categories are centrally defined and enforced via schema validation.
 
 This prevents taxonomy drift over time.
+
+---
+
+## Portfolio Domain
+
+The portfolio domain contains:
+
+* Project definitions
+* Type contracts
+* Tech stack metadata
+
+Projects are centrally defined and used across:
+
+* Home page (featured projects)
+* Projects index page (all projects)
+* Project cards and lists
+
+This prevents duplication of project data across components.
 
 ---
 
