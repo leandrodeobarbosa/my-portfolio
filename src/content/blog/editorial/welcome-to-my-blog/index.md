@@ -3,6 +3,7 @@ title: 'Welcome to My Blog'
 slug: 'welcome-to-my-blog'
 description: 'A brief introduction to my new blog'
 tags: ["Welcome"]
+category: "editorial"
 pubDate: '2026-02-19'
 ---
 

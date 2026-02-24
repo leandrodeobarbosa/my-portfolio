@@ -1,12 +1,12 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
-import Prose from '../components/Prose.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Prose from '../../components/Prose.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import FormattedDate from '../components/FormattedDate.astro';
-import AboutTheAuthor from '../components/widgets/AboutTheAuthor.astro';
-import TableOfContent from '../components/widgets/TableOfContent.astro';
-import { slugify } from '../utils';
+import FormattedDate from '../../components/FormattedDate.astro';
+import AboutTheAuthor from '../../components/widgets/AboutTheAuthor.astro';
+import TableOfContent from '../../components/widgets/TableOfContent.astro';
+import { slugify } from '../../utils';
 import { loadEnv } from 'vite';
 import { render } from 'astro:content';
 
@@ -14,14 +14,31 @@ const { GISCUS_REPO, GISCUS_REPO_ID, GISCUS_CATEGORY, GISCUS_CATEGORY_ID } = loa
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts.map((post: any) => ({
-		params: { slug: post.slug || post.id },
-		props: post
-	}));
+	return posts.map((post: any) => {
+		// Use the post's actual id from the glob loader
+		// The glob loader strips the folder, so we need to use post.id
+		// But we want the URL to include the category from frontmatter
+		const category = post.data.category;
+		const slug = post.id; // Use the actual post id
+		
+		// Only add category prefix if explicitly set in frontmatter
+		const urlSlug = category ? `${category}/${slug}` : slug;
+		
+		return {
+			params: { 
+				slug: urlSlug
+			},
+			props: { 
+				post,
+				urlSlug
+			}
+		};
+	});
 }
-type Props = CollectionEntry<'blog'>;
-const post = Astro.props as Props & { slug?: string };
-const postSlug = post.slug || post.id;
+
+type Props = { post: CollectionEntry<'blog'>; urlSlug: string };
+const { post, urlSlug } = Astro.props as Props;
+const postSlug = post.data.slug || post.id;
 const {
 	data: { title, seoTitle, description, coverImage, pubDate, updatedDate, tags }
 } = post;
@@ -35,7 +52,7 @@ const { Content, headings } = await render(post);
 	pubDate={pubDate}
 	updatedDate={updatedDate}
 	type='blogPost'
-	slug={`/posts/${postSlug}`}
+	slug={`/posts/${urlSlug}`}
 >
 	<div class='container lg:flex gap-10'>
 		<main
