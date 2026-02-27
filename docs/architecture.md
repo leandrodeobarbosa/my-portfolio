@@ -116,6 +116,48 @@ This prevents taxonomy drift over time.
 
 ---
 
+### Content Taxonomy: Categories as Frontmatter Metadata
+
+Categories are defined as **metadata in the frontmatter** of each post, not as physical folders in the filesystem.
+
+**Why this approach?**
+
+| Aspect | Frontmatter Metadata | Physical Folders |
+|--------|---------------------|------------------|
+| Flexibility | ✅ Easy to change category | ❌ Requires moving files |
+| Validation | ✅ Build fails if invalid | ❌ No validation |
+| Multiple categories | ✅ Supports arrays | ❌ Limited |
+| Maintenance | ✅ Centralized in domain | ❌ Scattered |
+
+**Implementation:**
+
+```typescript
+// src/content.config.ts
+const blog = defineCollection({
+  schema: ({ image }) => z.object({
+    category: z.enum(validCategories).optional(),
+    // ...other fields
+  })
+});
+```
+
+```yaml
+---
+title: 'My Post'
+category: 'tutoriais'
+---
+```
+
+The categories are defined in `src/domains/blog/categories.ts` and derived into TypeScript types automatically. This ensures:
+
+* **Fail-fast validation** - build fails if an invalid category is used
+* **Single Source of Truth** - categories exist in one place only
+* **Type safety** - autocomplete and compile-time checking
+
+Physical folders in `src/content/blog/` may exist for organizational purposes, but they do not determine the post's category. The category is explicitly declared in the frontmatter.
+
+---
+
 ## Portfolio Domain
 
 The portfolio domain contains:
