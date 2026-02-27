@@ -3,7 +3,6 @@ import BaseHead from './components/BaseHead.astro';
 import StructuredData from './components/StructuredData.astro';
 import Header from './components/Header.astro';
 import Footer from './components/Footer.astro';
-import { loadEnv } from 'vite';
 
 interface Props {
 	title: string;
@@ -15,7 +14,6 @@ interface Props {
 	slug?: string;
 }
 
-const { GTAG_MEASUREMENT_ID } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), '');
 const { title, description, image, pubDate, updatedDate, type = 'website', slug } = Astro.props;
 ---
 
@@ -41,21 +39,5 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 			<slot />
 		</div>
 		<Footer />
-		<!-- Google tag (gtag.js) -->
-    {
-      GTAG_MEASUREMENT_ID &&
-      <>
-        <script is:inline type='text/partytown' async src={'https://www.googletagmanager.com/gtag/js?id=' + GTAG_MEASUREMENT_ID}></script>
-        <script is:inline type='text/partytown' define:vars={{ GTAG_MEASUREMENT_ID }}>
-          window.dataLayer = window.dataLayer || [];
-          function gtag() {
-            dataLayer.push(arguments);
-          }
-          gtag('js', new Date());
-
-          gtag('config', GTAG_MEASUREMENT_ID);
-        </script>
-      </>
-    }
 	</body>
 </html>
