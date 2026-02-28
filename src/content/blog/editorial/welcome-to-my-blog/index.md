@@ -1,4 +1,5 @@
 ---
+id: '1'
 title: 'Welcome to My Blog'
 slug: 'welcome-to-my-blog'
 description: 'A brief introduction to my new blog'

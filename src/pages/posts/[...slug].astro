@@ -1,16 +1,13 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
 import Prose from '../../components/Prose.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import FormattedDate from '../../components/FormattedDate.astro';
 import AboutTheAuthor from '../../components/widgets/AboutTheAuthor.astro';
 import TableOfContent from '../../components/widgets/TableOfContent.astro';
+import Giscus from '../../components/Giscus.astro';
 import { slugify } from '../../utils';
-import { loadEnv } from 'vite';
-import { render } from 'astro:content';
-
-const { GISCUS_REPO, GISCUS_REPO_ID, GISCUS_CATEGORY, GISCUS_CATEGORY_ID } = loadEnv(process.env.NODE_ENV || 'production', process.cwd(), '');
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -39,7 +36,7 @@ export async function getStaticPaths() {
 type Props = { post: CollectionEntry<'blog'>; urlSlug: string };
 const { post, urlSlug } = Astro.props as Props;
 const {
-	data: { title, seoTitle, description, coverImage, pubDate, updatedDate, tags }
+	data: { title, seoTitle, description, coverImage, pubDate, updatedDate, tags, id }
 } = post;
 const { Content, headings } = await render(post);
 ---
@@ -93,26 +90,7 @@ const { Content, headings } = await render(post);
           </div>
 					<Content />
 				</Prose>
-        {
-          GISCUS_REPO &&
-            <script
-              id='giscus-script'
-              is:inline
-              src='https://giscus.app/client.js'
-              data-repo={GISCUS_REPO}
-              data-repo-id={GISCUS_REPO_ID}
-              data-category={GISCUS_CATEGORY}
-              data-category-id={GISCUS_CATEGORY_ID}
-              data-mapping='pathname'
-              data-strict='0'
-              data-reactions-enabled='1'
-              data-emit-metadata='0'
-              data-input-position='bottom'
-              data-theme='preferred_color_scheme'
-              data-lang='en'
-              crossorigin='anonymous'
-              async></script>
-        }
+        <Giscus term={id} />
 
 			</article>
 		</main>
