@@ -4,9 +4,9 @@ export const GISCUS_CONFIG = {
   category: import.meta.env.PUBLIC_GISCUS_CATEGORY,
   categoryId: import.meta.env.PUBLIC_GISCUS_CATEGORY_ID,
   lang: 'pt',
-  reactionsEnabled: '0',
-  emitMetadata: '0',
+  reactionsEnabled: '1',
+  emitMetadata: '1', // Enable to get comment count
   inputPosition: 'top',
-  theme: 'noborder_dark',
+  theme: 'light', // Will be dynamically updated based on page theme
   strict: '0',
 };
