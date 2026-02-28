@@ -10,24 +10,58 @@ const { term } = Astro.props;
 
 {
   GISCUS_CONFIG.repo && (
-    <script
-      is:inline
-      src='https://giscus.app/client.js'
-      data-repo={GISCUS_CONFIG.repo}
-      data-repo-id={GISCUS_CONFIG.repoId}
-      data-category={GISCUS_CONFIG.category}
-      data-category-id={GISCUS_CONFIG.categoryId}
-      data-mapping='specific'
-      data-term={term}
-      data-strict={GISCUS_CONFIG.strict}
-      data-reactions-enabled={GISCUS_CONFIG.reactionsEnabled}
-      data-emit-metadata={GISCUS_CONFIG.emitMetadata}
-      data-input-position={GISCUS_CONFIG.inputPosition}
-      data-theme={GISCUS_CONFIG.theme}
-      data-lang={GISCUS_CONFIG.lang}
-      data-loading='lazy'
-      crossorigin='anonymous'
-      async
-    ></script>
+    <>
+      <script
+        is:inline
+        src='https://giscus.app/client.js'
+        data-repo={GISCUS_CONFIG.repo}
+        data-repo-id={GISCUS_CONFIG.repoId}
+        data-category={GISCUS_CONFIG.category}
+        data-category-id={GISCUS_CONFIG.categoryId}
+        data-mapping='specific'
+        data-term={term}
+        data-strict={GISCUS_CONFIG.strict}
+        data-reactions-enabled={GISCUS_CONFIG.reactionsEnabled}
+        data-emit-metadata={GISCUS_CONFIG.emitMetadata}
+        data-input-position={GISCUS_CONFIG.inputPosition}
+        data-theme={GISCUS_CONFIG.theme}
+        data-lang={GISCUS_CONFIG.lang}
+        data-loading='lazy'
+        crossorigin='anonymous'
+        async
+      ></script>
+      <script is:inline>
+        // Listen for Giscus updates to refresh comments after posting
+        function handleGiscusMessage(event) {
+          if (typeof event.data !== 'object' || event.data === null) return;
+          if (event.data.giscus) {
+            const giscusData = event.data.giscus;
+            // Refresh when comments are added, updated, or deleted
+            if (
+              giscusData.topic === 'comment' ||
+              giscusData.topic === 'createComment' ||
+              giscusData.topic === 'deleteComment' ||
+              giscusData.topic === 'updateComment' ||
+              giscusData.topic === 'reply'
+            ) {
+              // Small delay to allow Giscus to process the update
+              setTimeout(() => {
+                if (window.giscus && typeof window.giscus.refresh === 'function') {
+                  window.giscus.refresh();
+                }
+              }, 100);
+            }
+          }
+        }
+
+        // Wait for Giscus to load, then set up the listener
+        window.addEventListener('message', handleGiscusMessage);
+
+        // Also listen for giscus:ready and refresh immediately after
+        document.addEventListener('giscus:ready', () => {
+          // Giscus is ready
+        });
+      </script>
+    </>
   )
 }

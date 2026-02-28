@@ -8,7 +8,16 @@ const validCategories = Object.keys(BLOG_CATEGORIES) as [CategorySlug, ...Catego
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
   schema: ({ image }) => z.object({
-    id: z.string().describe('Discussion ID from GitHub Discussions (required for Giscus comments)'),
+    id: z
+      .string()
+      .describe('Discussion ID from GitHub Discussions (required for Giscus comments)')
+      .refine((val) => {
+        // Pattern: slug-hash (e.g., welcome-to-my-blog-a3f91c)
+        // slug: lowercase letters, numbers, and hyphens
+        // hash: exactly 6 lowercase letters or numbers
+        const pattern = /^[a-z0-9]+(-[a-z0-9]+)*-[a-z0-9]{6}$/;
+        return pattern.test(val);
+      }, 'ID must be in format: {slug}-{hash} (e.g., welcome-to-my-blog-a3f91c)'),
     title: z.string(),
     slug: z.string().optional(),
     seoTitle: z.string().optional(),
