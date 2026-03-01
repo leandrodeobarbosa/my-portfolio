@@ -9,6 +9,11 @@ import { autoNewTabExternalLinks } from './src/autoNewTabExternalLinks';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://leandrodeobarbosa.io',
+	image: {
+		service: {
+			entrypoint: 'astro/assets/services/sharp'
+		}
+	},
 	integrations: [mdx(), sitemap(), tailwind()],
 	markdown: {
 		extendDefaultPlugins: true,
