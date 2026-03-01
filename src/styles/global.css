@@ -79,6 +79,9 @@
 		--color-success: #4ADE80;
 		--color-warning: #FACC15;
 		--color-error: #F87171;
+	
+		/* Fix tap highlight in dark mode */
+		-webkit-tap-highlight-color: transparent;
 	}
 
 	/* Base styles */
