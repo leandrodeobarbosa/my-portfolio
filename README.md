@@ -2,7 +2,7 @@
 
 Leandro de O Barbosa is a personal portfolio and blog website built with Astro.
 
-[Demo](https://leandrodeobarbosa.io)
+[Demo](https://leandrodeobarbosa.dev)
 
 ---
 
