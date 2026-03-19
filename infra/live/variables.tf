@@ -35,3 +35,8 @@ variable "abort_multipart_days" {
   type        = number
   default     = 7
 }
+
+variable "domain_name" {
+  description = "Domínio principal do certificado"
+  type = string
+}
