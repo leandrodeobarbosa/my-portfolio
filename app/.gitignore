@@ -1,5 +1,6 @@
 # build output
 dist/
+
 # generated types
 .astro/
 
@@ -15,7 +16,6 @@ pnpm-debug.log*
 # VS Code
 .vscode/
 
-
 # environment variables
 .env
 .env.production
@@ -25,3 +25,30 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Terraform Dependencies
+.terraform/
+
+# Arquivos de state
+*.tfstate
+*.tfstate.*
+
+# Lock de execução (runtime)
+*.tfstate.lock.info
+
+# Variáveis sensíveis
+*.tfvars
+*.tfvars.json
+
+# Overrides
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Arquivo de crash
+crash.log
+
+# CLI config local
+.terraformrc
+terraform.rc
