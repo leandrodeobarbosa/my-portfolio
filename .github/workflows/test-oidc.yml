@@ -2,6 +2,7 @@ name: test-oidc
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   test:
