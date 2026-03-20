@@ -22,10 +22,31 @@ output "cloudfront_distribution_id" {
   value = aws_cloudfront_distribution.portfolio.id
 }
 
+output "cloudfront_hosted_zone_id" {
+  description = "CloudFront hosted zone ID (used for Route53 alias)"
+  value       = aws_cloudfront_distribution.portfolio.hosted_zone_id
+}
+
 output "cloudfront_domain_name" {
   value = aws_cloudfront_distribution.portfolio.domain_name
 }
 
 output "cloudfront_arn" {
   value = aws_cloudfront_distribution.portfolio.arn
+}
+
+output "domain_name" {
+  value = var.domain_name
+}
+
+output "route53_zone_id" {
+  value = data.aws_route53_zone.portfolio.zone_id
+}
+
+output "website_url" {
+  value = "https://${var.domain_name}"
+}
+
+output "www_website_url" {
+  value = "https://www.${var.domain_name}"
 }

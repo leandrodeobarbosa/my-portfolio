@@ -19,6 +19,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   }
 
   default_cache_behavior {
+    compress = true
     target_origin_id       = "${var.bucket_name}-origin"
     viewer_protocol_policy = "redirect-to-https"
 
