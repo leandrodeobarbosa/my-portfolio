@@ -1,0 +1,40 @@
+name: CI - Application
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - '!app/**/*.md'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Enable Corepack (PNPM)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run lint
+        run: pnpm lint
+
+      - name: Astro check (TypeScript)
+        run: pnpm check
+
+      - name: Build project
+        run: pnpm build
