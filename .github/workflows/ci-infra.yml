@@ -1,0 +1,97 @@
+name: CI - Infrastructure
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'infra/**'
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-infra:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+      TF_IN_AUTOMATION: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::320789259849:role/github-oidc-terraform-portfolio
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Terraform Init
+        working-directory: ./infra/live
+        run: terraform init -input=false
+
+      - name: Terraform Format Check
+        working-directory: ./infra/live
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        working-directory: ./infra/live
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        working-directory: ./infra/live
+        run: |
+          set -e
+          terraform plan -no-color -input=false -detailed-exitcode -out=tfplan || exit_code=$?
+          echo "exit_code=$exit_code" >> $GITHUB_OUTPUT
+          exit $exit_code
+
+      - name: Show Terraform Plan
+        if: always()
+        working-directory: ./infra/live
+        run: terraform show -no-color tfplan || true
+
+      - name: Upload Terraform Plan
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tf-plan
+          path: infra/live/tfplan
+          retention-days: 30
+
+      - name: Comment Terraform Plan on PR
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { execSync } = require('child_process');
+
+            let planOutput;
+            try {
+              planOutput = execSync('terraform show -no-color tfplan', { cwd: './infra/live' }).toString();
+            } catch (e) {
+              core.info('No plan output available');
+              return;
+            }
+
+            const truncated = planOutput.length > 65000
+              ? planOutput.substring(0, 65000) + '\n... (truncated)'
+              : planOutput;
+
+            const body = `## Terraform Plan\n\n\`\`\`\n${truncated}\n\`\`\``;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
