@@ -1,0 +1,125 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import type { Project } from '../domains/portfolio/projects'
+
+interface Props {
+  projects: Project[];
+  featured?: boolean;
+}
+
+const { projects, featured = false } = Astro.props;
+
+// Simplified variant logic - prioritize consistent 2-column layout
+// Featured gets a slightly larger visual emphasis within the 2-column constraint
+type CardVariant = 'featured' | 'secondary';
+
+const getCardVariant = (index: number, isFeatured: boolean): CardVariant => {
+  if (!isFeatured) return 'secondary';
+  // In featured mode, first project gets emphasized treatment
+  return index === 0 ? 'featured' : 'secondary';
+};
+
+// Create pairs to ensure balanced 2-column layout
+const projectPairs: [Project, Project | null][] = [];
+for (let i = 0; i < projects.length; i += 2) {
+  projectPairs.push([
+    projects[i],
+    projects[i + 1] || null
+  ]);
+}
+---
+
+<div class="projects-grid" data-featured={featured}>
+  {projectPairs.map(([project1, project2], pairIndex: number) => (
+    <div class="projects-grid__row">
+      <div class="projects-grid__item">
+        <ProjectCard 
+          project={project1} 
+          variant={getCardVariant(pairIndex * 2, featured)} 
+        />
+      </div>
+      {project2 && (
+        <div class="projects-grid__item">
+          <ProjectCard 
+            project={project2} 
+            variant={getCardVariant(pairIndex * 2 + 1, featured)} 
+          />
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+<style>
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* Each row maintains 2 columns */
+  .projects-grid__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Tablet and above: 2 columns per row */
+  @media (min-width: 640px) {
+    .projects-grid__row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Ensure cards in the same row have equal height */
+  .projects-grid__row > .projects-grid__item {
+    display: flex;
+  }
+
+  .projects-grid__row > .projects-grid__item:only-child {
+    /* Odd number of projects: full-width on mobile, half on tablet+ */
+  }
+
+  /* Featured card gets subtle visual emphasis */
+  @media (min-width: 640px) {
+    .projects-grid[data-featured="true"] .projects-grid__row:first-child .projects-grid__item:first-child {
+      position: relative;
+    }
+    
+    .projects-grid[data-featured="true"] .projects-grid__row:first-child .projects-grid__item:first-child::before {
+      content: '';
+      position: absolute;
+      inset: -0.5rem;
+      border-radius: 0.5rem;
+      background: linear-gradient(135deg, var(--color-accent) 0%, transparent 100%);
+      opacity: 0.05;
+      pointer-events: none;
+    }
+  }
+
+  /* Desktop: maintain 2 columns with increased spacing */
+  @media (min-width: 1024px) {
+    .projects-grid {
+      gap: 2rem;
+    }
+    
+    .projects-grid__row {
+      gap: 2rem;
+    }
+  }
+
+  /* Large Desktop: consistent 2-column layout */
+  @media (min-width: 1280px) {
+    .projects-grid__row {
+      gap: 2.5rem;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .projects-grid,
+    .projects-grid__row {
+      transition: none;
+    }
+  }
+</style>

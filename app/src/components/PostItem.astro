@@ -1,0 +1,48 @@
+---
+import { slugify } from '../utils';
+import FormattedDate from './FormattedDate.astro';
+import type { CollectionEntry } from 'astro:content';
+
+type BlogPost = CollectionEntry<'blog'>;
+const { post, showExcerpt = false }: Record<string, any> | { post: BlogPost; showExcerpt?: boolean } = Astro.props
+
+// Generate URL with category if available
+const category = post.data.category;
+const postSlug = post.data.slug || post.id;
+const urlSlug = category ? `${category}/${postSlug}` : postSlug;
+
+// Get excerpt from description or generate from body
+const excerpt = post.data.description || (post.body ? post.body.slice(0, 160).replace(/[#*`]/g, '').trim() + '...' : '');
+---
+<div class='group'>
+  <div class='flex flex-col sm:flex-row gap-2 sm:items-center border-b border-[var(--color-border-subtle)] py-4 mb-0 capitalize'>        
+    <div class='text-[var(--color-text-secondary)] text-sm w-24 shrink-0'>
+      <FormattedDate date={post.data.pubDate} />
+    </div>
+    <h3 class='font-medium grow text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors duration-150'>
+      <a href={`/posts/${urlSlug}/`} class="focus:outline-none">
+        {post.data.title}
+      </a>
+    </h3>
+    <div class='flex gap-2 shrink-0'>
+      {
+        (post.data.tags || [] )?.map((tag: string) => (
+          <a
+            class='card-tag'
+            href={`/tags/${slugify(tag)}`}>
+            {tag}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+  
+  <!-- Excerpt -->
+  {showExcerpt && excerpt && (
+    <div class='pb-4 pl-0 sm:pl-24'>
+      <p class='text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2'>
+        {excerpt}
+      </p>
+    </div>
+  )}
+</div>
