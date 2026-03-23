@@ -1,0 +1,580 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .animate-typing {
+    animation: typing 1s steps(55) forwards;
+    width: 0;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+}
+
+@layer base {
+	/* Light mode color tokens */
+	:root {
+		/* Background */
+		--color-bg-primary: #FFFFFF;
+		--color-bg-secondary: #F4F4F5;
+		--color-bg-tertiary: #E4E4E7;
+		
+		/* Border */
+		--color-border: #D4D4D8;
+		--color-border-subtle: #E4E4E7;
+		
+		/* Text */
+		--color-text-primary: #18181B;
+		--color-text-secondary: #52525B;
+		--color-text-tertiary: #A1A1AA;
+		
+		/* Accent */
+		--color-accent: #0D9488;
+		--color-accent-hover: #0F766E;
+		
+		/* Code */
+		--color-code-bg: #F4F4F5;
+		--color-code-text: #18181B;
+		
+		/* Semantic */
+		--color-success: #16A34A;
+		--color-warning: #CA8A04;
+		--color-error: #DC2626;
+	}
+
+	/* Dark mode color tokens */
+	.dark {
+		/* Background */
+		--color-bg-primary: #0A0A0B;
+		--color-bg-secondary: #18181B;
+		--color-bg-tertiary: #27272A;
+		
+		/* Border */
+		--color-border: #3F3F46;
+		--color-border-subtle: #27272A;
+		
+		/* Text */
+		--color-text-primary: #FAFAFA;
+		--color-text-secondary: #A1A1AA;
+		--color-text-tertiary: #71717A;
+		
+		/* Accent */
+		--color-accent: #14B8A6;
+		--color-accent-hover: #0D9488;
+		
+		/* Code */
+		--color-code-bg: #27272A;
+		--color-code-text: #FAFAFA;
+		
+		/* Semantic */
+		--color-success: #4ADE80;
+		--color-warning: #FACC15;
+		--color-error: #F87171;
+	
+		/* Fix tap highlight in dark mode */
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	/* Base styles */
+	html {
+		scroll-behavior: smooth;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+		
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+		}
+	}
+
+	/* Body base styles */
+	body {
+		background-color: var(--color-bg-primary);
+		color: var(--color-text-primary);
+		font-family: "IBM Plex Sans", system-ui, sans-serif;
+		font-size: 1rem;
+		line-height: 1.75;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	/* Code font sizes */
+	pre,
+	code {
+		font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+		font-size: 0.875rem;
+	}
+
+	/* Link base styles - Enhanced with accent color */
+	a {
+		color: var(--color-accent);
+		text-decoration: none;
+		transition: color 200ms ease, text-decoration-color 200ms ease;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-color: transparent;
+	}
+
+	a:hover {
+		color: var(--color-accent-hover);
+		text-decoration-color: var(--color-accent);
+	}
+
+	/* Override for buttons/links that should not have hover underline */
+	a.no-underline:hover {
+		text-decoration: none;
+	}
+
+	/* Focus styles for accessibility */
+	:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
+	/* Selection styles */
+	::selection {
+		background-color: var(--color-accent);
+		color: white;
+	}
+}
+
+@layer components {
+	/* Documentation Style - Cards without borders and shadows */
+	.card {
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+		padding: 0;
+	}
+
+	.card:hover {
+		border-color: transparent;
+		box-shadow: none;
+	}
+
+	/* Project Card - Documentation style (no borders, no shadows) */
+	.card-project {
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.card-project:hover {
+		border-color: transparent;
+		box-shadow: none;
+	}
+
+	.dark .card-project:hover {
+		box-shadow: none;
+	}
+
+	/* Featured Project Card - Documentation style */
+	.card-project.featured {
+		border-left: none;
+	}
+
+	.card-project.featured::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 0;
+	}
+
+	.card-project.featured:hover {
+		box-shadow: none;
+	}
+
+	.dark .card-project.featured:hover {
+		box-shadow: none;
+	}
+
+	/* Featured badge */
+	.featured-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.625rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--color-accent);
+		background-color: transparent;
+		padding: 0.125rem 0.5rem;
+		border: 1px solid var(--color-accent);
+		transition: all 200ms ease;
+	}
+
+	.featured-badge:hover {
+		background-color: var(--color-accent);
+		color: white;
+	}
+
+	/* Certification Card - Documentation style (no borders) */
+	.card-certification {
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+		padding: 0;
+	}
+
+	.card-certification:hover {
+		border-color: transparent;
+		box-shadow: none;
+	}
+
+	.dark .card-certification:hover {
+		box-shadow: none;
+	}
+
+	/* Tag - Minimal, text-like with accent hover */
+	.card-tag {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding: 0.125rem 0;
+		font-size: 0.75rem;
+		font-weight: 500;
+		font-family: "IBM Plex Sans", system-ui, sans-serif;
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+		color: var(--color-text-tertiary);
+		transition: color 200ms ease, text-decoration-color 200ms ease;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		text-decoration: underline;
+		text-decoration-color: transparent;
+		text-underline-offset: 3px;
+	}
+
+	.card-tag:hover {
+		color: var(--color-accent);
+		text-decoration-color: var(--color-accent);
+	}
+
+	/* Tech icon label */
+	.card-tech-label {
+		font-size: 0.6875rem;
+		font-weight: 500;
+		color: var(--color-text-tertiary);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	/* Link actions - Enhanced with accent color and micro-interactions */
+	.card-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: var(--color-text-secondary);
+		text-decoration: none;
+		transition: color 200ms ease, transform 200ms ease;
+		position: relative;
+	}
+
+	.card-link:hover {
+		color: var(--color-accent);
+		text-decoration: none;
+		transform: translateX(2px);
+	}
+
+	/* View Code - Primary action with accent */
+	.card-link-primary {
+		color: var(--color-accent);
+		font-weight: 600;
+	}
+
+	.card-link-primary:hover {
+		color: var(--color-accent-hover);
+		transform: translateX(2px);
+	}
+
+	/* Demo - Secondary action */
+	.card-link-secondary {
+		color: var(--color-text-tertiary);
+	}
+
+	.card-link-secondary:hover {
+		color: var(--color-text-secondary);
+	}
+
+	/* Reduced motion for cards */
+	@media (prefers-reduced-motion: reduce) {
+		.card,
+		.card-project,
+		.card-certification,
+		.card-tag,
+		.card-link {
+			transition: none;
+		}
+		.card:hover,
+		.card-project:hover,
+		.card-certification:hover {
+			border-color: var(--color-border-subtle);
+			background-color: transparent;
+		}
+		.card-tag:hover,
+		.card-link:hover {
+			color: var(--color-text-tertiary);
+		}
+	}
+
+	/* Keyword emphasis for DevOps/Software Engineer context */
+	.keyword {
+		font-weight: 700;
+		color: var(--color-text-primary);
+		position: relative;
+		display: inline-block;
+		padding-bottom: 2px;
+	}
+
+	.keyword::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		background-color: var(--color-accent);
+		border-radius: 2px;
+		opacity: 0.6;
+	}
+
+	/* Keyword badge variant - Subtle (no border, muted) */
+	.keyword-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		padding: 0.125rem 0;
+		font-size: 0.6875rem;
+		font-weight: 500;
+		font-family: "IBM Plex Sans", system-ui, sans-serif;
+		background-color: transparent;
+		border: none;
+		border-radius: 0;
+		color: var(--color-text-tertiary);
+		transition: color 200ms ease, text-decoration-color 200ms ease;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		text-decoration: transparent;
+		text-underline-offset: 4px;
+	}
+
+	.keyword-badge:hover {
+		color: var(--color-text-secondary);
+		text-decoration: underline;
+		text-decoration-color: var(--color-accent);
+	}
+
+	/* Skill badge - Modern discrete pill badges with subtle hover */
+	.skill-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.2rem 0.625rem;
+		font-size: 0.6875rem;
+		font-weight: 500;
+		font-family: "IBM Plex Sans", system-ui, sans-serif;
+		background-color: var(--color-bg-secondary);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: 9999px;
+		color: var(--color-text-tertiary);
+		transition: all 200ms ease;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		opacity: 0.85;
+	}
+
+	.skill-badge:hover {
+		color: var(--color-accent);
+		border-color: var(--color-accent);
+		background-color: rgba(13, 148, 136, 0.08);
+		opacity: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.keyword-badge {
+			transition: none;
+		}
+		.keyword-badge:hover {
+			color: var(--color-text-tertiary);
+			text-decoration: none;
+		}
+
+		.skill-badge {
+			transition: none;
+			opacity: 0.85;
+		}
+		.skill-badge:hover {
+			color: var(--color-text-tertiary);
+			border-color: var(--color-border-subtle);
+			background-color: var(--color-bg-secondary);
+			opacity: 1;
+		}
+	}
+
+	.keyword-badge:first-child::before {
+		content: '';
+		margin-right: 0;
+	}
+
+	/* Hero keyword - Muted editorial emphasis without gradient */
+	.hero-keyword {
+		font-weight: 600;
+		color: var(--color-accent);
+	}
+
+	/* Subtle reveal effect for hero keywords - slow, elegant, runs once */
+	.hero-keyword-typing {
+		display: inline;
+		color: var(--color-accent);
+		font-weight: 600;
+		transition: opacity 500ms ease;
+		opacity: 0;
+		animation: reveal-hero 500ms ease 0.3s forwards;
+	}
+
+	.hero-keyword-typing.pipelines {
+		animation-delay: 0.8s;
+	}
+
+	@keyframes reveal-hero {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-keyword,
+		.hero-keyword-typing {
+			background: none;
+			-webkit-text-fill-color: currentColor;
+			background-clip: unset;
+			font-weight: 600;
+		}
+		.hero-keyword-typing {
+			opacity: 1;
+			animation: none;
+		}
+	}
+
+	/* Terminal/code style keyword */
+	.keyword-code {
+		font-family: "IBM Plex Mono", monospace;
+		font-size: 0.875em;
+		font-weight: 500;
+		color: var(--color-accent);
+		background-color: var(--color-code-bg);
+		padding: 0.125rem 0.375rem;
+		border-radius: 0.25rem;
+		border: 1px solid var(--color-border-subtle);
+		transition: all 200ms ease;
+	}
+
+	.keyword-code:hover {
+		border-color: var(--color-accent);
+		box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.1);
+	}
+
+	/* Button base - Enhanced with micro-interactions */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem 1rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		border-radius: 0.375rem;
+		transition: all 200ms ease;
+		cursor: pointer;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.btn::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+		transition: left 400ms ease;
+	}
+
+	.btn:hover::before {
+		left: 100%;
+	}
+
+	.btn-primary {
+		background-color: var(--color-accent);
+		color: white;
+		border: none;
+	}
+
+	.btn-primary:hover {
+		background-color: var(--color-accent-hover);
+		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+	}
+
+	.btn-secondary {
+		background-color: transparent;
+		color: var(--color-text-primary);
+		border: 1px solid var(--color-border);
+	}
+
+	.btn-secondary:hover {
+		background-color: var(--color-bg-tertiary);
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	/* Inline code */
+	:not(pre) > code {
+		background-color: var(--color-code-bg);
+		color: var(--color-code-text);
+		padding: 0.125rem 0.375rem;
+		border-radius: 0.25rem;
+		font-size: 0.875em;
+	}
+
+	/* Code block */
+	pre {
+		background-color: var(--color-code-bg);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: 0.5rem;
+		padding: 1rem;
+		overflow-x: auto;
+	}
+}

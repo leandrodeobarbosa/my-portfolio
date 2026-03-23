@@ -1,0 +1,14 @@
+project_name = "your-project"
+environment  = "prod"
+
+bucket_name = "your-bucket"
+
+cloudfront_distribution_arn = "your-cloudfront-arn"
+
+domain_name = "your-domain.com"
+
+acm_certificate_arn = "arn:aws:acm:us-east-1:000000000000:certificate/xxxx"
+
+origin_access_control_id = "ID do Origin Access Control do CloudFront"
+
+cloudfront_function_arn = "ARN da CloudFront Function"
