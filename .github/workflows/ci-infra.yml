@@ -4,17 +4,21 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'infra/**'
+      - "infra/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   id-token: write
   contents: read
   pull-requests: write
+  issues: write
 
 jobs:
   validate-infra:
     runs-on: ubuntu-latest
-    environment: production
 
     env:
       AWS_REGION: us-east-1
@@ -43,9 +47,17 @@ jobs:
         with:
           terraform_version: 1.6.6
 
+      - name: Cache Terraform plugins
+        uses: actions/cache@v4
+        with:
+          path: ~/.terraform
+          key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            terraform-plugins-${{ runner.os }}-
+
       - name: Terraform Init
         working-directory: ./infra/live
-        run: terraform init -input=false
+        run: terraform init -input=false -lockfile=readonly
 
       - name: Terraform Format Check
         working-directory: ./infra/live
@@ -53,16 +65,22 @@ jobs:
 
       - name: Terraform Validate
         working-directory: ./infra/live
-        run: terraform validate
+        run: terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
         working-directory: ./infra/live
         run: |
-          set -e
-          terraform plan -no-color -input=false -detailed-exitcode -out=tfplan || exit_code=$?
+          terraform plan -no-color -input=false -detailed-exitcode -out=tfplan
+          exit_code=$?
+
           echo "exit_code=$exit_code" >> $GITHUB_OUTPUT
-          exit $exit_code
+
+          if [ "$exit_code" -eq 1 ]; then
+            exit 1
+          fi
+
+          exit 0
 
       - name: Show Terraform Plan
         if: always()
@@ -71,7 +89,7 @@ jobs:
 
       - name: Upload Terraform Plan
         uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && steps.plan.outputs.exit_code != '1'
         with:
           name: tf-plan
           path: infra/live/tfplan
@@ -83,24 +101,68 @@ jobs:
         with:
           script: |
             const { execSync } = require('child_process');
+            const fs = require('fs');
 
-            let planOutput;
-            try {
-              planOutput = execSync('terraform show -no-color tfplan', { cwd: './infra/live' }).toString();
-            } catch (e) {
-              core.info('No plan output available');
-              return;
+            const terraformExitCode = '${{ steps.plan.outputs.exit_code }}';
+
+            let status;
+            if (terraformExitCode == 0) {
+              status = "✅ No changes";
+            } else if (terraformExitCode == 2) {
+              status = "🟡 Changes detected";
+            } else {
+              status = "❌ Error during plan";
+            }
+
+            let planOutput = "";
+
+            if (fs.existsSync('./infra/live/tfplan')) {
+              try {
+                planOutput = execSync('terraform show -no-color tfplan', { cwd: './infra/live' }).toString();
+              } catch (e) {
+                planOutput = "Error while reading tfplan";
+              }
+            } else {
+              planOutput = "No tfplan file generated (plan may have failed)";
             }
 
             const truncated = planOutput.length > 65000
               ? planOutput.substring(0, 65000) + '\n... (truncated)'
               : planOutput;
 
-            const body = `## Terraform Plan\n\n\`\`\`\n${truncated}\n\`\`\``;
+            const body = `## Terraform Plan
 
-            github.rest.issues.createComment({
+            **Status:** ${status}
+            **Terraform Exit Code:** ${terraformExitCode}
+
+            \`\`\`
+            ${truncated}
+            \`\`\`
+            `;
+
+            const comments = await github.rest.issues.listComments({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body
             });
+
+            const botComment = comments.data.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('## Terraform Plan')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body
+              });
+            }
