@@ -1,0 +1,120 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const navLinks = [
+  { href: '/', label: 'Início', slug: 'home' },
+  { href: '/projects/', label: 'Projetos', slug: 'projects' },
+  { href: '/posts/', label: 'Blog', slug: 'blog' },
+  { href: '/about/', label: 'Sobre', slug: 'about' },
+];
+
+const suggestions = [
+  'Verifique se o URL está correto',
+  'Use a navegação acima para encontrar o que procura',
+  'Retorne para a página inicial',
+  'Explore os projetos ou artigos do blog',
+];
+---
+
+<BaseLayout 
+  title={'404 - Página Não Encontrada - ' + SITE_TITLE} 
+  description={SITE_DESCRIPTION + ' - Página não encontrada'}
+>
+  <div class='container'>
+    <main class='max-w-4xl'>
+      <!-- Documentation/Markdown Style 404 -->
+      
+      <!-- Header Section -->
+      <div class='mb-12'>
+        <h1 class='text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono mb-4'>
+          404
+        </h1>
+        
+        <!-- Seniority-style error indicator -->
+        <p class='text-xs text-zinc-400 dark:text-zinc-500 font-mono mb-6'>
+          <span>ERROR</span>
+          <span class='mx-1'>•</span>
+          <span>Página não encontrada</span>
+        </p>
+        
+        <hr class='border-t border-[var(--color-border-subtle)]' />
+      </div>
+
+      <!-- Error Message Section -->
+      <div class='mb-12'>
+        <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-4'>
+          ## Página Não Encontrada
+        </h2>
+        
+        <p class='text-lg leading-relaxed mb-6 text-zinc-700 dark:text-zinc-200/90 max-w-[65ch]'>
+          O caminho que você tentou acessar não existe ou foi movido. 
+          Talvez você tenha seguido um link desatualizado ou digitado o URL incorretamente.
+        </p>
+      </div>
+
+      <!-- Suggestions Section - Markdown Style -->
+      <div class='mb-12'>
+        <h3 class='text-lg font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-4 mt-8'>
+          ## Sugestões
+        </h3>
+        
+        <div class='grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-8'>
+          {suggestions.map((suggestion) => (
+            <div class='flex items-center gap-2'>
+              <span class='text-[var(--color-accent)]'>▸</span>
+              <span class='text-sm text-zinc-600 dark:text-zinc-300'>{suggestion}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+
+      <!-- Navigation Links - Documentation Style -->
+      <div class='mb-12'>
+        <h3 class='text-lg font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-6 mt-8'>
+          ## Navegação
+        </h3>
+        
+        <div class='flex flex-wrap gap-6'>
+          {navLinks.map((link) => (
+            <a 
+              href={link.href}
+              class='group inline-flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-[var(--color-accent)] no-underline font-mono transition-colors'
+            >
+              <span class='opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 text-[var(--color-accent)]'>
+                →
+              </span>
+              <span>[</span>
+              <span class='group-hover:underline decoration-[var(--color-accent)] decoration-2 underline-offset-2'>
+                {link.label}
+              </span>
+              <span>]</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+
+      <!-- Report Link Section -->
+      <div class='mb-8'>
+        <p class='text-sm text-zinc-500 dark:text-zinc-400'>
+          <span class='font-mono text-[var(--color-accent)]'>$</span>
+          <span class='ml-2'>Encontrou um link quebrado?</span>
+        </p>
+        <p class='text-sm text-zinc-500 dark:text-zinc-400 mt-2 ml-6'>
+          <a 
+            href="mailto:contato@leandrodeobarbosa.com?subject=Link%20quebrado%20no%20site" 
+            class='text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] underline decoration-transparent hover:decoration-[var(--color-accent)] transition-colors'
+          >
+            Entre em contato
+          </a>
+          <span class='mx-2'>|</span>
+          <span>para que eu possa corrigir.</span>
+        </p>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
