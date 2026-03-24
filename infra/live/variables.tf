@@ -38,12 +38,12 @@ variable "abort_multipart_days" {
 
 variable "domain_name" {
   description = "Domínio principal do certificado"
-  type = string
+  type        = string
 }
 
 variable "acm_certificate_arn" {
   description = "ARN do certificado ACM usado pelo CloudFront"
-  type = string
+  type        = string
 }
 
 variable "origin_access_control_id" {
@@ -54,4 +54,10 @@ variable "origin_access_control_id" {
 variable "cloudfront_function_arn" {
   description = "ARN da função CloudFront para URL rewrite"
   type        = string
+}
+
+variable "enable_ci_test" {
+  description = "Enable CI test resource"
+  type        = bool
+  default     = false
 }
