@@ -7,6 +7,10 @@ on:
       - "app/**"
       - "!app/**/*.md"
 
+concurrency:
+  group: app-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
