@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   }
 
   default_cache_behavior {
-    compress = true
+    compress               = true
     target_origin_id       = "${var.bucket_name}-origin"
     viewer_protocol_policy = "redirect-to-https"
 
@@ -30,7 +30,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
 
     function_association {
       event_type   = "viewer-request"
-      function_arn = "${var.cloudfront_function_arn}"
+      function_arn = var.cloudfront_function_arn
     }
   }
 

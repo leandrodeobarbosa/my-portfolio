@@ -1,0 +1,220 @@
+name: CI - Infrastructure
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "infra/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  validate-infra:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+      TF_IN_AUTOMATION: true
+      TF_VAR_project_name: ${{ vars.PROJECT_NAME }}
+      TF_VAR_environment: ${{ vars.ENVIRONMENT }}
+      TF_VAR_bucket_name: ${{ vars.BUCKET_NAME }}
+      TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
+      TF_VAR_cloudfront_distribution_arn: ${{ vars.CLOUDFRONT_DISTRIBUTION_ARN }}
+      TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
+      TF_VAR_origin_access_control_id: ${{ vars.ORIGIN_ACCESS_CONTROL_ID }}
+      TF_VAR_cloudfront_function_arn: ${{ vars.CLOUDFRONT_FUNCTION_ARN }}
+      TF_VAR_enable_ci_test: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::320789259849:role/github-oidc-terraform-portfolio
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Cache Terraform plugins
+        uses: actions/cache@v4
+        with:
+          path: ~/.terraform
+          key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            terraform-plugins-${{ runner.os }}-
+
+      - name: Terraform Init
+        working-directory: ./infra/live
+        run: terraform init -input=false -lockfile=readonly
+
+      - name: Terraform Format Check
+        working-directory: ./infra/live
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Validate
+        working-directory: ./infra/live
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        working-directory: ./infra/live
+        run: |
+          set +e
+          terraform plan -detailed-exitcode -out=tfplan -no-color -input=false
+          exit_code=$?
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          if [ "$exit_code" -eq 1 ]; then
+            echo "::error::Terraform plan failed with errors"
+            exit 1
+          fi
+          exit 0
+
+      - name: Generate Plan Output
+        id: plan-output
+        if: steps.plan.outputs.exit_code != '1'
+        working-directory: ./infra/live
+        run: |
+          terraform show -json tfplan > tfplan.json
+
+          add=$(jq '[.resource_changes[]? | select(.change.actions | contains(["create"]))] | length' tfplan.json)
+          change=$(jq '[.resource_changes[]? | select(.change.actions | contains(["update"]))] | length' tfplan.json)
+          destroy=$(jq '[.resource_changes[]? | select(.change.actions | contains(["delete"]))] | length' tfplan.json)
+
+          add=${add:-0}
+          change=${change:-0}
+          destroy=${destroy:-0}
+
+          echo "add=$add" >> "$GITHUB_OUTPUT"
+          echo "change=$change" >> "$GITHUB_OUTPUT"
+          echo "destroy=$destroy" >> "$GITHUB_OUTPUT"
+
+          terraform show -no-color tfplan > tfplan.txt
+
+
+          head -c 60000 tfplan.txt > tfplan-truncated.txt
+          if [ $(wc -c < tfplan.txt) -gt 60000 ]; then
+            echo "" >> tfplan-truncated.txt
+            echo "... (truncated - output exceeds GitHub comment limit)" >> tfplan-truncated.txt
+          fi
+
+          echo "plan_output<<EOF" >> "$GITHUB_OUTPUT"
+          cat tfplan-truncated.txt >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Comment Terraform Plan on PR
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const COMMENT_MARKER = '<!-- terraform-plan-comment -->';
+            const exitCode = parseInt('${{ steps.plan.outputs.exit_code }}') || 0;
+            const add = parseInt('${{ steps.plan-output.outputs.add }}') || 0;
+            const change = parseInt('${{ steps.plan-output.outputs.change }}') || 0;
+            const destroy = parseInt('${{ steps.plan-output.outputs.destroy }}') || 0;
+            const hasChanges = add > 0 || change > 0 || destroy > 0;
+            const formattedDate = new Intl.DateTimeFormat('pt-BR', {
+            timeZone: 'America/Sao_Paulo',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+            }).format(new Date());
+
+            // Determine status based on exit code AND actual changes
+            let statusMessage;
+            let statusEmoji;
+            if (exitCode === 1) {
+              statusMessage = 'Plan failed with errors';
+              statusEmoji = '❌';
+            } else if (hasChanges) {
+              statusMessage = 'Changes detected';
+              statusEmoji = '⚠️';
+            } else {
+              statusMessage = 'No changes detected';
+              statusEmoji = '✅';
+            }
+
+            // Build the comment body
+            let body = COMMENT_MARKER + '\n';
+            body += `🔄 **Last update:** ${formattedDate} (UTC-3) \n`
+            body += `## ${statusEmoji} Terraform Plan Result\n\n`;
+            body += `**Status:** ${statusMessage}\n\n`;
+
+            // Add summary for successful plans (exit code 0 or 2)
+            if (exitCode === 0 || exitCode === 2) {
+              body += '### Summary\n';
+              body += `| 🟢 Add | 🟡 Change | 🔴 Destroy |\n`;
+              body += `|--------|-----------|------------|\n`;
+              body += `| ${add} | ${change} | ${destroy} |\n\n`;
+
+              // Warning for destructive changes
+              if (destroy > 0) {
+                body += '> ⚠️ **Warning:** This plan includes resource destruction. Please review carefully.\n\n';
+              }
+
+              // Add collapsible plan output
+              const planOutput = `${{ steps.plan-output.outputs.plan_output }}`;
+              if (planOutput) {
+                body += '<details><summary>📋 Click to expand full plan output</summary>\n\n';
+                body += '```diff\n';
+                body += planOutput;
+                body += '\n```\n';
+                body += '</details>\n';
+              }
+            } else if (exitCode === 1) {
+              body += '> ❌ **Terraform plan failed.** Check the workflow logs for error details.\n';
+            }
+
+            body += '\n---\n';
+            body += `*Workflow: ${{ github.workflow }} | Run: ${{ github.run_id }}*`;
+
+            // Find existing comment with marker
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const existingComment = comments.find(comment =>
+              comment.body && comment.body.includes(COMMENT_MARKER)
+            );
+
+            if (existingComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: body
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+      - name: Upload Terraform Plan
+        uses: actions/upload-artifact@v4
+        if: always() && steps.plan.outputs.exit_code != '1'
+        with:
+          name: tf-plan
+          path: infra/live/tfplan
+          retention-days: 30
