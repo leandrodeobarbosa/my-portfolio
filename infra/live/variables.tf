@@ -55,9 +55,3 @@ variable "cloudfront_function_arn" {
   description = "ARN da função CloudFront para URL rewrite"
   type        = string
 }
-
-variable "enable_ci_test" {
-  description = "Enable CI test resource"
-  type        = bool
-  default     = false
-}
