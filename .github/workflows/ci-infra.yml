@@ -150,7 +150,7 @@ jobs:
 
             // Build the comment body
             let body = COMMENT_MARKER + '\n';
-            body += `🔄 **Last update:** ${formattedDate} + ' (BRT) \n`
+            body += `🔄 **Last update:** ${formattedDate} (UTC-3) \n`
             body += `## ${statusEmoji} Terraform Plan Result\n\n`;
             body += `**Status:** ${statusMessage}\n\n`;
 
