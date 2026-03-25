@@ -72,6 +72,8 @@ jobs:
         id: plan
         working-directory: ./infra/live
         run: |
+          set +e
+
           terraform plan -no-color -input=false -detailed-exitcode -out=tfplan
           exit_code=$?
 
@@ -104,13 +106,13 @@ jobs:
             const { execSync } = require('child_process');
             const fs = require('fs');
 
-            const terraformExitCode = '${{ steps.plan.outputs.exit_code }}';
+            const terraformExitCode = Number('${{ steps.plan.outputs.exit_code }}');
 
             let status;
-            if (terraformExitCode == 0) {
+            if (terraformExitCode === 0) {
               status = "No changes";
-            } else if (terraformExitCode == 2) {
-              status = "Changes detected (may included infra drift)";
+            } else if (terraformExitCode === 2) {
+              status = "Changes detected (may include infra drift)";
             } else {
               status = "Error during plan";
             }
@@ -131,7 +133,10 @@ jobs:
               ? planOutput.substring(0, 65000) + '\n... (truncated)'
               : planOutput;
 
-            const body = `## Terraform Plan
+            const marker = '<!-- terraform-plan-comment -->';
+
+            const body = `${marker}
+            ## Terraform Plan
 
             **Status:** ${status}
             **Terraform Exit Code:** ${terraformExitCode}
@@ -147,10 +152,9 @@ jobs:
               repo: context.repo.repo,
             });
 
-            const botComment = comments.data.find(comment =>
-              comment.user.type === 'Bot' &&
-              comment.body.includes('## Terraform Plan')
-            );
+            const botComment = comments.data.find(comment => {
+              return comment.body && comment.body.includes(marker);
+            });
 
             if (botComment) {
               await github.rest.issues.updateComment({
