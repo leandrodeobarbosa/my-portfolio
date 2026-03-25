@@ -125,7 +125,14 @@ jobs:
             const change = parseInt('${{ steps.plan-output.outputs.change }}') || 0;
             const destroy = parseInt('${{ steps.plan-output.outputs.destroy }}') || 0;
             const hasChanges = add > 0 || change > 0 || destroy > 0;
-            const now = new Date().toISOString();
+            const formattedDate = new Intl.DateTimeFormat('pt-BR', {
+            timeZone: 'America/Sao_Paulo',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+            }).format(new Date());
 
             // Determine status based on exit code AND actual changes
             let statusMessage;
@@ -143,7 +150,7 @@ jobs:
 
             // Build the comment body
             let body = COMMENT_MARKER + '\n';
-            body += `Last updated: ${now}\n`
+            body += `🔄 **Last update:** ${formattedDate} + ' (BRT) \n`
             body += `## ${statusEmoji} Terraform Plan Result\n\n`;
             body += `**Status:** ${statusMessage}\n\n`;
 
