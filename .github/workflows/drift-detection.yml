@@ -1,0 +1,136 @@
+name: Terraform Drift Detection
+
+on:
+  schedule:
+    - cron: "0 12 * * *" # 09:00 BRT
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: drift-detection
+  cancel-in-progress: false
+
+jobs:
+  drift-detection:
+    name: Detect Infrastructure Drift
+    runs-on: ubuntu-latest
+
+    environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN_CI_INFRA }}
+          aws-region: us-east-1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan (Drift Detection)
+        id: plan
+        run: |
+          set +e
+          terraform plan -detailed-exitcode -no-color -out=tfplan
+          exit_code=$?
+
+          echo "exitcode=$exit_code" >> "$GITHUB_OUTPUT"
+
+          if [ "$exit_code" -eq 1 ]; then
+            echo "❌ Terraform plan failed with error"
+            exit 1
+          elif [ "$exit_code" -eq 2 ]; then
+            echo "⚠️ Drift detected in Terraform infrastructure"
+          fi
+          exit 0
+
+      - name: Check for Existing Drift Issue
+        id: check_issue
+        if: steps.plan.outputs.exitcode == '2'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+            const { data: issues } = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open',
+            labels: 'drift'
+            });
+
+            const existing = issues.find(issue =>
+            issue.title.startsWith('🚨 Infrastructure Drift Detected')
+            );
+
+            core.setOutput('exists', String(Boolean(existing)));
+            core.setOutput('issue_number', existing ? String(existing.number) : '');
+            } catch (error) {
+                core.setFailed(`Failed to check issues: ${error.message}`);
+            }
+
+      - name: Create GitHub Issue if not exists
+        if: steps.plan.outputs.exitcode == '2' && steps.check_issue.outputs.exists == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Infrastructure Drift Detected',
+              body: `
+            Drift detected in Terraform infrastructure.
+
+                Please review the latest pipeline run:
+                ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}
+
+                > This issue was automatically created by the drift detection pipeline.
+                            `,
+                            labels: ['drift', 'terraform', 'infra']
+                            });
+
+      - name: Comment on Existing Drift Issue
+        if: steps.plan.outputs.exitcode == '2' && steps.check_issue.outputs.exists == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: Number("${{ steps.check_issue.outputs.issue_number }}"),
+              body: `⚠️ Drift still detected on run ${context.runId}.`
+            });
+
+      - name: Fail workflow if drift detected
+        if: steps.plan.outputs.exitcode == '2'
+        run: exit 1
+
+      - name: Log Drift Details
+        if: steps.plan.outputs.exitcode == '2'
+        run: |
+          echo "Drift detected at $(date)"
+          echo "Run ID: ${{ github.run_id }}"
+          echo "Repository: ${{ github.repository }}"
+
+      - name: Upload Terraform Plan Artifact
+        if: always() && steps.plan.outputs.exitcode == '2'
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan
+          path: tfplan
