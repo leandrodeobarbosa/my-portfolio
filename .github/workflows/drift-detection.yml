@@ -1,6 +1,9 @@
 name: Terraform Drift Detection
 
 on:
+  push:
+    branches:
+      - feat/cd-infra
   workflow_dispatch:
 
 permissions:
