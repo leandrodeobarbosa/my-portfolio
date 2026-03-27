@@ -1,8 +1,6 @@
 name: Terraform Drift Detection
 
 on:
-  schedule:
-    - cron: "0 12 * * *" # 09:00 BRT
   workflow_dispatch:
 
 permissions:
