@@ -48,7 +48,7 @@ jobs:
       - name: Cache Terraform plugins
         uses: actions/cache@v4
         with:
-          path: ~/.terraform
+          path: ./infra/live
           key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
           restore-keys: |
             terraform-plugins-${{ runner.os }}-
