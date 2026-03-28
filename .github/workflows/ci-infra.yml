@@ -183,7 +183,7 @@ jobs:
             }
 
             body += '\n---\n';
-            body += `*Workflow: \`${github.workflow}\` | Run ID: [${github.run_id}](${github.server_url}/${github.repo.owner}/${github.repo.repo}/actions/runs/${github.run_id})*`;
+            body += `*Workflow: \`${context.workflow}\` | Run ID: [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})*`;
 
 
             const { owner, repo } = context.repo;
