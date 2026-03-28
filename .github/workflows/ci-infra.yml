@@ -45,6 +45,14 @@ jobs:
           terraform_version: 1.6.6
           terraform_wrapper: false
 
+      - name: Cache Terraform plugins
+        uses: actions/cache@v4
+        with:
+          path: ~/.terraform
+          key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            terraform-plugins-${{ runner.os }}-
+
       - name: Terraform Format Check
         working-directory: ./infra/live
         run: terraform fmt -check -recursive
@@ -54,14 +62,6 @@ jobs:
         with:
           role-to-assume: ${{vars.AWS_ROLE_ARN_CI_INFRA}}
           aws-region: ${{ env.AWS_REGION }}
-
-      - name: Cache Terraform plugins
-        uses: actions/cache@v4
-        with:
-          path: ~/.terraform
-          key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
-          restore-keys: |
-            terraform-plugins-${{ runner.os }}-
 
       - name: Terraform Init
         run: terraform init -input=false -lockfile=readonly
@@ -154,7 +154,6 @@ jobs:
 
             // Build the comment body
             let body = COMMENT_MARKER + '\n';
-            let body = COMMENT_MARKER + '\n';
             body += `🔄 **Última atualização:** ${formattedDate} (horário de Brasília) \n`;
             body += `## ${statusEmoji} Terraform Plan Result\n\n`;
             body += `**Status:** ${statusMessage}\n\n`;
@@ -171,10 +170,10 @@ jobs:
               body += '> ⚠️ **Atenção:** Este plano inclui a **DESTRUIÇÃO** de recursos. Revise com cuidado extremo.\n\n';
             }
 
-            if (planOutput) {
+            if (PLAN_CONTENT) {
               body += '<details><summary>📋 Clique para expandir o output detalhado</summary>\n\n';
               body += '```diff\n';
-              body += planOutput; // Sem aspas, pois já é uma variável JS segura
+              body += PLAN_CONTENT; // Sem aspas, pois já é uma variável JS segura
               body += '\n```\n';
               body += '</details>\n';
             }
