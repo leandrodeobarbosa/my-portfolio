@@ -185,11 +185,14 @@ jobs:
             body += '\n---\n';
             body += `*Workflow: \`${github.workflow}\` | Run ID: [${github.run_id}](${github.server_url}/${github.repo.owner}/${github.repo.repo}/actions/runs/${github.run_id})*`;
 
-            // Find existing comment with marker
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+
             const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
+              owner: owner,
+              repo: repo,
+              issue_number: issue_number
             });
 
             const existingComment = comments.find(comment =>
@@ -197,19 +200,17 @@ jobs:
             );
 
             if (existingComment) {
-              // Update existing comment
               await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                owner: owner,
+                repo: repo,
                 comment_id: existingComment.id,
                 body: body
               });
             } else {
-              // Create new comment
               await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
+                owner: owner,
+                repo: repo,
+                issue_number: issue_number,
                 body: body
               });
             }
