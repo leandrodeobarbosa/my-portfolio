@@ -1,0 +1,89 @@
+name: CD - Infrastructure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "infra/**"
+
+concurrency:
+  group: cd-infra-${{github.ref_name}}
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-infra:
+    name: Deploy Production
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: ./infra/live
+
+    env:
+      AWS_REGION: us-east-1
+      TF_IN_AUTOMATION: true
+      TF_VAR_project_name: ${{ vars.PROJECT_NAME }}
+      TF_VAR_environment: ${{ vars.ENVIRONMENT }}
+      TF_VAR_bucket_name: ${{ vars.BUCKET_NAME }}
+      TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
+      TF_VAR_cloudfront_distribution_arn: ${{ vars.CLOUDFRONT_DISTRIBUTION_ARN }}
+      TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
+      TF_VAR_origin_access_control_id: ${{ vars.ORIGIN_ACCESS_CONTROL_ID }}
+      TF_VAR_cloudfront_function_arn: ${{ vars.CLOUDFRONT_FUNCTION_ARN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+          terraform_wrapper: false
+
+      - name: Cache Terraform plugins
+        uses: actions/cache@v4
+        with:
+          path: ./infra/live
+          key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            terraform-plugins-${{ runner.os }}-
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{secrets.AWS_ROLE_INFRA_ARN}}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        run: terraform init -input=false -lockfile=readonly
+
+      - name: Terraform Plan (CD)
+        id: plan
+        run: |
+          set +e
+          terraform plan -detailed-exitcode -out=tfplan -no-color -input=false
+          exit_code=$?
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          if [ "$exit_code" -eq 1 ]; then
+            echo "Terraform plan failed with errors"
+            exit 1
+          fi
+          exit 0
+
+      - name: Apply Terraform
+        if: steps.plan.outputs.exit_code == '2'
+        run: |
+          terraform apply -input=false -no-color tfplan
+          echo "### ✅ Deploy concluído com sucesso!" >> $GITHUB_STEP_SUMMARY
+          echo "Mudanças aplicadas na infraestrutura em $(date)" >> $GITHUB_STEP_SUMMARY
+
+      - name: No changes detected
+        if: steps.plan.outputs.exit_code == '0'
+        run: |
+          echo "No infrastructure changes to apply"
+          echo "### ✨ Infraestrutura já está atualizada." >> $GITHUB_STEP_SUMMARY

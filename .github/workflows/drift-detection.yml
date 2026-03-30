@@ -1,0 +1,136 @@
+name: Terraform Drift Detection
+
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  issues: write
+
+concurrency:
+  group: drift-detection-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  drift-detection:
+    name: Detect Infrastructure Drift
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./infra/live
+
+    env:
+      AWS_REGION: us-east-1
+      TF_IN_AUTOMATION: true
+      TF_VAR_project_name: ${{ vars.PROJECT_NAME }}
+      TF_VAR_environment: ${{ vars.ENVIRONMENT }}
+      TF_VAR_bucket_name: ${{ vars.BUCKET_NAME }}
+      TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
+      TF_VAR_cloudfront_distribution_arn: ${{ vars.CLOUDFRONT_DISTRIBUTION_ARN }}
+      TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
+      TF_VAR_origin_access_control_id: ${{ vars.ORIGIN_ACCESS_CONTROL_ID }}
+      TF_VAR_cloudfront_function_arn: ${{ vars.CLOUDFRONT_FUNCTION_ARN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+          terraform_wrapper: false
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN_CI_INFRA }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init & Validate
+        run: |
+          terraform init -input=false
+          terraform validate
+
+      - name: Terraform Plan (Drift Detection)
+        id: plan
+        run: |
+          set +e
+          terraform plan -detailed-exitcode -no-color -out=tfplan > plan_output.txt
+          exit_code=$?
+          set -e
+          echo "exitcode=$exit_code" >> $GITHUB_OUTPUT
+
+          if [ "$exit_code" -eq 2 ]; then
+            echo "### ⚠️ Drift Detectado!" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`terraform" >> $GITHUB_STEP_SUMMARY
+            grep -E "Plan:|~| \+ | - " plan_output.txt | tail -n 10 >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Manage Drift Issue (Create/Comment/Resolve)
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const exitCode = "${{ steps.plan.outputs.exitcode }}";
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'drift'
+            });
+
+            const existingIssue = issues.find(i => i.title.includes('Infrastructure Drift Detected'));
+
+            if (exitCode === '2') {
+              if (!existingIssue) {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: '🚨 Infrastructure Drift Detected',
+                  labels: ['drift', 'terraform', 'bug'],
+                  body: `Drift detectado na execução [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existingIssue.number,
+                  body: `⚠️ O drift ainda persiste. Verifique a última execução: ${context.runId}`
+                });
+              }
+            } else if (exitCode === '0' && existingIssue) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: '✅ Drift resolvido. Fechando esta issue automaticamente.'
+              });
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                state: 'closed'
+              });
+            }
+
+      - name: Upload Terraform Plan Artifact
+        if: steps.plan.outputs.exitcode == '2'
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan
+          path: infra/live/tfplan
+          retention-days: 5
+
+      - name: Final Status Check
+        run: |
+          if [ "${{ steps.plan.outputs.exitcode }}" -eq "1" ]; then exit 1; fi
+          if [ "${{ steps.plan.outputs.exitcode }}" -eq "2" ]; then
+            echo "Drift detectado.Ação necessária: investigar e reconciliar o estado via Terraform."
+            exit 1
+          fi

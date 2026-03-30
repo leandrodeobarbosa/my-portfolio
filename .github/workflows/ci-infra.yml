@@ -19,14 +19,17 @@ permissions:
 jobs:
   validate-infra:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infra/live
 
     env:
       AWS_REGION: us-east-1
       TF_IN_AUTOMATION: true
       TF_VAR_project_name: ${{ vars.PROJECT_NAME }}
-      TF_VAR_environment: ${{ vars.ENVIRONMENT }}
       TF_VAR_bucket_name: ${{ vars.BUCKET_NAME }}
       TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
+      TF_VAR_environment: ${{ vars.ENVIRONMENT }}
       TF_VAR_cloudfront_distribution_arn: ${{ vars.CLOUDFRONT_DISTRIBUTION_ARN }}
       TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
       TF_VAR_origin_access_control_id: ${{ vars.ORIGIN_ACCESS_CONTROL_ID }}
@@ -36,58 +39,57 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::320789259849:role/github-oidc-terraform-portfolio
-          aws-region: ${{ env.AWS_REGION }}
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
+          terraform_wrapper: false
 
       - name: Cache Terraform plugins
         uses: actions/cache@v4
         with:
-          path: ~/.terraform
+          path: ./infra/live
           key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
           restore-keys: |
             terraform-plugins-${{ runner.os }}-
-
-      - name: Terraform Init
-        working-directory: ./infra/live
-        run: terraform init -input=false -lockfile=readonly
 
       - name: Terraform Format Check
         working-directory: ./infra/live
         run: terraform fmt -check -recursive
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{vars.AWS_ROLE_ARN_CI_INFRA}}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        run: terraform init -input=false -lockfile=readonly
+
       - name: Terraform Validate
-        working-directory: ./infra/live
         run: terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
-        working-directory: ./infra/live
         run: |
           set +e
           terraform plan -detailed-exitcode -out=tfplan -no-color -input=false
           exit_code=$?
           echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
           if [ "$exit_code" -eq 1 ]; then
-            echo "::error::Terraform plan failed with errors"
+            echo "Terraform plan failed with errors"
             exit 1
           fi
           exit 0
 
       - name: Generate Plan Output
-        id: plan-output
+        id: build-plan
         if: steps.plan.outputs.exit_code != '1'
-        working-directory: ./infra/live
         run: |
+          terraform show -no-color tfplan > tfplan.txt
           terraform show -json tfplan > tfplan.json
 
+          # Capture metrics
           add=$(jq '[.resource_changes[]? | select(.change.actions | contains(["create"]))] | length' tfplan.json)
           change=$(jq '[.resource_changes[]? | select(.change.actions | contains(["update"]))] | length' tfplan.json)
           destroy=$(jq '[.resource_changes[]? | select(.change.actions | contains(["delete"]))] | length' tfplan.json)
@@ -96,11 +98,11 @@ jobs:
           change=${change:-0}
           destroy=${destroy:-0}
 
+          # Prepare truncate output for comment
           echo "add=$add" >> "$GITHUB_OUTPUT"
           echo "change=$change" >> "$GITHUB_OUTPUT"
           echo "destroy=$destroy" >> "$GITHUB_OUTPUT"
 
-          terraform show -no-color tfplan > tfplan.txt
 
 
           head -c 60000 tfplan.txt > tfplan-truncated.txt
@@ -109,20 +111,23 @@ jobs:
             echo "... (truncated - output exceeds GitHub comment limit)" >> tfplan-truncated.txt
           fi
 
-          echo "plan_output<<EOF" >> "$GITHUB_OUTPUT"
-          cat tfplan-truncated.txt >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "plan_output<<EOF" >> "$GITHUB_ENV"
+          cat tfplan-truncated.txt >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
 
       - name: Comment Terraform Plan on PR
         if: always()
         uses: actions/github-script@v7
+        env:
+          PLAN_CONTENT: ${{steps.build-plan.outputs.body}}
         with:
           script: |
+            const { PLAN_CONTENT } = process.env;
             const COMMENT_MARKER = '<!-- terraform-plan-comment -->';
             const exitCode = parseInt('${{ steps.plan.outputs.exit_code }}') || 0;
-            const add = parseInt('${{ steps.plan-output.outputs.add }}') || 0;
-            const change = parseInt('${{ steps.plan-output.outputs.change }}') || 0;
-            const destroy = parseInt('${{ steps.plan-output.outputs.destroy }}') || 0;
+            const add = parseInt('${{ steps.build-plan.outputs.add }}') || 0;
+            const change = parseInt('${{ steps.build-plan.outputs.change }}') || 0;
+            const destroy = parseInt('${{ steps.build-plan.outputs.destroy }}') || 0;
             const hasChanges = add > 0 || change > 0 || destroy > 0;
             const formattedDate = new Intl.DateTimeFormat('pt-BR', {
             timeZone: 'America/Sao_Paulo',
@@ -149,43 +154,45 @@ jobs:
 
             // Build the comment body
             let body = COMMENT_MARKER + '\n';
-            body += `🔄 **Last update:** ${formattedDate} (UTC-3) \n`
+            body += `🔄 **Última atualização:** ${formattedDate} (horário de Brasília) \n`;
             body += `## ${statusEmoji} Terraform Plan Result\n\n`;
             body += `**Status:** ${statusMessage}\n\n`;
 
-            // Add summary for successful plans (exit code 0 or 2)
             if (exitCode === 0 || exitCode === 2) {
-              body += '### Summary\n';
-              body += `| 🟢 Add | 🟡 Change | 🔴 Destroy |\n`;
-              body += `|--------|-----------|------------|\n`;
+              body += '### Resumo das Alterações\n';
+              body += `| 🟢 Adicionar | 🟡 Alterar | 🔴 Destruir |\n`;
+              body += `| :--- | :--- | :--- |\n`; // Adicionei alinhamento para o Markdown ficar bonito
               body += `| ${add} | ${change} | ${destroy} |\n\n`;
 
-              // Warning for destructive changes
-              if (destroy > 0) {
-                body += '> ⚠️ **Warning:** This plan includes resource destruction. Please review carefully.\n\n';
-              }
+            if (destroy > 0) {
+              // Destaquei o aviso de destruição com negrito e itálico
+              body += '> [!CAUTION]\n';
+              body += '> ⚠️ **Atenção:** Este plano inclui a **DESTRUIÇÃO** de recursos. Revise com cuidado extremo.\n\n';
+            }
 
-              // Add collapsible plan output
-              const planOutput = `${{ steps.plan-output.outputs.plan_output }}`;
-              if (planOutput) {
-                body += '<details><summary>📋 Click to expand full plan output</summary>\n\n';
-                body += '```diff\n';
-                body += planOutput;
-                body += '\n```\n';
-                body += '</details>\n';
-              }
+            if (PLAN_CONTENT) {
+              body += '<details><summary>📋 Clique para expandir o output detalhado</summary>\n\n';
+              body += '```diff\n';
+              body += PLAN_CONTENT; // Sem aspas, pois já é uma variável JS segura
+              body += '\n```\n';
+              body += '</details>\n';
+            }
             } else if (exitCode === 1) {
-              body += '> ❌ **Terraform plan failed.** Check the workflow logs for error details.\n';
+              body += '> [!IMPORTANT]\n';
+              body += '> ❌ **O Terraform Plan falhou.** Verifique os logs do workflow para detalhes do erro.\n';
             }
 
             body += '\n---\n';
-            body += `*Workflow: ${{ github.workflow }} | Run: ${{ github.run_id }}*`;
+            body += `*Workflow: \`${context.workflow}\` | Run ID: [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})*`;
 
-            // Find existing comment with marker
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+
             const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
+              owner: owner,
+              repo: repo,
+              issue_number: issue_number
             });
 
             const existingComment = comments.find(comment =>
@@ -193,19 +200,17 @@ jobs:
             );
 
             if (existingComment) {
-              // Update existing comment
               await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                owner: owner,
+                repo: repo,
                 comment_id: existingComment.id,
                 body: body
               });
             } else {
-              // Create new comment
               await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
+                owner: owner,
+                repo: repo,
+                issue_number: issue_number,
                 body: body
               });
             }
