@@ -21,7 +21,7 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 				<!-- Name, Seniority Micro-signal, and Keywords -->
 				<div class='flex-1 min-w-0 pt-1'>
 					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono mb-2'>
-						Leandro de Oliveira Barbosa
+						Leandro de Oliveira Barbosa (O brabo!)
 					</h1>
 					<!-- Seniority Micro-signal -->
 					<p class='text-xs text-zinc-400 dark:text-zinc-500 font-mono mb-3 tracking-tight'>
@@ -29,24 +29,24 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 						<span class='mx-1'>•</span>
 						<span>DevOps Engineer</span>
 					</p>
-			
+
 			<!-- Introduction -->
 			<p class='text-lg sm:text-xl leading-relaxed mb-8 text-zinc-700 dark:text-zinc-200/90 max-w-[65ch]'>
 				<span class='font-semibold text-[var(--color-accent)]'>Engenheiro DevOps</span> com base em
 				<span class='font-medium'> Desenvolvimento de Software</span> e foco em
 				<span class='font-medium'> Plataforma,</span>
-				<span class='font-medium'> Cloud</span> e 
+				<span class='font-medium'> Cloud</span> e
 				<span class='font-medium'> Automação</span>. Atuo como ponte entre desenvolvimento e produto, estruturando plataformas e pipelines que transformam código em sistemas confiáveis, escaláveis e sustentáveis.
 			</p>
 
-		
-		
+
+
 
 
 			</div>
-			
+
 			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
-			
+
 			<!-- Projects - Markdown Style Header -->
 			<div class='mb-12'>
 				<div class='flex justify-between gap-2 mb-6'>
@@ -55,13 +55,13 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 				</div>
 				<ProjectList projects={top6Projects} featured={true}/>
 			</div>
-			
+
 			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
-			
+
 			<!-- Tech Stack - Markdown Style Header -->
 			<div class='mb-12'>
 				<h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-4 mt-10'>## Tecnologias & Ferramentas</h2>
-				
+
 				<!-- Skills Grid -->
 				<div class='grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-3 mb-8'>
 					<div class='flex items-center gap-2'>
@@ -86,9 +86,9 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 					</div>
 				</div>
 			</div>
-			
+
 			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
-			
+
 			<!-- Recent Posts - Markdown Style Header -->
 			<div class='mb-12'>
 				<div class='flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6'>
@@ -100,7 +100,7 @@ const posts = (await getCollection('blog')).sort((a: BlogPost, b: BlogPost) => b
 						posts.map((post: BlogPost) => (
 							<PostItem post={post} />
 						))
-					}      
+					}
 				</div>
 			</div>
 		</main>
