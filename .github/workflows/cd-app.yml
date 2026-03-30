@@ -78,4 +78,4 @@ jobs:
       - name: Deployment Summary
         run: |
           echo "### 🚀 App Deployed!" >> $GITHUB_STEP_SUMMARY
-          echo "A versão mais recente do Astro foi sincronizada e o cache do CloudFront foi invalidado." >> $GITHUB_STEP_SUMMARY
+          echo "A versão mais recente da aplicação foi sincronizada e o cache do CloudFront foi invalidado." >> $GITHUB_STEP_SUMMARY
