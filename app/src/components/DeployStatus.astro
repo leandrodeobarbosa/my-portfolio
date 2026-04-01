@@ -1,0 +1,122 @@
+---
+// DeployStatus component - Terminal-style deploy status indicator
+// Shows system status, last deploy status, and infra state
+---
+
+<div class="deploy-status">
+  <span class="deploy-status-item">
+    <span class="deploy-status-label">system_status:</span>
+    <span class="deploy-status-value">online</span>
+    <span class="deploy-status-indicator" aria-label="System online"></span>
+  </span>
+  <span class="deploy-status-separator">|</span>
+  <span class="deploy-status-item">
+    <span class="deploy-status-label">last_deploy:</span>
+    <span class="deploy-status-value deploy-status-success">success</span>
+  </span>
+
+  <span class="deploy-status-separator">|</span>
+  <span class="deploy-status-item">
+    <span class="deploy-status-label">infra_state:</span>
+    <span class="deploy-status-value">managed by terraform</span>
+    <a href="https://github.com/leandrodeobarbosa/my-portfolio/tree/main/infra" class="deploy-status-link" target="_blank" rel="noopener noreferrer">[View Code]</a>
+  </span>
+</div>
+
+<style>
+  .deploy-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+    font-size: 0.8125rem;
+    line-height: 1;
+    color: var(--color-text-tertiary);
+    padding: 0.375rem 0;
+  }
+
+  .deploy-status-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .deploy-status-label {
+    color: var(--color-text-tertiary);
+    opacity: 0.5;
+    font-weight: 500;
+  }
+
+  .deploy-status-value {
+    color: var(--color-text-primary);
+  }
+
+  .deploy-status-success {
+    color: var(--color-success);
+  }
+
+  .deploy-status-indicator {
+    display: inline-block;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    background-color: var(--color-success);
+    border-radius: 50%;
+    box-shadow: 0 0 6px 2px var(--color-success);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    vertical-align: middle;
+    margin-top: -1px;
+  }
+
+  .deploy-status-separator {
+    color: var(--color-text-tertiary);
+    opacity: 0.3;
+    user-select: none;
+  }
+
+  .deploy-status-link {
+    color: var(--color-success);
+    text-decoration: none;
+    transition: opacity 200ms ease;
+  }
+
+  .deploy-status-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .deploy-status-indicator {
+      animation: none;
+    }
+    .deploy-status {
+      transition: none;
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .deploy-status {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.375rem;
+    }
+
+    .deploy-status-separator {
+      display: none;
+    }
+
+    .deploy-status-item {
+      gap: 0.125rem;
+    }
+  }
+</style>

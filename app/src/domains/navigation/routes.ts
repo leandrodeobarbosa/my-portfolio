@@ -8,8 +8,8 @@
 
 export const NAV_ROUTES = [
 	{ path: '/', label: 'início' },
-	{ path: '/projects/', label: 'projetos' },
-	{ path: '/about/', label: 'sobre' }
+	{ path: '/projetos/', label: 'projetos' },
+	{ path: '/sobre/', label: 'sobre' }
 ] as const;
 
 export type NavRoute = (typeof NAV_ROUTES)[number];

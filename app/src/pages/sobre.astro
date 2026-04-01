@@ -18,7 +18,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
       transform: translateY(12px);
       transition: opacity 450ms ease-out, transform 450ms ease-out;
     }
-    
+
     .about-hero-line.visible {
       opacity: 1;
       transform: translateY(0);
@@ -65,27 +65,27 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
             <!-- Photo - Documentation style avatar -->
             <div class='shrink-0 self-start'>
               <div class='about-hero-line w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[var(--color-border-subtle)] shadow-lg opacity-0 -translate-y-4' style='font-size: 0;'>
-                <Image 
-                  src={leandroImg} 
-                  alt='Leandro de Oliveira Barbosa' 
-                  width={128} 
+                <Image
+                  src={leandroImg}
+                  alt='Leandro de Oliveira Barbosa'
+                  width={128}
                   height={128}
                   class='w-full h-full object-cover'
                   loading='eager'
                 />
               </div>
             </div>
-            
+
             <!-- Name, badge, and intro content -->
             <div class='flex-1 min-w-0 pt-1'>
               <!-- Name - Primary hero element -->
               <h1 class='about-hero-line text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono opacity-0 translate-y-4 mb-3 sm:mb-4'>
                 Leandro de Oliveira Barbosa
               </h1>
-              
+
               <!-- Role badges row -->
               <div class='flex flex-wrap items-center gap-4 mb-5'>
-                <span class='inline-flex items-center px-3 py-1 rounded-md text-sm font-mono bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20'>
+                <span class='inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700'>
                   DevOps & Platform Engineer
                 </span>
               </div>
@@ -95,16 +95,16 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch] mb-4'>
                   Engenheiro DevOps com base sólida em Desenvolvimento de Software e experiência na implantação de soluções em ambientes Kubernetes (on-premise e cloud). Atuei na construção e operação de plataformas Kubernetes baseadas em OpenShift e AWS (EKS), integrando automação, governança e práticas de segurança em ambientes corporativos e governamentais.
                 </p>
-                
+
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch] mb-4'>
                   Minha abordagem combina mentalidade de produto com engenharia de plataforma: busco estruturar pipelines, infraestrutura como código e ambientes observáveis que sustentem entregas contínuas de forma confiável e escalável.
                 </p>
-                
+
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch]'>
                   Atualmente, continuo aprofundando meus conhecimentos em arquitetura cloud, automação e confiabilidade, com foco na evolução para Engenharia de Plataforma.
                 </p>
               </div>
-              
+
               <!-- Skills tags - Modern discrete badges with increased spacing -->
               <div class='flex flex-wrap gap-6 mb-6'>
                 <span class='skill-badge font-mono text-xs'>Cloud</span>
@@ -115,7 +115,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 <span class='skill-badge font-mono text-xs'>IaC</span>
                 <span class='skill-badge font-mono text-xs'>Integração de sistemas</span>
               </div>
-              
+
               <!-- CV Download -->
               <a href='/cv.pdf' download class='group inline-flex items-center gap-2.5 px-4 py-2.5 font-mono text-sm border border-[var(--color-border-subtle)] text-zinc-600 dark:text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)] transition-all duration-200 no-underline'>
                 <svg class='w-[18px] h-[18px] transition-transform duration-200 group-hover:-translate-y-0.5' xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' x1='12' y1='15' y2='3'/></svg>
@@ -134,7 +134,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
         <!-- Technical Skills Section - Markdown Style -->
         <section class='mb-12'>
           <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-8'>## Habilidades Técnicas</h2>
-          
+
           <!-- Grouped Skills - No cards, just clean layout with generous whitespace -->
           <div class='grid grid-cols-1 md:grid-cols-2 gap-8'>
             <!-- Platform & Cloud -->
@@ -161,7 +161,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 </li>
               </ul>
             </div>
-            
+
             <!-- CI/CD & Automation -->
             <div class='doc-section'>
               <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
@@ -186,7 +186,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 </li>
               </ul>
             </div>
-            
+
             <!-- Development & Integration -->
             <div class='doc-section'>
               <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
@@ -207,7 +207,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 </li>
               </ul>
             </div>
-            
+
             <!-- Operations & Reliability -->
             <div class='doc-section'>
               <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
@@ -265,14 +265,14 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
           <div class='relative'>
             <!-- Timeline line -->
             <div class='absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[var(--color-accent)] to-[var(--color-accent)]/30'></div>
-            
+
             <!-- Job Entry -->
             <div class='relative pl-10 pb-10 group last:pb-0'>
               <!-- Timeline dot -->
               <div class='absolute left-0 top-1 w-6 h-6 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/30 group-hover/pegasus:scale-110 transition-transform duration-300'>
                 <div class='w-2 h-2 rounded-full bg-white/90'></div>
               </div>
-              
+
               <!-- Content -->
               <div class='relative group/pegasus'>
                 <!-- Header -->
@@ -282,14 +282,14 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                   </h3>
                   <span class='text-sm text-zinc-500 dark:text-zinc-400'>Full-Stack Developer (Node.js) & DevOps</span>
                 </div>
-                
+
                 <!-- Meta -->
                 <div class='flex flex-wrap items-center gap-3 mb-4'>
                   <span class='skill-badge font-mono text-xs'>Remoto</span>
                   <span class='text-xs text-zinc-400 dark:text-zinc-500 font-mono'>Fev/2022 – Mar/2025</span>
                   <span class='text-xs text-[var(--color-accent)] font-semibold'>▸ 3 anos</span>
                 </div>
-                
+
                 <!-- Description -->
                 <ul class='space-y-2.5 mb-4'>
                   <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
@@ -305,7 +305,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                     <span>Apoio em tarefas de infraestrutura e troubleshooting, colaborandando em pipelines e rotinas operacionais.</span>
                   </li>
                 </ul>
-                
+
                 <!-- Tech Stack - Horizontal scroll on mobile -->
                 <div class='flex flex-wrap items-center gap-2'>
                   <span class='text-xs font-mono text-zinc-400 dark:text-zinc-500 shrink-0'>Stack:</span>
@@ -324,14 +324,14 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 </div>
               </div>
             </div>
-            
+
             <!-- Job Entry -->
             <div class='relative pl-10 pb-0 group'>
               <!-- Timeline dot -->
               <div class='absolute left-0 top-1 w-6 h-6 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/30 group-hover/every:scale-110 transition-transform duration-300'>
                 <div class='w-2 h-2 rounded-full bg-white/90'></div>
               </div>
-              
+
               <!-- Content -->
               <div class='relative group/every'>
                 <!-- Header -->
@@ -341,14 +341,14 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                   </h3>
                   <span class='text-sm text-zinc-500 dark:text-zinc-400'>Analista DevOps/Platform</span>
                 </div>
-                
+
                 <!-- Meta -->
                 <div class='flex flex-wrap items-center gap-3 mb-4'>
                   <span class='skill-badge font-mono text-xs'>Híbrido</span>
                   <span class='text-xs text-zinc-400 dark:text-zinc-500 font-mono'>Nov/2023 – Dez/2024</span>
                   <span class='text-xs text-[var(--color-accent)] font-semibold'>▸ 1 ano</span>
                 </div>
-                
+
                 <!-- Description -->
                 <ul class='space-y-2.5 mb-4'>
                   <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
@@ -364,7 +364,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                     <span>Contribuí para observabilidade e segurança dos ambientes Kubernetes, realizando monitoramento com Prometheus e gestão de acessos por meio de RBAC e SCC, além de padronização de deploys com GitOps (Argo CD).</span>
                   </li>
                 </ul>
-                
+
                 <!-- Tech Stack -->
                 <div class='flex flex-wrap items-center gap-2'>
                   <span class='text-xs font-mono text-zinc-400 dark:text-zinc-500 shrink-0'>Stack:</span>

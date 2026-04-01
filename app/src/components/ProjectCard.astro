@@ -30,7 +30,8 @@ const techIcons: Record<string, string> = {
   grafana: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg',
   githubactions: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg',
   actions: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg',
-  aws: 'https://img.icons8.com/color/48/amazon-web-services.png',
+  aws: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg',
+  'aws-dark': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg',
   oci: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg',
   astro: 'https://api.iconify.design/skill-icons:astro.svg',
   tailwind: 'https://img.icons8.com/color/48/tailwindcss.png',
@@ -49,12 +50,17 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
   variant === 'featured' && 'project-card--featured',
   variant === 'compact' && 'project-card--compact'
 ]}>
+  {project.badge && (
+    <a href={project.badge.link} target="_blank" rel="noopener noreferrer" class="project-card__badge" aria-label={project.badge.label}>
+      <img src={project.badge.imageUrl} alt={project.badge.label} loading="lazy" />
+    </a>
+  )}
   <header class="project-card__header">
     <div class="project-card__meta">
       {(project.tags || []).slice(0, 2).map((tag: string) => (
         <span class="project-card__tag">{tag}</span>
       ))}
-      
+
       {project.stargazers_count !== undefined && (
         <a
           href={project.html_url}
@@ -69,37 +75,61 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
         </a>
       )}
     </div>
-    
+
     <h3 class="project-card__title">
       <a href={project.demoLink} target="_blank" rel={project.demoLinkRel} class="project-card__link">
         {project.name}
       </a>
     </h3>
   </header>
-  
+
   <p class="project-card__description">
     {project.description}
   </p>
-  
+
   {/* Tech Icons - Clean row without label */}
   {(project.techIcons || []).length > 0 && (
     <div class="project-card__tech">
       {project.techIcons.map((iconName: string) => {
         const iconUrl = techIcons[iconName.toLowerCase()];
+        const isAws = iconName.toLowerCase() === 'aws';
+        const awsDarkUrl = techIcons['aws-dark'];
+
         return iconUrl ? (
-          <img 
-            src={iconUrl} 
-            width={20} 
-            height={20} 
-            alt={iconName}
-            class={`project-card__tech-icon ${shouldKeepColor(iconName) ? '' : 'dark:invert'}`}
-            loading="lazy"
-          />
+          isAws ? (
+            <>
+              <img
+                src={iconUrl}
+                width={20}
+                height={20}
+                alt={iconName}
+                class="project-card__tech-icon dark:hidden"
+                loading="lazy"
+              />
+              <img
+                src={awsDarkUrl}
+                width={20}
+                height={20}
+                alt={iconName}
+                class="project-card__tech-icon hidden dark:block"
+                loading="lazy"
+              />
+            </>
+          ) : (
+            <img
+              src={iconUrl}
+              width={20}
+              height={20}
+              alt={iconName}
+              class={`project-card__tech-icon ${shouldKeepColor(iconName) ? '' : 'dark:invert'}`}
+              loading="lazy"
+            />
+          )
         ) : null;
       })}
     </div>
   )}
-  
+
   <footer class="project-card__footer">
     {project.demoLink && (
       <a href={project.demoLink} target="_blank" rel={project.demoLinkRel} class="project-card__action">
@@ -125,10 +155,28 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     padding: 1.25rem;
     border-left: 1px solid var(--color-border-subtle);
     transition: border-color 200ms ease;
+    position: relative;
   }
 
   .project-card:hover {
     border-color: var(--color-accent);
+  }
+
+  .project-card__badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    opacity: 0.6;
+    transition: opacity 200ms ease;
+  }
+
+  .project-card__badge:hover {
+    opacity: 1;
+  }
+
+  .project-card__badge img {
+    height: 1.125rem;
+    width: auto;
   }
 
   /* Featured variant - more prominent */
