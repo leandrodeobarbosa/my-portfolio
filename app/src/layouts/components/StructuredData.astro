@@ -5,7 +5,7 @@
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_OG_LOCALE } from '../../consts';
 
 interface Props {
-  type: 'website' | 'person' | 'blogPost' | 'about' | 'projects';
+  type: 'website' | 'person' | 'about' | 'projects';
   title?: string;
   description?: string;
   image?: string;
@@ -14,14 +14,14 @@ interface Props {
   updatedDate?: Date;
 }
 
-const { 
-  type, 
-  title, 
-  description, 
-  image, 
-  slug, 
-  pubDate, 
-  updatedDate 
+const {
+  type,
+  title,
+  description,
+  image,
+  slug,
+  pubDate,
+  updatedDate
 } = Astro.props;
 
 // Site-wide values
@@ -47,7 +47,7 @@ const toAbsoluteUrl = (path: string) => {
 const generateJsonLd = () => {
   const profileImageUrl = toAbsoluteUrl(PROFILE_IMAGE);
   const currentUrl = slug ? toAbsoluteUrl(slug) : SITE_URL;
-  
+
   switch (type) {
     case 'person':
       return {
@@ -100,35 +100,6 @@ const generateJsonLd = () => {
         },
       };
 
-    case 'blogPost':
-      const articleImage = image ? toAbsoluteUrl(image) : profileImageUrl;
-      return {
-        '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        headline: title,
-        description: description,
-        image: articleImage,
-        url: currentUrl,
-        datePublished: pubDate?.toISOString(),
-        dateModified: updatedDate?.toISOString() || pubDate?.toISOString(),
-        author: {
-          '@type': 'Person',
-          name: PERSON_NAME,
-          url: toAbsoluteUrl('/about'),
-          jobTitle: JOB_TITLE,
-        },
-        publisher: {
-          '@type': 'Person',
-          name: PERSON_NAME,
-          image: profileImageUrl,
-        },
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': SITE_URL,
-        },
-        inLanguage: SITE_OG_LOCALE,
-      };
-
     case 'website':
     default:
       return {
@@ -141,14 +112,7 @@ const generateJsonLd = () => {
           '@type': 'Person',
           name: PERSON_NAME,
         },
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: {
-            '@type': 'EntryPoint',
-            urlTemplate: `${SITE_URL}/posts?q={search_term_string}`,
-          },
-          'query-input': 'required name=search_term_string',
-        },
+
       };
   }
 };

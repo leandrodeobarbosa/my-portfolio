@@ -10,7 +10,7 @@ interface Props {
 	image?: string;
 	pubDate?: Date;
 	updatedDate?: Date;
-	type?: 'website' | 'person' | 'blogPost' | 'about' | 'projects';
+	type?: 'website' | 'person' | 'about' | 'projects';
 	slug?: string;
 }
 
@@ -21,7 +21,7 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 <html lang='en'>
 	<head>
 		<BaseHead title={title} description={description} image={image} />
-		<StructuredData 
+		<StructuredData
 			type={type}
 			title={title}
 			description={description}
