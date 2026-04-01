@@ -33,16 +33,16 @@ for (let i = 0; i < projects.length; i += 2) {
   {projectPairs.map(([project1, project2], pairIndex: number) => (
     <div class="projects-grid__row">
       <div class="projects-grid__item">
-        <ProjectCard 
-          project={project1} 
-          variant={getCardVariant(pairIndex * 2, featured)} 
+        <ProjectCard
+          project={project1}
+          variant={getCardVariant(pairIndex * 2, featured)}
         />
       </div>
       {project2 && (
         <div class="projects-grid__item">
-          <ProjectCard 
-            project={project2} 
-            variant={getCardVariant(pairIndex * 2 + 1, featured)} 
+          <ProjectCard
+            project={project2}
+            variant={getCardVariant(pairIndex * 2 + 1, featured)}
           />
         </div>
       )}
@@ -54,14 +54,14 @@ for (let i = 0; i < projects.length; i += 2) {
   .projects-grid {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   /* Each row maintains 2 columns */
   .projects-grid__row {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   /* Tablet and above: 2 columns per row */
@@ -85,7 +85,7 @@ for (let i = 0; i < projects.length; i += 2) {
     .projects-grid[data-featured="true"] .projects-grid__row:first-child .projects-grid__item:first-child {
       position: relative;
     }
-    
+
     .projects-grid[data-featured="true"] .projects-grid__row:first-child .projects-grid__item:first-child::before {
       content: '';
       position: absolute;
@@ -100,18 +100,18 @@ for (let i = 0; i < projects.length; i += 2) {
   /* Desktop: maintain 2 columns with increased spacing */
   @media (min-width: 1024px) {
     .projects-grid {
-      gap: 2rem;
+      gap: 2.5rem;
     }
-    
+
     .projects-grid__row {
-      gap: 2rem;
+      gap: 2.5rem;
     }
   }
 
   /* Large Desktop: consistent 2-column layout */
   @media (min-width: 1280px) {
     .projects-grid__row {
-      gap: 2.5rem;
+      gap: 3rem;
     }
   }
 

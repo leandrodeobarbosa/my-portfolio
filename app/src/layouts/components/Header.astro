@@ -69,16 +69,17 @@ const menu = NAV_ROUTES.map((route) => ({
 		<nav class='flex gap-4 items-center justify-between py-3'>
 			<!-- Logo Section (Left) - Interactive Terminal Breadcrumb -->
 			<h2 class='m-0'>
-				<a href='/' class='group flex gap-1.5 items-center text-sm font-bold no-underline font-mono opacity-90 hover:opacity-100 transition-all duration-200' aria-label='Home - leandro@portfolio'>
-					<span class="text-[var(--color-accent)]">leandro@portfolio</span>
+				<a href='/' class='group flex gap-1.5 items-center text-sm font-bold no-underline font-mono opacity-90 hover:opacity-100 transition-all duration-200' aria-label='Home - leandro@devops'>
+					<span class="text-[var(--color-accent)]" id="terminal-text">leandro@devops</span>
 					<span class="text-zinc-500 dark:text-zinc-400">:</span>
+					<span id="terminal-cursor"></span>
 
 					<!-- Terminal Breadcrumb -->
 					<nav class='flex items-center gap-0.5' aria-label='NavegaçãoBreadcrumb'>
 						{
 							navHierarchy.map((item, index) => (
 								<>
-									{index > 0 && <span class="text-zinc-600 dark:text-zinc-500 mx-0.5">/</span>}
+									{index > 0 && <span class="text-zinc-400 dark:text-zinc-500 mx-0.5">/</span>}
 									{
 										item.isLast ? (
 											<span class:list={[
@@ -156,19 +157,19 @@ const menu = NAV_ROUTES.map((route) => ({
 				</button>
 
 				<!-- Social Icons: Larger touch targets for accessibility -->
-				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)] dark:hover:bg-[var(--color-bg-secondary)] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://github.com/leandrodeobarbosa' target='_blank' aria-label='GitHub'>
+				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)]/50 dark:hover:bg-[var(--color-bg-secondary)]/30 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://github.com/leandrodeobarbosa' target='_blank' aria-label='GitHub'>
 					<Image class='w-5 h-5 dark:hidden opacity-70 hover:opacity-100 transition-opacity' src={GithubBlack} width={20} height={20} alt='Github logo' />
 					<Image class='w-5 h-5 hidden dark:block opacity-70 hover:opacity-100 transition-opacity' src={GithubWhite} width={20} height={20} alt='Github logo' />
 				</a>
-				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)] dark:hover:bg-[var(--color-bg-secondary)] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://linkedin.com/in/leandrodeobarbosa' target='_blank' aria-label='LinkedIn'>
+				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)]/50 dark:hover:bg-[var(--color-bg-secondary)]/30 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://linkedin.com/in/leandrodeobarbosa' target='_blank' aria-label='LinkedIn'>
 					<Image class='w-5 h-5 dark:hidden opacity-70 hover:opacity-100 transition-opacity' src={LinkedinBlack} width={20} height={20} alt='LinkedIn logo' />
 					<Image class='w-5 h-5 hidden dark:block opacity-70 hover:opacity-100 transition-opacity' src={LinkedinWhite} width={20} height={20} alt='LinkedIn logo' />
 				</a>
-				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)] dark:hover:bg-[var(--color-bg-secondary)] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://x.com/leandrodeobarbosa' target='_blank' aria-label='X/Twitter'>
+				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)]/50 dark:hover:bg-[var(--color-bg-secondary)]/30 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://x.com/leandrodeobarbosa' target='_blank' aria-label='X/Twitter'>
 					<Image class='w-5 h-5 dark:hidden opacity-70 hover:opacity-100 transition-opacity' src={XBlack} width={20} height={20} alt='X logo' />
 					<Image class='w-5 h-5 hidden dark:block opacity-70 hover:opacity-100 transition-opacity' src={XWhite} width={20} height={20} alt='X logo' />
 				</a>
-				<button class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)] dark:hover:bg-[var(--color-bg-secondary)] transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' id='themeToggle' aria-label='Toggle theme mode'>
+				<button class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)]/50 dark:hover:bg-[var(--color-bg-secondary)]/30 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' id='themeToggle' aria-label='Toggle theme mode'>
 					<svg
 						class='sun w-5 h-5'
 						xmlns='http://www.w3.org/2000/svg'
@@ -201,7 +202,7 @@ const menu = NAV_ROUTES.map((route) => ({
 
 	<!-- Mobile Navigation Dropdown -->
 	<div
-		class='lg:hidden absolute top-full left-0 right-0 bg-[var(--color-bg-primary)] dark:bg-[var(--color-bg-primary)] border-b border-[var(--color-border-subtle)] shadow-lg dark:shadow-none overflow-hidden transition-all duration-300 ease-in-out'
+		class='lg:hidden absolute top-full left-0 right-0 bg-[var(--color-bg-primary)]/95 dark:bg-[var(--color-bg-primary)]/90 backdrop-blur-xl border-b border-[var(--color-border-subtle)] shadow-lg dark:shadow-2xl overflow-hidden transition-all duration-300 ease-in-out'
 		id='mobileMenu'
 		role='menu'
 		aria-hidden='true'
@@ -212,7 +213,7 @@ const menu = NAV_ROUTES.map((route) => ({
 					menu.map((item, index) => (
 						<li>
 							<HeaderLink
-								class="flex items-center gap-2 px-4 py-3 rounded-lg text-zinc-600 dark:text-zinc-300 hover:text-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)] dark:hover:bg-[var(--color-bg-secondary)] transition-all duration-200"
+								class="flex items-center gap-2 px-4 py-3 rounded-lg text-zinc-600 dark:text-zinc-300 hover:text-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)]/50 dark:hover:bg-[var(--color-bg-secondary)]/30 transition-all duration-200"
 								href={item.link}
 								role='menuitem'
 							>
@@ -278,6 +279,8 @@ const menu = NAV_ROUTES.map((route) => ({
 		display: block;
 	}
 
+
+
 	/* Mobile menu animation */
 	#mobileMenu {
 		max-height: 0;
@@ -304,6 +307,30 @@ const menu = NAV_ROUTES.map((route) => ({
 		display: block;
 	}
 
+	/* Terminal cursor effect */
+	@keyframes blink-cursor {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0; }
+	}
+
+	#terminal-text {
+		white-space: nowrap;
+	}
+
+	#terminal-cursor {
+		display: inline-block;
+		width: 0.5ch;
+		height: 1em;
+		border: 1.5px solid var(--color-accent);
+		padding: 2px;
+		animation: blink-cursor 1.2s ease-in-out infinite;
+		vertical-align: middle;
+		margin-left: 2px;
+		margin-top: 0.15em;
+		opacity: 0.8;
+		box-sizing: border-box;
+	}
+
 	/* Reduced motion */
 	@media (prefers-reduced-motion: reduce) {
 		#mobileMenu {
@@ -312,6 +339,84 @@ const menu = NAV_ROUTES.map((route) => ({
 			opacity: 1;
 			visibility: visible;
 		}
+		#terminal-text, #terminal-cursor {
+			border-right-color: transparent;
+			animation: none;
+		}
+	}
+
+	/* Dark mode mobile menu enhancements */
+	.dark #mobileMenu {
+		background: linear-gradient(180deg, rgba(10, 10, 11, 0.95) 0%, rgba(10, 10, 11, 0.98) 100%);
+		backdrop-filter: blur(20px) saturate(180%);
+		-webkit-backdrop-filter: blur(20px) saturate(180%);
+	}
+
+	/* Dark mode social icons hover enhancement */
+	.dark header a:hover {
+		background: rgba(24, 24, 27, 0.3);
+	}
+
+	/* Dark mode header border enhancement */
+	.dark #site-header {
+		border-bottom-color: rgba(63, 63, 70, 0.3);
+	}
+
+	/* Dark mode mobile menu item hover */
+	.dark #mobileMenu a:hover {
+		background: rgba(24, 24, 27, 0.5);
+	}
+
+	/* Dark mode hamburger button enhancement */
+	.dark #mobileMenuBtn:hover {
+		background: rgba(24, 24, 27, 0.5);
+	}
+
+	/* Dark mode navigation links enhancement */
+	.dark header nav a:hover {
+		background: rgba(24, 24, 27, 0.3);
+	}
+
+	/* Dark mode header background enhancement */
+	.dark #site-header {
+		background: rgba(10, 10, 11, 0.95);
+		backdrop-filter: blur(12px) saturate(180%);
+		-webkit-backdrop-filter: blur(12px) saturate(180%);
+	}
+
+	/* Dark mode header link hover enhancement */
+	.dark #site-header a:hover {
+		color: var(--color-accent);
+	}
+
+	/* Dark mode header button hover enhancement */
+	.dark #site-header button:hover {
+		background: rgba(24, 24, 27, 0.5);
+	}
+
+	/* Dark mode header icon hover enhancement */
+	.dark #site-header a:hover img {
+		opacity: 1;
+	}
+
+	/* Dark mode header icon hover enhancement */
+	.dark #site-header a:hover svg {
+		color: var(--color-accent);
+	}
+
+	/* Dark mode header icon hover enhancement */
+	.dark #site-header a:hover img {
+		opacity: 1;
+	}
+
+	/* Dark mode header icon hover enhancement */
+	.dark #site-header a:hover svg {
+		color: var(--color-accent);
+	}
+
+	/* Dark mode header icon hover enhancement */
+	.dark #site-header a:hover img {
+		opacity: 1;
 	}
 </style>
 
@@ -404,4 +509,7 @@ const menu = NAV_ROUTES.map((route) => ({
 		}
 
 	}, { passive: true });
+
+	// Terminal cursor effect - just keep the cursor blinking
+	// The CSS handles the blinking cursor animation
 </script>

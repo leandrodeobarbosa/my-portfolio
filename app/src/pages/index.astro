@@ -4,34 +4,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { PROJECTS as projects } from '../domains/portfolio/projects';
 import ProjectList from '../components/ProjectList.astro'
 
-const top6Projects = projects.slice(0, 6);
+const top3Projects = projects.slice(0, 3);
 ---
 
 <BaseLayout title={SITE_TITLE + ' - ' + SITE_TAGLINE} description={SITE_DESCRIPTION}>
 	<div class='container'>
 		<main>
 			<!-- Documentation Style Hero Section -->
-			<div class='max-w-4xl mb-16'>
+			<div class='max-w-4xl mb-20'>
 				<!-- Name, Seniority Micro-signal, and Keywords -->
 				<div class='flex-1 min-w-0 pt-1'>
-					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono mb-2'>
+					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono mb-3'>
 						Leandro de Oliveira Barbosa
 					</h1>
-					<!-- Seniority Micro-signal -->
-					<p class='text-xs text-zinc-400 dark:text-zinc-500 font-mono mb-3 tracking-tight'>
-						<span>Cloud & Platform</span>
-						<span class='mx-1'>•</span>
-						<span>DevOps Engineer</span>
-					</p>
 
-			<!-- Introduction -->
-			<p class='text-lg sm:text-xl leading-relaxed mb-8 text-zinc-700 dark:text-zinc-200/90 max-w-[65ch]'>
-				<span class='font-semibold text-[var(--color-accent)]'>Engenheiro DevOps</span> com base em
-				<span class='font-medium'> Desenvolvimento de Software</span> e foco em
-				<span class='font-medium'> Plataforma,</span>
-				<span class='font-medium'> Cloud</span> e
-				<span class='font-medium'> Automação</span>. Atuo como ponte entre desenvolvimento e produto, estruturando plataformas e pipelines que transformam código em sistemas confiáveis, escaláveis e sustentáveis.
-			</p>
+					<!-- Role Badge - Enhanced glassmorphism -->
+					<div class='mb-4'>
+						<span class='inline-flex items-center px-3 py-1 rounded-lg text-xs font-mono bg-white/70 dark:bg-zinc-800/70 backdrop-blur-sm text-zinc-600 dark:text-zinc-300 border border-zinc-200/50 dark:border-zinc-700/50 shadow-sm hover:shadow-md hover:border-[var(--color-accent)]/30 transition-all duration-250'>
+							DevOps & Platform Engineer
+						</span>
+					</div>
+
+			<!-- Introduction - Enhanced visual hierarchy -->
+			<div class='mb-6'>
+				<p class='text-lg sm:text-xl leading-relaxed text-zinc-700 dark:text-zinc-200/90 max-w-[65ch] mb-4'>
+					<span class='text-[var(--color-accent)]'>Desenvolvo plataformas de nuvem</span> com foco em automação e CI/CD que aceleram o ciclo de entrega e melhoram a experiência do desenvolvedor.
+				<a href='/sobre/' class='inline-flex items-center gap-1 ml-2 text-xs font-mono text-zinc-400 dark:text-zinc-500 hover:text-[var(--color-accent)] transition-all duration-200 no-underline opacity-70 hover:opacity-100 hover:translate-x-0.5'>
+					<span class='text-[var(--color-accent)]'>cat</span> sobre.md <span class='text-zinc-300 dark:text-zinc-600'>→</span>
+				</a>
+				</p>
+
+				<!-- Key Stack -->
+				<div class='flex flex-wrap gap-2 mb-4'>
+					<div class='group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/60 hover:border-[var(--color-accent)]/40 hover:shadow-md transition-all duration-250'>
+						<span class='text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 group-hover:text-[var(--color-accent)] transition-colors duration-200'>Cloud</span>
+						<span class='text-xs font-semibold text-zinc-800 dark:text-zinc-100'>AWS</span>
+					</div>
+					<div class='group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/60 hover:border-[var(--color-accent)]/40 hover:shadow-md transition-all duration-250'>
+						<span class='text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 group-hover:text-[var(--color-accent)] transition-colors duration-200'>IaC</span>
+						<span class='text-xs font-semibold text-zinc-800 dark:text-zinc-100'>TERRAFORM</span>
+					</div>
+					<div class='group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/60 hover:border-[var(--color-accent)]/40 hover:shadow-md transition-all duration-250'>
+						<span class='text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 group-hover:text-[var(--color-accent)] transition-colors duration-200'>CI/CD</span>
+						<span class='text-xs font-semibold text-zinc-800 dark:text-zinc-100'>GITHUB ACTIONS</span>
+					</div>
+					<div class='group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/60 hover:border-[var(--color-accent)]/40 hover:shadow-md transition-all duration-250'>
+						<span class='text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 group-hover:text-[var(--color-accent)] transition-colors duration-200'>Runtime</span>
+						<span class='text-xs font-semibold text-zinc-800 dark:text-zinc-100'>NODE.JS</span>
+					</div>
+					<div class='group flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100/80 dark:bg-zinc-800/80 border border-zinc-200/60 dark:border-zinc-700/60 hover:border-[var(--color-accent)]/40 hover:shadow-md transition-all duration-250'>
+						<span class='text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 group-hover:text-[var(--color-accent)] transition-colors duration-200'>OS</span>
+						<span class='text-xs font-semibold text-zinc-800 dark:text-zinc-100'>LINUX</span>
+					</div>
+				</div>
+
+
+			</div>
 
 
 
@@ -41,45 +69,16 @@ const top6Projects = projects.slice(0, 6);
 
 			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
 
-			<!-- Projects - Markdown Style Header -->
+			<!-- Projects - Markdown Style Header with enhanced button -->
 			<div class='mb-12'>
 				<div class='flex justify-between gap-2 mb-6'>
 					<h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100'>## Projects</h2>
-					<a href='/projects/' class='text-sm text-zinc-500 dark:text-zinc-400 hover:text-[var(--color-accent)] no-underline font-mono'>[ All projects ]</a>
+					<a href='/projetos/' class='inline-flex items-center px-4 py-2 text-sm font-mono bg-white/70 dark:bg-zinc-800/70 backdrop-blur-sm border border-zinc-200/50 dark:border-zinc-700/50 text-zinc-600 dark:text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:shadow-md rounded-lg transition-all duration-250 no-underline'>[ All projects ]</a>
 				</div>
-				<ProjectList projects={top6Projects} featured={true}/>
-			</div>
+				<ProjectList projects={top3Projects} featured={true}/>
+			</div
 
-			<hr class='border-t border-[var(--color-border-subtle)] mb-12' />
 
-			<!-- Tech Stack - Markdown Style Header -->
-			<div class='mb-12'>
-				<h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-4 mt-10'>## Tecnologias & Ferramentas</h2>
-
-				<!-- Skills Grid -->
-				<div class='grid grid-cols-2 sm:grid-cols-3 gap-x-8 gap-y-3 mb-8'>
-					<div class='flex items-center gap-2'>
-						<span class='text-[var(--color-accent)]'>▸</span>
-						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Infraestrutura como Código (IaC)</span>
-					</div>
-					<div class='flex items-center gap-2'>
-						<span class='text-[var(--color-accent)]'>▸</span>
-						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Containers & Orquestração</span>
-					</div>
-					<div class='flex items-center gap-2'>
-						<span class='text-[var(--color-accent)]'>▸</span>
-						<span class='text-sm text-zinc-600 dark:text-zinc-300'>CI/CD & Automação</span>
-					</div>
-					<div class='flex items-center gap-2'>
-						<span class='text-[var(--color-accent)]'>▸</span>
-						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Sistemas Linux</span>
-					</div>
-					<div class='flex items-center gap-2'>
-						<span class='text-[var(--color-accent)]'>▸</span>
-						<span class='text-sm text-zinc-600 dark:text-zinc-300'>Gestão de Integridade & Integrações</span>
-					</div>
-				</div>
-			</div>
 
 
 		</main>

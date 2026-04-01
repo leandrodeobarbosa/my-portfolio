@@ -3,7 +3,7 @@
 
 // global variables
 export const SITE_TITLE = 'Leandro de O Barbosa';
-export const SITE_TAGLINE = 'DevOps Engineer & Software Engineer';
+export const SITE_TAGLINE = 'DevOps & Platform Engineer';
 export const SITE_DESCRIPTION =
 	'Portfólio de Leandro de O Barbosa - Compartilhando conhecimentos em DevOps, infraestrutura em nuvem, engenharia de plataformas e desenvolvimento de software, demonstrando habilidades técnicas e casos de uso.';
 
