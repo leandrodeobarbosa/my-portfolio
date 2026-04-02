@@ -10,7 +10,8 @@ export interface Project {
 	description: string;
 	postLink?: string;
 	demoLinkRel?: string;
-	techIcons: string[];
+	techIcons?: string[];
+	status?: string;
 	badge?: {
 		label: string;
 		imageUrl: string;
@@ -21,17 +22,19 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
 	{
-		name: 'devexor app',
+		name: 'FlowDX Platform',
 		description:
-			'Cloud Native Portfolio com arquitetura em AWS, provisionado via Terraform e pipelines CI/CD com foco em práticas de Platform Engineering.',
+			'Plataforma Interna de Desenvolvedor (IDP) focada em self-service para provisionamento de infraestrutura e entrega de aplicações.',
+		demoLink: '/projetos/flowdx-platform',
+		tags: [],
+		status: 'WIP'
+	},
+	{
+		name: 'FlowDX App',
+		description: 'Workload de referência da FlowDX Platform, com deploy em produção, infraestrutura como código e entrega automatizada.',
 		demoLink: '#',
-		tags: ['Portfolio', 'Cloud'],
-		techIcons: ['aws', 'terraform', 'githubactions', 'typescript', 'astro'],
-		badge: {
-			label: 'CD - Application',
-			imageUrl: 'https://github.com/leandrodeobarbosa/my-portfolio/actions/workflows/cd-app.yml/badge.svg',
-			link: 'https://github.com/leandrodeobarbosa/my-portfolio/actions/workflows/cd-app.yml'
-		}
+		tags: ['Node.js', 'TypeScript', 'Astro'],
+		status: 'Production'
 	},
 	{
 		name: 'Fedora Sway',
