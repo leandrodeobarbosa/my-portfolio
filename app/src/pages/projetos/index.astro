@@ -4,19 +4,21 @@ import ProjectList from '../../components/ProjectList.astro';
 import { PROJECTS as projects } from '../../domains/portfolio/projects';
 import { SITE_PROJECTS_DESCRIPTION } from '../../consts';
 
+// Use default variant for all projects to ensure consistent sizing
+const variantOverrides: Record<string, 'featured' | 'secondary' | 'compact' | 'horizontal'> = {}
 ---
 
 <BaseLayout
-	title="All My Projects"
+	title="Todos os Projetos"
 	description={SITE_PROJECTS_DESCRIPTION}
 	type='projects'
 	slug='/projects'
 >
   <div class='container'>
     <div class='mb-10'>
-      <h1 class='text-3xl font-bold font-mono mb-2'># All Projects</h1>
-      <p class='text-zinc-700 dark:text-zinc-300 text-lg'>All my project portfolio from real projects to open source projects.</p>
+      <h1 class='text-3xl font-bold font-mono mb-2'># Todos os Projetos</h1>
+      <p class='text-zinc-200 text-lg'>Projetos focados em plataforma, automação e experiência do desenvolvedor, incluindo iniciativas em infraestrutura como código, CI/CD e segurança.</p>
     </div>
-    <ProjectList projects={projects} featured={false}/>
+    <ProjectList projects={projects} featured={false} variantOverrides={variantOverrides}/>
   </div>
 </BaseLayout>

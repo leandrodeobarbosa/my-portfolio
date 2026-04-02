@@ -33,7 +33,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
   </style>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    function initAboutAnimations() {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -53,18 +53,21 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
       if (heroSection) {
         observer.observe(heroSection);
       }
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', initAboutAnimations);
+    document.addEventListener('astro:page-load', initAboutAnimations);
   </script>
 
   <div class='container'>
-		<main class='prose text-lg dark:prose-invert max-w-4xl'>
+    <main class='prose text-lg prose-invert max-w-4xl'>
       <article>
         <!-- Name with badge and intro -->
         <div class='mb-12'>
           <div class='flex flex-col sm:flex-row sm:items-start gap-8'>
             <!-- Photo - Documentation style avatar -->
             <div class='shrink-0 self-start'>
-              <div class='about-hero-line w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[var(--color-border-subtle)] shadow-lg opacity-0 -translate-y-4' style='font-size: 0;'>
+              <div class='about-hero-line w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden border-2 border-[var(--color-border-subtle)] shadow-lg' style='font-size: 0;'>
                 <Image
                   src={leandroImg}
                   alt='Leandro de Oliveira Barbosa'
@@ -79,175 +82,59 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
             <!-- Name, badge, and intro content -->
             <div class='flex-1 min-w-0 pt-1'>
               <!-- Name - Primary hero element -->
-              <h1 class='about-hero-line text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-zinc-50 font-mono opacity-0 translate-y-4 mb-3 sm:mb-4'>
+              <h1 class='about-hero-line text-3xl sm:text-4xl font-bold text-zinc-50 font-mono mb-3 sm:mb-4'>
                 Leandro de Oliveira Barbosa
               </h1>
 
               <!-- Role badges row -->
               <div class='flex flex-wrap items-center gap-4 mb-5'>
-                <span class='inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700'>
+                <span class='work-badge'>
                   DevOps & Platform Engineer
                 </span>
               </div>
 
               <!-- Career Narrative -->
-              <div class='about-hero-line opacity-0 translate-y-3 mb-6'>
-                <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch] mb-4'>
-                  Engenheiro DevOps com base sólida em Desenvolvimento de Software e experiência na implantação de soluções em ambientes Kubernetes (on-premise e cloud). Atuei na construção e operação de plataformas Kubernetes baseadas em OpenShift e AWS (EKS), integrando automação, governança e práticas de segurança em ambientes corporativos e governamentais.
+              <div class='about-hero-line mb-6'>
+                <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
+                  Sou um Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud native utilizando AWS, Terraform e CI/CD, estruturando pipelines e infraestruturas que priorizam previsibilidade, escalabilidade e facilidade de uso para times de desenvolvimento.
                 </p>
 
-                <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch] mb-4'>
-                  Minha abordagem combina mentalidade de produto com engenharia de plataforma: busco estruturar pipelines, infraestrutura como código e ambientes observáveis que sustentem entregas contínuas de forma confiável e escalável.
+                <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
+                  Minha abordagem combina automação com uma mentalidade orientada a plataforma, buscando reduzir fricções no ciclo de entrega por meio de padrões, templates e boas práticas embutidas nos processos. Aplico princípios de confiabilidade inspirados em práticas de SRE e foco na construção de ambientes observáveis e consistentes.
                 </p>
 
-                <p class='text-base sm:text-lg leading-[1.75] text-zinc-700 dark:text-zinc-300/90 max-w-[65ch]'>
-                  Atualmente, continuo aprofundando meus conhecimentos em arquitetura cloud, automação e confiabilidade, com foco na evolução para Engenharia de Plataforma.
+                <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch]'>
+                  Atualmente, estou evoluindo o <a href='/projetos/flowdx-platform' class='text-[var(--color-accent)] hover:underline'>FlowDX Platform</a>, um projeto de plataforma interna que integra workloads e padronizações de entrega, com foco em golden paths e templates de execução com Docker e Kubernetes, criando uma base prática para evolução em arquitetura de plataformas e experiência do desenvolvedor.
                 </p>
               </div>
 
-              <!-- Skills tags - Modern discrete badges with increased spacing -->
-              <div class='flex flex-wrap gap-6 mb-6'>
-                <span class='skill-badge font-mono text-xs'>Cloud</span>
-                <span class='skill-badge font-mono text-xs'>Observabilidade</span>
-                <span class='skill-badge font-mono text-xs'>Kubernetes</span>
-                <span class='skill-badge font-mono text-xs'>CI/CD</span>
-                <span class='skill-badge font-mono text-xs'>Linux</span>
-                <span class='skill-badge font-mono text-xs'>IaC</span>
-                <span class='skill-badge font-mono text-xs'>Integração de sistemas</span>
-              </div>
-
-              <!-- CV Download -->
-              <a href='/cv.pdf' download class='group inline-flex items-center gap-2.5 px-4 py-2.5 font-mono text-sm border border-[var(--color-border-subtle)] text-zinc-600 dark:text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] dark:hover:text-[var(--color-accent)] transition-all duration-200 no-underline'>
+<!-- CV Download -->
+              <a href='/cv.pdf' download class='group inline-flex items-center gap-2.5 px-4 py-2.5 font-mono text-sm border border-[var(--color-border-subtle)] text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-200 no-underline'>
                 <svg class='w-[18px] h-[18px] transition-transform duration-200 group-hover:-translate-y-0.5' xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' x1='12' y1='15' y2='3'/></svg>
                 [ Download CV ]
               </a>
 
               <!-- Open to Opportunities - Subtle inline indicator -->
-              <p class='mt-6 font-mono text-sm text-zinc-500 dark:text-zinc-400'>
+              <p class='mt-6 font-mono text-sm text-zinc-400'>
                 <span class='text-[var(--color-accent)]'>Aberto a oportunidades</span> em DevOps, Platform Engineering e SRE, com foco em ambientes colaborativos e orientados a boas práticas.
               </p>
+            </div>
           </div>
         </div>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
 
-        <!-- Technical Skills Section - Markdown Style -->
-        <section class='mb-12'>
-          <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-8'>## Habilidades Técnicas</h2>
-
-          <!-- Grouped Skills - No cards, just clean layout with generous whitespace -->
-          <div class='grid grid-cols-1 md:grid-cols-2 gap-8'>
-            <!-- Platform & Cloud -->
-            <div class='doc-section'>
-              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
-                Plataforma & Cloud
-              </h3>
-              <ul class='space-y-3.5'>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Kubernetes (on-premise e AWS EKS)</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>OpenShift (OCP)</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Docker e Helm</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Arquitetura em Cloud (AWS / OCI)</span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- CI/CD & Automation -->
-            <div class='doc-section'>
-              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
-                CI/CD & Automação
-              </h3>
-              <ul class='space-y-3.5'>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Azure DevOps e GitHub Actions</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>GitOps com Argo CD</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Infraestrutura como Código (Terraform / CloudFormation)</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Automação com scripts (Bash / Python)</span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Development & Integration -->
-            <div class='doc-section'>
-              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
-                Desenvolvimento & Integração
-              </h3>
-              <ul class='space-y-3.5'>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>APIs REST (JavaScript / TypeScript)</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Integração com Active Directory (LDAP)</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Integração entre sistemas legados e modernos</span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Operations & Reliability -->
-            <div class='doc-section'>
-              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-4'>
-                Observabilidade & Confiabilidade
-              </h3>
-              <ul class='space-y-3.5'>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Monitoramento com Prometheus/span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Conceitos de SRE e troubleshooting em produção</span>
-                </li>
-                <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>RBAC e SCC (OpenShift)</span>
-                </li>
-                 <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300'>
-                  <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                  <span>Boas práticas de segurança (OWASP)</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
 
         <!-- Certifications Section -->
         <section class='mb-12'>
-          <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-8'>## Certificações</h2>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Certificações</h2>
           <div class='space-y-4'>
             <!-- Oracle OCI Certification -->
             <a href='https://catalog-education.oracle.com/pls/certview/sharebadge?id=5DC65FD63A2330B5A7116E8EDD416E22DAFC4BB89EF9F91039D0751FAEB91832' target='_blank' rel='noopener noreferrer' class='group block no-underline py-2'>
               <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-2'>
                 Oracle Cloud Infrastructure
               </h3>
-              <p class='font-semibold text-base text-zinc-900 dark:text-zinc-100 mb-1'>Oracle Cloud Infrastructure Fundamentals</p>
-              <p class='text-sm text-zinc-500 dark:text-zinc-400 flex items-center gap-2'>
+              <p class='font-semibold text-base text-zinc-100 mb-1'>Oracle Cloud Infrastructure Fundamentals</p>
+              <p class='text-sm text-zinc-400 flex items-center gap-2'>
                 <span>Oracle • 2025</span>
                 <span class='opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs text-[var(--color-accent)]'>
                   [ Verify <svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/><polyline points='15 3 21 3 21 9'/><line x1='10' x1='14' x2='21' y2='3'/></svg> ]
@@ -261,7 +148,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
         <!-- Professional Experience Section -->
         <section class='mb-12'>
-          <h2 class='text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100 mb-8'>## Experiência Profissional</h2>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Experiência Profissional</h2>
           <div class='relative'>
             <!-- Timeline line -->
             <div class='absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[var(--color-accent)] to-[var(--color-accent)]/30'></div>
@@ -277,30 +164,30 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
               <div class='relative group/pegasus'>
                 <!-- Header -->
                 <div class='flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-2'>
-                  <h3 class='font-bold text-xl text-zinc-900 dark:text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
+                  <h3 class='font-bold text-xl text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
                     Pegasus EE
                   </h3>
-                  <span class='text-sm text-zinc-500 dark:text-zinc-400'>Full-Stack Developer (Node.js) & DevOps</span>
+                  <span class='text-sm text-zinc-400'>Full-Stack Developer (Node.js) & DevOps</span>
                 </div>
 
                 <!-- Meta -->
                 <div class='flex flex-wrap items-center gap-3 mb-4'>
-                  <span class='skill-badge font-mono text-xs'>Remoto</span>
-                  <span class='text-xs text-zinc-400 dark:text-zinc-500 font-mono'>Fev/2022 – Mar/2025</span>
+                  <span class='work-badge'>Remoto</span>
+                  <span class='text-xs text-zinc-500 font-mono'>Fev/2022 – Mar/2025</span>
                   <span class='text-xs text-[var(--color-accent)] font-semibold'>▸ 3 anos</span>
                 </div>
 
                 <!-- Description -->
                 <ul class='space-y-2.5 mb-4'>
-                  <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
                     <span>Desenvolvimento e manutenção de aplicações Node.js (APIs REST e integrações com serviços corporativos).</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
                     <span>Automação de deploys e suporte a ambientes Linux, incluindo scripts Bash e versionamento com Git.</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
                     <span>Apoio em tarefas de infraestrutura e troubleshooting, colaborandando em pipelines e rotinas operacionais.</span>
                   </li>
@@ -308,18 +195,18 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
                 <!-- Tech Stack - Horizontal scroll on mobile -->
                 <div class='flex flex-wrap items-center gap-2'>
-                  <span class='text-xs font-mono text-zinc-400 dark:text-zinc-500 shrink-0'>Stack:</span>
+                  <span class='text-xs font-mono text-zinc-500 shrink-0'>Stack:</span>
                   <div class='flex flex-wrap gap-1.5'>
-                    <span class='skill-badge text-[10px]'>Node.js</span>
-                    <span class='skill-badge text-[10px]'>REST API</span>
-                    <span class='skill-badge text-[10px]'>Linux</span>
-                    <span class='skill-badge text-[10px]'>Bash</span>
-                    <span class='skill-badge text-[10px]'>Git</span>
-                    <span class='skill-badge text-[10px]'>OWASP</span>
-                    <span class='skill-badge text-[10px]'>RBAC</span>
-                    <span class='skill-badge text-[10px]'>GitHub Actions</span>
-                    <span class='skill-badge text-[10px]'>Nginx</span>
-                    <span class='skill-badge text-[10px]'>Ansible</span>
+                    <span class='skill-badge'>Node.js</span>
+                    <span class='skill-badge'>REST API</span>
+                    <span class='skill-badge'>Linux</span>
+                    <span class='skill-badge'>Bash</span>
+                    <span class='skill-badge'>Git</span>
+                    <span class='skill-badge'>OWASP</span>
+                    <span class='skill-badge'>RBAC</span>
+                    <span class='skill-badge'>GitHub Actions</span>
+                    <span class='skill-badge'>Nginx</span>
+                    <span class='skill-badge'>Ansible</span>
                   </div>
                 </div>
               </div>
@@ -336,30 +223,30 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
               <div class='relative group/every'>
                 <!-- Header -->
                 <div class='flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-2'>
-                  <h3 class='font-bold text-xl text-zinc-900 dark:text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
+                  <h3 class='font-bold text-xl text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
                     Every CyberSecurity
                   </h3>
-                  <span class='text-sm text-zinc-500 dark:text-zinc-400'>Analista DevOps/Platform</span>
+                  <span class='text-sm text-zinc-400'>Analista DevOps/Platform</span>
                 </div>
 
                 <!-- Meta -->
                 <div class='flex flex-wrap items-center gap-3 mb-4'>
-                  <span class='skill-badge font-mono text-xs'>Híbrido</span>
-                  <span class='text-xs text-zinc-400 dark:text-zinc-500 font-mono'>Nov/2023 – Dez/2024</span>
+                  <span class='work-badge'>Híbrido</span>
+                  <span class='text-xs text-zinc-500 font-mono'>Nov/2023 – Dez/2024</span>
                   <span class='text-xs text-[var(--color-accent)] font-semibold'>▸ 1 ano</span>
                 </div>
 
                 <!-- Description -->
                 <ul class='space-y-2.5 mb-4'>
-                  <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
                     <span>Participei da implantação da solução BigID em ambientes on-premise, estruturada em 1 VM dedicada ao MongoDB e 4 VMs para o core da aplicação, com workloads orquestrados via Kubernetes e configuração inicial de Service Mesh (Istio).</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
                     <span>Apoiei a implantação do BigID em ambiente governamental utilizando OpenShift na AWS (EKS), colaborandando na configuração de clusters, integração com Active Directory (LDAP), pipelines CI/CD (Azure DevOps) e provisionamento via CloudFormation.</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed'>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
                     <span>Contribuí para observabilidade e segurança dos ambientes Kubernetes, realizando monitoramento com Prometheus e gestão de acessos por meio de RBAC e SCC, além de padronização de deploys com GitOps (Argo CD).</span>
                   </li>
@@ -367,26 +254,22 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
                 <!-- Tech Stack -->
                 <div class='flex flex-wrap items-center gap-2'>
-                  <span class='text-xs font-mono text-zinc-400 dark:text-zinc-500 shrink-0'>Stack:</span>
+                  <span class='text-xs font-mono text-zinc-500 shrink-0'>Stack:</span>
                   <div class='flex flex-wrap gap-1.5'>
-                    <span class='skill-badge text-[10px]'>BigID</span>
-                    <span class='skill-badge text-[10px]'>Kubernetes</span>
-                    <span class='skill-badge text-[10px]'>OpenShift</span>
-                    <span class='skill-badge text-[10px]'>AWS EKS</span>
-                    <span class='skill-badge text-[10px]'>Istio</span>
-                    <span class='skill-badge text-[10px]'>Azure DevOps</span>
-                    <span class='skill-badge text-[10px]'>Prometheus</span>
-                    <span class='skill-badge text-[10px]'>ElasticSearch</span>
-                    <span class='skill-badge text-[10px]'>RabbitMQ</span>
-                    <span class='skill-badge text-[10px]'>MongoDB</span>
-                    <span class='skill-badge text-[10px]'>Argo CD</span>
+                    <span class='skill-badge'>BigID</span>
+                    <span class='skill-badge'>Kubernetes</span>
+                    <span class='skill-badge'>OpenShift</span>
+                    <span class='skill-badge'>Prometheus</span>
+                    <span class='skill-badge'>RabbitMQ</span>
+                    <span class='skill-badge'>MongoDB</span>
+                    <span class='skill-badge'>Argo CD</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        </article>
-      </main>
-    </div>
+      </article>
+    </main>
+  </div>
 </BaseLayout>

@@ -15,7 +15,7 @@ const isActive = href === pathname || href === '/' + subpath?.[0];
 	class:list={[
 		className, 
 		{ 
-			'text-[var(--color-accent)] bg-[var(--color-bg-secondary)] dark:bg-[var(--color-bg-secondary)]': isActive 
+			'text-[var(--color-accent)] bg-[var(--color-bg-secondary)] bg-[var(--color-bg-secondary)]': isActive 
 		}, 
 	]}
 	aria-current={isActive ? 'page' : undefined}

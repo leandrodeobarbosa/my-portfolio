@@ -5,15 +5,22 @@ import type { Project } from '../domains/portfolio/projects'
 interface Props {
   projects: Project[];
   featured?: boolean;
+  horizontal?: boolean;
+  variantOverrides?: Record<string, 'featured' | 'secondary' | 'compact' | 'horizontal'>;
 }
 
-const { projects, featured = false } = Astro.props;
+const { projects, featured = false, horizontal = false, variantOverrides = {} } = Astro.props;
 
 // Simplified variant logic - prioritize consistent 2-column layout
 // Featured gets a slightly larger visual emphasis within the 2-column constraint
-type CardVariant = 'featured' | 'secondary';
+type CardVariant = 'featured' | 'secondary' | 'compact' | 'horizontal';
 
-const getCardVariant = (index: number, isFeatured: boolean): CardVariant => {
+const getCardVariant = (index: number, isFeatured: boolean, isHorizontal: boolean, projectName: string): CardVariant => {
+  // Check if there's a variant override for this project
+  if (variantOverrides[projectName]) {
+    return variantOverrides[projectName];
+  }
+  if (isHorizontal) return 'horizontal';
   if (!isFeatured) return 'secondary';
   // In featured mode, first project gets emphasized treatment
   return index === 0 ? 'featured' : 'secondary';
@@ -29,20 +36,20 @@ for (let i = 0; i < projects.length; i += 2) {
 }
 ---
 
-<div class="projects-grid" data-featured={featured}>
+<div class="projects-grid" data-featured={featured} data-horizontal={horizontal}>
   {projectPairs.map(([project1, project2], pairIndex: number) => (
     <div class="projects-grid__row">
       <div class="projects-grid__item">
         <ProjectCard
           project={project1}
-          variant={getCardVariant(pairIndex * 2, featured)}
+          variant={getCardVariant(pairIndex * 2, featured, horizontal, project1.name)}
         />
       </div>
       {project2 && (
         <div class="projects-grid__item">
           <ProjectCard
             project={project2}
-            variant={getCardVariant(pairIndex * 2 + 1, featured)}
+            variant={getCardVariant(pairIndex * 2 + 1, featured, horizontal, project2.name)}
           />
         </div>
       )}
@@ -121,5 +128,14 @@ for (let i = 0; i < projects.length; i += 2) {
     .projects-grid__row {
       transition: none;
     }
+  }
+
+  /* Horizontal layout - full-width cards */
+  .projects-grid[data-horizontal="true"] .projects-grid__row {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-grid[data-horizontal="true"] .projects-grid__item {
+    width: 100%;
   }
 </style>

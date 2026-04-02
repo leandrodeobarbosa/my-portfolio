@@ -7,7 +7,7 @@ import GithubBlack from '@src/assets/img/github-mark.svg';
 
 interface Props {
   project: Project;
-  variant?: 'featured' | 'secondary' | 'compact';
+  variant?: 'featured' | 'secondary' | 'compact' | 'horizontal';
   index?: number;
 }
 
@@ -45,144 +45,219 @@ const keepOriginalColors = ['typescript', 'ts', 'docker', 'astro', 'tailwind', '
 const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconName.toLowerCase());
 ---
 
-<article class:list={[
+<article
+  transition:name={`project-${project.name.toLowerCase().replace(/\s+/g, '-')}`}
+  class:list={[
   'project-card',
   variant === 'featured' && 'project-card--featured',
-  variant === 'compact' && 'project-card--compact'
+  variant === 'compact' && 'project-card--compact',
+  variant === 'horizontal' && 'project-card--horizontal'
 ]}>
-  {project.badge && (
-    <a href={project.badge.link} target="_blank" rel="noopener noreferrer" class="project-card__badge" aria-label={project.badge.label}>
-      <img src={project.badge.imageUrl} alt={project.badge.label} loading="lazy" />
-    </a>
-  )}
-  <header class="project-card__header">
-    <div class="project-card__meta">
-      {(project.tags || []).slice(0, 2).map((tag: string) => (
-        <span class="project-card__tag">{tag}</span>
-      ))}
 
-      {project.stargazers_count !== undefined && (
-        <a
-          href={project.html_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="project-card__stars"
-          aria-label={`${project.stargazers_count} stars on GitHub`}
-        >
-          <Image src={GithubBlack} height={14} class="dark:hidden" alt="" />
-          <Image src={GithubWhite} height={14} class="hidden dark:block" alt="" />
-          <span>{kFormatter(project.stargazers_count)}</span>
-        </a>
-      )}
-    </div>
+  {/* Two-Column Layout: Content (60%) + Terminal (40%) */}
+  <div class="project-card__layout">
+    {/* Left Column: Title, Badge, Description, Tech Icons, Footer */}
+    <div class="project-card__content">
+      {/* Header Section - Tags, Stars, Title */}
+      <header class="project-card__header">
+        <div class="project-card__meta">
+          {project.name !== 'FlowDX App' && (project.tags || []).slice(0, 2).map((tag: string) => (
+            <span class="project-card__tag">{tag}</span>
+          ))}
 
-    <h3 class="project-card__title">
-      <a href={project.demoLink} target="_blank" rel={project.demoLinkRel} class="project-card__link">
-        {project.name}
-      </a>
-    </h3>
-  </header>
+          {project.stargazers_count !== undefined && (
+            <a
+              href={project.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-card__stars"
+              aria-label={`${project.stargazers_count} stars on GitHub`}
+            >
+              <Image src={GithubBlack} height={14} class="hidden" alt="" />
+              <Image src={GithubWhite} height={14} class="hidden block" alt="" />
+              <span>{kFormatter(project.stargazers_count)}</span>
+            </a>
+          )}
+        </div>
 
-  <p class="project-card__description">
-    {project.description}
-  </p>
+        <h3 class="project-card__title" transition:name={`project-title-${project.name.toLowerCase().replace(/\s+/g, '-')}`}>
+          {(project.name === 'FlowDX Platform' || project.name === 'FlowDX App') ? (
+            <span>{project.name}</span>
+          ) : (
+            <a href={project.demoLink} {...(project.demoLink.startsWith('/') ? {} : { target: '_blank', rel: project.demoLinkRel || 'noopener noreferrer' })} class="project-card__link">
+              {project.name}
+            </a>
+          )}
+          {project.status && (
+            <span class="project-card__status">[{project.status}]</span>
+          )}
+          {project.badge && (
+            <a href={project.badge.link} target="_blank" rel="noopener noreferrer" class="project-card__badge" aria-label={project.badge.label}>
+              <img src={project.badge.imageUrl} alt={project.badge.label} loading="lazy" />
+            </a>
+          )}
+        </h3>
+      </header>
 
-  {/* Tech Icons - Clean row without label */}
-  {(project.techIcons || []).length > 0 && (
-    <div class="project-card__tech">
-      {project.techIcons.map((iconName: string) => {
-        const iconUrl = techIcons[iconName.toLowerCase()];
-        const isAws = iconName.toLowerCase() === 'aws';
-        const awsDarkUrl = techIcons['aws-dark'];
+      {/* Description Section */}
+      <p class="project-card__description">
+        {project.description}
+      </p>
 
-        return iconUrl ? (
-          isAws ? (
-            <>
+      {/* Tech Icons */}
+      {(project.techIcons || []).length > 0 && (
+        <div class="project-card__tech">
+          {(project.techIcons || []).map((iconName: string) => {
+            const iconUrl = techIcons[iconName.toLowerCase()];
+
+            return iconUrl ? (
               <img
                 src={iconUrl}
                 width={20}
                 height={20}
                 alt={iconName}
-                class="project-card__tech-icon dark:hidden"
+                class={`project-card__tech-icon ${shouldKeepColor(iconName) ? '' : 'invert'}`}
                 loading="lazy"
               />
-              <img
-                src={awsDarkUrl}
-                width={20}
-                height={20}
-                alt={iconName}
-                class="project-card__tech-icon hidden dark:block"
-                loading="lazy"
-              />
-            </>
-          ) : (
-            <img
-              src={iconUrl}
-              width={20}
-              height={20}
-              alt={iconName}
-              class={`project-card__tech-icon ${shouldKeepColor(iconName) ? '' : 'dark:invert'}`}
-              loading="lazy"
-            />
-          )
-        ) : null;
-      })}
-    </div>
-  )}
+            ) : null;
+          })}
+        </div>
+      )}
 
-  <footer class="project-card__footer">
-    {project.demoLink && (
-      <a href={project.demoLink} target="_blank" rel={project.demoLinkRel} class="project-card__action">
-        <span>View</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-        </svg>
-      </a>
+      {/* Footer Section - Actions */}
+      <footer class="project-card__footer">
+        {project.demoLink && (
+          <a href={project.demoLink} {...(project.demoLink.startsWith('/') ? {} : { target: '_blank', rel: project.demoLinkRel || 'noopener noreferrer' })} class="project-card__action">
+            <span>{project.name === 'FlowDX Platform' ? 'FlowDX Platform — Technical Overview' : 'FlowDX App — Architecture Overview'}</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        )}
+        {project.postLink && (
+          <a href={project.postLink} class="project-card__action project-card__action--secondary">
+            Article
+          </a>
+        )}
+      </footer>
+    </div>
+
+    {/* Right Column: Terminal */}
+    {(project.name === 'FlowDX Platform' || project.name === 'FlowDX App') && (
+      <div class="project-card__terminal-wrapper">
+        <div class="project-card__terminal">
+          <div class="project-card__terminal-header">
+            <span class="project-card__terminal-dot"></span>
+            <span class="project-card__terminal-dot"></span>
+            <span class="project-card__terminal-dot"></span>
+            <span class="project-card__terminal-title">{project.name === 'FlowDX Platform' ? 'flowdx-status' : 'flowdx-app'}</span>
+          </div>
+          <div class="project-card__terminal-body">
+            {project.name === 'FlowDX Platform' ? (
+              <>
+                <div class="project-card__terminal-line">
+                  <span class="project-card__terminal-prompt">$</span>
+                  <span class="project-card__terminal-key">reference:</span>
+                  <span class="project-card__terminal-value">FlowDX App (production-like workload)</span>
+                </div>
+                <div class="project-card__terminal-line">
+                  <span class="project-card__terminal-prompt">$</span>
+                  <span class="project-card__terminal-key">status:</span>
+                  <span class="project-card__terminal-value">app + infra + ci/cd</span>
+                </div>
+                <div class="project-card__terminal-line">
+                  <span class="project-card__terminal-prompt">$</span>
+                  <span class="project-card__terminal-key">next:</span>
+                  <span class="project-card__terminal-value">cli, templates, delivery engine</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <div class="project-card__terminal-line">
+                  <span class="project-card__terminal-prompt">$</span>
+                  <span class="project-card__terminal-key">stack:</span>
+                  <span class="project-card__terminal-value">Node.js + TypeScript + Astro</span>
+                </div>
+                <div class="project-card__terminal-line">
+                  <span class="project-card__terminal-prompt">$</span>
+                  <span class="project-card__terminal-key">deploy:</span>
+                  <span class="project-card__terminal-value">AWS S3 + CloudFront</span>
+                </div>
+                <div class="project-card__terminal-line">
+                  <span class="project-card__terminal-prompt">$</span>
+                  <span class="project-card__terminal-key">ci/cd:</span>
+                  <span class="project-card__terminal-value">GitHub Actions</span>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     )}
-    {project.postLink && (
-      <a href={project.postLink} class="project-card__action project-card__action--secondary">
-        Article
-      </a>
-    )}
-  </footer>
+  </div>
 </article>
 
 <style>
   .project-card {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.25rem;
-    border-left: 1px solid var(--color-border-subtle);
-    transition: border-color 200ms ease;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 0.75rem;
+    transition: border-color 200ms ease, border-width 200ms ease, box-shadow 200ms ease, transform 200ms ease;
     position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), transparent);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .project-card:hover::before {
+    opacity: 1;
   }
 
   .project-card:hover {
     border-color: var(--color-accent);
+    border-width: 0.5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
   }
 
   .project-card__badge {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    opacity: 0.6;
-    transition: opacity 200ms ease;
+    opacity: 0.7;
+    transition: opacity 200ms ease, transform 200ms ease;
+    filter: grayscale(20%);
+    margin-left: 0.5rem;
+    vertical-align: middle;
   }
 
   .project-card__badge:hover {
     opacity: 1;
+    transform: scale(1.05);
+    filter: grayscale(0%);
   }
 
   .project-card__badge img {
     height: 1.125rem;
     width: auto;
+    vertical-align: middle;
   }
 
   /* Featured variant - more prominent */
   .project-card--featured {
     padding: 1.5rem;
-    border-left-width: 2px;
   }
 
   .project-card--featured .project-card__title {
@@ -196,7 +271,6 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
   /* Compact variant - for smaller displays */
   .project-card--compact {
     padding: 1rem;
-    gap: 0.5rem;
   }
 
   .project-card--compact .project-card__title {
@@ -211,11 +285,56 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     overflow: hidden;
   }
 
+  /* Horizontal variant - full-width layout */
+  .project-card--horizontal {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+  }
+
+  .project-card--horizontal .project-card__layout {
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+
+  .project-card--horizontal .project-card__content {
+    flex: 0 0 60%;
+    min-width: 0;
+  }
+
+  .project-card--horizontal .project-card__terminal-wrapper {
+    flex: 0 0 40%;
+    min-width: 0;
+    display: flex;
+    align-items: stretch;
+    margin-left: -1.5rem;
+  }
+
+  /* When there's no terminal wrapper, content takes full width */
+  .project-card--horizontal .project-card__layout:not(:has(.project-card__terminal-wrapper)) .project-card__content {
+    flex: 1 1 100%;
+  }
+
+  /* Two-Column Layout - Rule of Thirds (60/40) */
+  .project-card__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .project-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
   /* Header */
   .project-card__header {
     display: flex;
     flex-direction: column;
-    gap: 0.375rem;
+    gap: 0.5rem;
   }
 
   .project-card__meta {
@@ -254,6 +373,17 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     line-height: 1.4;
     color: var(--color-text-primary);
     margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .project-card__status {
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.05em;
   }
 
   .project-card__link {
@@ -269,9 +399,14 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
   /* Description */
   .project-card__description {
     font-size: 0.875rem;
-    line-height: 1.6;
+    line-height: 1.7;
     color: var(--color-text-secondary);
     margin: 0;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    text-wrap: balance;
   }
 
   /* Tech icons */
@@ -279,14 +414,12 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.375rem;
-    margin-top: auto;
-    padding-top: 0.5rem;
+    gap: 0.5rem;
   }
 
   .project-card__tech-icon {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     object-fit: contain;
     opacity: 0.7;
     transition: opacity 200ms ease, transform 200ms ease;
@@ -297,10 +430,115 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     transform: scale(1.15);
   }
 
-  .project-card__tech-more {
+  /* Terminal wrapper - Right column */
+  .project-card__terminal-wrapper {
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* Terminal block */
+  .project-card__terminal {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.98) 100%);
+    border-radius: 0.625rem;
+    overflow: hidden;
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', 'Source Code Pro', monospace;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: transform 200ms ease;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+
+
+  .project-card:hover .project-card__terminal {
+    transform: translateY(-2px);
+  }
+
+  .project-card__terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.625rem 0.875rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 200ms ease;
+  }
+
+  .project-card:hover .project-card__terminal-header {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  }
+
+  .project-card__terminal-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .project-card__terminal-dot:first-child {
+    background: #ff5f56;
+  }
+
+  .project-card__terminal-dot:nth-child(2) {
+    background: #ffbd2e;
+  }
+
+  .project-card__terminal-dot:nth-child(3) {
+    background: #27ca40;
+  }
+
+  .project-card__terminal-title {
+    margin-left: auto;
     font-size: 0.6875rem;
-    color: var(--color-text-tertiary);
+    color: rgba(255, 255, 255, 0.5);
     font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .project-card__terminal-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    flex: 1;
+  }
+
+  .project-card__terminal-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .project-card__terminal-prompt {
+    color: #27ca40;
+    font-weight: 600;
+    flex-shrink: 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .project-card__terminal-key {
+    color: #ffbd2e;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .project-card__terminal-value {
+    color: rgba(255, 255, 255, 0.85);
+    word-break: break-word;
   }
 
   /* Footer */
@@ -319,12 +557,20 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     font-weight: 500;
     color: var(--color-accent);
     text-decoration: none;
-    transition: color 200ms ease, gap 200ms ease;
+    transition: color 200ms ease;
+    white-space: nowrap;
   }
 
   .project-card__action:hover {
     color: var(--color-accent-hover);
-    gap: 0.5rem;
+  }
+
+  .project-card__action:hover svg {
+    transform: translateX(0.25rem);
+  }
+
+  .project-card__action svg {
+    transition: transform 200ms ease;
   }
 
   .project-card__action--secondary {
@@ -335,22 +581,53 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     color: var(--color-text-secondary);
   }
 
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .project-card--horizontal .project-card__layout {
+      flex-direction: column;
+    }
+
+    .project-card--horizontal .project-card__content {
+      flex: 1 1 100%;
+    }
+
+    .project-card--horizontal .project-card__terminal-wrapper {
+      flex: 1 1 100%;
+      margin-left: 0;
+    }
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .project-card,
     .project-card__link,
     .project-card__stars,
     .project-card__tech-icon,
-    .project-card__action {
+    .project-card__action,
+    .project-card__terminal {
       transition: none;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+      transform: none;
+      border-width: 1px;
     }
 
     .project-card__tech-icon:hover {
       transform: none;
     }
 
-    .project-card__action:hover {
-      gap: 0.25rem;
+    .project-card__action:hover svg {
+      transform: none;
+    }
+
+    .project-card:hover .project-card__terminal {
+      transform: none;
+    }
+
+    .project-card__terminal-prompt {
+      animation: none;
     }
   }
 </style>
