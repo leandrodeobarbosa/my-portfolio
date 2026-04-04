@@ -18,7 +18,17 @@ const { title, description, image, pubDate } = Astro.props;
 const ogImageUrl = image ? new URL(image, Astro.url) : undefined;
 ---
 
-<!-- Global Metadata -->
+<!-- Performance: No external fonts - using only system fonts for fastest possible FCP -->
+<meta name="theme-color" content="#18181b" />
+<style>
+  /* System fonts only - guaranteed instant render, no network dependency */
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+  pre, code, .font-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  }
+</style>
 <meta charset='utf-8' />
 <meta name='viewport' content='width=device-width,initial-scale=1' />
 <link rel='icon' type='image/svg+xml' href='/favicon-gear.svg' />

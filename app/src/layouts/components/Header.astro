@@ -125,7 +125,10 @@ const menu = NAV_ROUTES.map((route) => ({
 				{
 					menu.map((item) => (
 						<HeaderLink
-							class="px-3 py-2 text-zinc-300 hover:text-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)] rounded transition-all duration-200"
+							class:list={[
+								"px-3 py-2 text-zinc-300 hover:text-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)] rounded transition-all duration-200",
+								{ 'sobre-link': item.link === '/sobre/' }
+							]}
 							href={item.link}
 						>
 							{item.label}
@@ -186,7 +189,10 @@ const menu = NAV_ROUTES.map((route) => ({
 					menu.map((item, index) => (
 						<li>
 							<HeaderLink
-								class="flex items-center gap-2 px-4 py-3 rounded-lg text-zinc-200 hover:text-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)]/30 transition-all duration-200"
+								class:list={[
+									"flex items-center gap-2 px-4 py-3 rounded-lg text-zinc-200 hover:text-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)]/30 transition-all duration-200",
+									{ 'sobre-link': item.link === '/sobre/' }
+								]}
 								href={item.link}
 								role='menuitem'
 							>
@@ -380,8 +386,45 @@ const menu = NAV_ROUTES.map((route) => ({
 	// Ensure dark mode is always active
 	document.documentElement.classList.add('dark');
 
+	// Store references for cleanup
+	let menuToggleHandler = null;
+	let escapeKeyHandler = null;
+	let outsideClickHandler = null;
+	let scrollHandler = null;
+	let isMenuInitialized = false;
+
+	function cleanupMobileMenu() {
+		const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+		const mobileMenu = document.getElementById('mobileMenu');
+
+		if (!mobileMenuBtn || !mobileMenu) return;
+
+		// Remove event listeners
+		mobileMenuBtn.removeEventListener('click', menuToggleHandler);
+		document.removeEventListener('keydown', escapeKeyHandler);
+		document.removeEventListener('click', outsideClickHandler);
+		window.removeEventListener('scroll', scrollHandler);
+
+		// Reset state
+		mobileMenuBtn.classList.remove('open');
+		mobileMenu.classList.remove('open');
+		mobileMenuBtn.setAttribute('aria-expanded', 'false');
+		mobileMenu.setAttribute('aria-hidden', 'true');
+
+		menuToggleHandler = null;
+		escapeKeyHandler = null;
+		outsideClickHandler = null;
+		scrollHandler = null;
+		isMenuInitialized = false;
+	}
+
 	// Mobile menu toggle
 	function initMobileMenu() {
+		// Prevent multiple initializations
+		if (isMenuInitialized) {
+			cleanupMobileMenu();
+		}
+
 		const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 		const mobileMenu = document.getElementById('mobileMenu');
 
@@ -396,10 +439,11 @@ const menu = NAV_ROUTES.map((route) => ({
 			mobileMenu.setAttribute('aria-hidden', !isOpen);
 		}
 
-		mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+		menuToggleHandler = toggleMobileMenu;
+		mobileMenuBtn.addEventListener('click', menuToggleHandler);
 
 		// Close mobile menu on escape key
-		document.addEventListener('keydown', (e) => {
+		escapeKeyHandler = (e) => {
 			if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
 				mobileMenuBtn.classList.remove('open');
 				mobileMenu.classList.remove('open');
@@ -407,10 +451,11 @@ const menu = NAV_ROUTES.map((route) => ({
 				mobileMenu.setAttribute('aria-hidden', 'true');
 				mobileMenuBtn.focus();
 			}
-		});
+		};
+		document.addEventListener('keydown', escapeKeyHandler);
 
 		// Close mobile menu when clicking outside
-		document.addEventListener('click', (e) => {
+		outsideClickHandler = (e) => {
 			if (mobileMenu.classList.contains('open') &&
 				!mobileMenu.contains(e.target) &&
 				!mobileMenuBtn.contains(e.target)) {
@@ -419,12 +464,13 @@ const menu = NAV_ROUTES.map((route) => ({
 				mobileMenuBtn.setAttribute('aria-expanded', 'false');
 				mobileMenu.setAttribute('aria-hidden', 'true');
 			}
-		});
+		};
+		document.addEventListener('click', outsideClickHandler);
 
 		// Handle scroll: add border on scroll for better visual hierarchy
 		const header = document.getElementById('site-header');
 
-		window.addEventListener('scroll', () => {
+		scrollHandler = () => {
 			const currentScroll = window.scrollY;
 
 			if (currentScroll > 10) {
@@ -433,15 +479,18 @@ const menu = NAV_ROUTES.map((route) => ({
 				header?.classList.remove('border-b', 'border-[var(--color-border-subtle)]');
 			}
 
-		}, { passive: true });
+		};
+		window.addEventListener('scroll', scrollHandler, { passive: true });
+
+		isMenuInitialized = true;
 	}
 
 	// Initialize on first load
 	document.addEventListener('DOMContentLoaded', initMobileMenu);
 
-	// Re-initialize after View Transitions DOM swap
-	document.addEventListener('astro:after-swap', initMobileMenu);
-
-	// Terminal cursor effect - just keep the cursor blinking
-	// The CSS handles the blinking cursor animation
+	// Re-initialize after View Transitions DOM swap - cleanup first
+	document.addEventListener('astro:after-swap', function() {
+		cleanupMobileMenu();
+		initMobileMenu();
+	});
 </script>

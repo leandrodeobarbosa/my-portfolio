@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+/* Font loading - moved to BaseHead.astro for non-blocking async loading */
 
 @tailwind base;
 @tailwind components;
@@ -138,14 +138,9 @@
 		-webkit-tap-highlight-color: transparent;
 	}
 
-	/* Body background pattern */
+	/* Body background pattern - simplified for mobile performance */
 	body {
-		background-image:
-			radial-gradient(ellipse at 0% 0%, rgba(20, 184, 166, 0.12) 0%, transparent 40%),
-			radial-gradient(ellipse at 100% 0%, rgba(20, 184, 166, 0.08) 0%, transparent 35%),
-			radial-gradient(ellipse at 100% 100%, rgba(20, 184, 166, 0.10) 0%, transparent 40%),
-			radial-gradient(ellipse at 0% 100%, rgba(20, 184, 166, 0.06) 0%, transparent 35%),
-			url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2314B8A6' fill-opacity='0.015'%3E%3Cpath d='M30 30h8v2h-8zm2 4h4v2h-4zm-2 4h8v2h-8zm52-8h8v2h-8zm-2 4h12v2h-12zm2 4h8v2h-8zM30 60h8v2h-8zm2 4h4v2h-4zm-2 4h8v2h-8zm52-8h8v2h-8zm-2 4h12v2h-12zm2 4h8v2h-8zM30 90h8v2h-8zm2 4h4v2h-4zm-2 4h8v2h-8zm52-8h8v2h-8zm-2 4h12v2h-12zm2 4h8v2h-8zM60 15l-4 4 4 4 4-4zm0 30l-4 4 4 4 4-4zm0 30l-4 4 4 4 4-4zm0 30l-4 4 4 4 4-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+		background-image: radial-gradient(ellipse at 0% 0%, rgba(20, 184, 166, 0.08) 0%, transparent 50%);
 	}
 
 	/* Base styles */
@@ -208,9 +203,7 @@
 @layer components {
 	/* Documentation Style - Cards with enhanced glassmorphism */
 	.card {
-		background-color: rgba(24, 24, 27, 0.75);
-		backdrop-filter: blur(12px) saturate(180%);
-		-webkit-backdrop-filter: blur(12px) saturate(180%);
+		background-color: rgba(24, 24, 27, 0.85);
 		border: 1px solid rgba(63, 63, 70, 0.4);
 		border-radius: 0.75rem;
 		padding: 1.5rem;
@@ -232,9 +225,7 @@
 
 	/* Project Card - Enhanced glassmorphism with elevation */
 	.card-project {
-		background-color: rgba(24, 24, 27, 0.75);
-		backdrop-filter: blur(12px) saturate(180%);
-		-webkit-backdrop-filter: blur(12px) saturate(180%);
+		background-color: rgba(24, 24, 27, 0.85);
 		border: 1px solid rgba(63, 63, 70, 0.4);
 		border-radius: 0.75rem;
 		padding: 1.5rem;
@@ -293,8 +284,6 @@
 		letter-spacing: 0.1em;
 		color: var(--color-accent);
 		background-color: rgba(20, 184, 166, 0.1);
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
 		padding: 0.125rem 0.5rem;
 		border: 1px solid rgba(20, 184, 166, 0.3);
 		border-radius: 0.375rem;
@@ -309,9 +298,7 @@
 
 	/* Certification Card - Enhanced glassmorphism with elevation */
 	.card-certification {
-		background-color: rgba(24, 24, 27, 0.75);
-		backdrop-filter: blur(12px) saturate(180%);
-		-webkit-backdrop-filter: blur(12px) saturate(180%);
+		background-color: rgba(24, 24, 27, 0.85);
 		border: 1px solid rgba(63, 63, 70, 0.4);
 		border-radius: 0.75rem;
 		padding: 1.5rem;
@@ -341,8 +328,6 @@
 		font-weight: 500;
 		font-family: "IBM Plex Sans", system-ui, sans-serif;
 		background-color: rgba(20, 184, 166, 0.12);
-		backdrop-filter: blur(10px) saturate(180%);
-		-webkit-backdrop-filter: blur(10px) saturate(180%);
 		border: 1px solid rgba(20, 184, 166, 0.25);
 		border-radius: 9999px;
 		color: var(--color-accent);
@@ -411,6 +396,120 @@
 		transform: translateX(2px);
 	}
 
+	/* Role Terminal - Command Line Style */
+	.role-terminal {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.375rem 0.75rem;
+		font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+		font-size: 0.8125rem;
+		line-height: 1.5;
+		font-feature-settings: 'liga' 1, 'calt' 1;
+		-webkit-font-feature-settings: 'liga' 1, 'calt' 1;
+		-moz-font-feature-settings: 'liga' 1, 'calt' 1;
+		background: linear-gradient(135deg, rgba(24, 24, 27, 0.9) 0%, rgba(10, 10, 11, 0.95) 100%);
+		border: 1px solid rgba(63, 63, 70, 0.4);
+		border-radius: 0.5rem;
+		box-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.03);
+		transition: all 200ms ease;
+		cursor: default;
+	}
+
+	.role-terminal:hover {
+		border-color: rgba(20, 184, 166, 0.3);
+		box-shadow:
+			0 2px 4px rgba(0, 0, 0, 0.4),
+			0 0 0 1px rgba(20, 184, 166, 0.1);
+	}
+
+	.role-prompt {
+		color: var(--color-accent);
+		font-weight: 600;
+		font-size: 0.875rem;
+		user-select: none;
+	}
+
+	.role-command {
+		color: rgba(161, 161, 170, 0.9);
+		font-weight: 500;
+		letter-spacing: 0.02em;
+	}
+
+	.role-equals {
+		color: rgba(113, 113, 122, 0.8);
+		margin: 0 0.125rem;
+	}
+
+	.role-value {
+		color: #e4e4e7;
+		font-weight: 500;
+		background: linear-gradient(90deg, rgba(228, 228, 231, 0.9) 0%, rgba(212, 212, 216, 0.85) 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+
+	/* Kubernetes Resource - YAML/Manifest Syntax Highlighting */
+	.kube-resource {
+		font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+		font-size: 0.6875rem;
+		line-height: 1.5;
+		font-feature-settings: 'liga' 1, 'calt' 1;
+		-webkit-font-feature-settings: 'liga' 1, 'calt' 1;
+		-moz-font-feature-settings: 'liga' 1, 'calt' 1;
+		background: linear-gradient(135deg, rgba(24, 24, 27, 0.95) 0%, rgba(10, 10, 11, 0.98) 100%);
+		border: 1px solid rgba(63, 63, 70, 0.5);
+		border-radius: 0.375rem;
+		padding: 0.5rem 0.75rem;
+		box-shadow:
+			0 1px 3px rgba(0, 0, 0, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.03);
+		overflow-x: auto;
+		max-width: fit-content;
+	}
+
+	.kube-resource:hover {
+		border-color: rgba(20, 184, 166, 0.4);
+		box-shadow:
+			0 2px 6px rgba(0, 0, 0, 0.5),
+			0 0 0 1px rgba(20, 184, 166, 0.15);
+	}
+
+	.kube-resource pre {
+		margin: 0;
+		padding: 0;
+		background: transparent;
+	}
+
+	.kube-resource code {
+		font-family: inherit;
+		background: transparent;
+		padding: 0;
+	}
+
+	.kube-comment {
+		color: rgba(113, 113, 122, 0.9);
+		font-style: italic;
+		display: block;
+		margin-bottom: 0.25rem;
+	}
+
+	.kube-keyword {
+		color: rgba(147, 112, 219, 0.95);
+		font-weight: 500;
+	}
+
+	.kube-key {
+		color: rgba(161, 161, 170, 0.95);
+	}
+
+	.kube-string {
+		color: rgba(34, 211, 238, 0.95);
+	}
+
 	/* Work modality badge - Distinct style for Remoto/Híbrido */
 	.work-badge {
 		display: inline-flex;
@@ -421,8 +520,6 @@
 		font-weight: 500;
 		font-family: "IBM Plex Mono", monospace;
 		background-color: rgba(20, 184, 166, 0.08);
-		backdrop-filter: blur(10px) saturate(180%);
-		-webkit-backdrop-filter: blur(10px) saturate(180%);
 		border: 1px solid rgba(20, 184, 166, 0.2);
 		border-radius: 0.375rem;
 		color: var(--color-accent);
@@ -451,6 +548,21 @@
 		opacity: 1;
 	}
 
+	/* CV-style label - Minimal professional style for about page */
+	.cv-label {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-family: 'IBM Plex Mono', monospace;
+		font-size: 0.75rem;
+		font-weight: 400;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: rgba(161, 161, 170, 0.6);
+		padding: 0.125rem 0;
+		margin-left: 0.25rem;
+	}
+
 	/* Skill badge - Refined style for tech stack */
 	.skill-badge {
 		display: inline-flex;
@@ -461,8 +573,6 @@
 		font-weight: 500;
 		font-family: "IBM Plex Mono", monospace;
 		background-color: rgba(161, 161, 170, 0.08);
-		backdrop-filter: blur(8px) saturate(180%);
-		-webkit-backdrop-filter: blur(8px) saturate(180%);
 		border: 1px solid rgba(161, 161, 170, 0.15);
 		border-radius: 0.25rem;
 		color: var(--color-text-tertiary);
@@ -488,8 +598,6 @@
 		font-weight: 500;
 		font-family: "IBM Plex Sans", system-ui, sans-serif;
 		background-color: rgba(20, 184, 166, 0.12);
-		backdrop-filter: blur(10px) saturate(180%);
-		-webkit-backdrop-filter: blur(10px) saturate(180%);
 		border: 1px solid rgba(20, 184, 166, 0.25);
 		border-radius: 9999px;
 		color: var(--color-accent);
@@ -643,15 +751,13 @@
 		align-items: center;
 		gap: 0.5rem;
 		padding: 0.5rem 0.75rem;
-		background-color: rgba(24, 24, 27, 0.75);
-		backdrop-filter: blur(12px) saturate(180%);
-		-webkit-backdrop-filter: blur(12px) saturate(180%);
-		border: 1px solid rgba(63, 63, 70, 0.4);
-		border-radius: 0.5rem;
+		background: linear-gradient(135deg, rgba(24, 24, 27, 0.95) 0%, rgba(10, 10, 11, 0.98) 100%);
+		border: 1px solid rgba(63, 63, 70, 0.5);
+		border-radius: 0.375rem;
 		box-shadow:
-			0 2px 4px rgba(0, 0, 0, 0.15),
-			0 0 0 1px rgba(20, 184, 166, 0.05);
-		transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+			0 1px 3px rgba(0, 0, 0, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.03);
+		transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
 		position: relative;
 		z-index: 2;
 	}
@@ -659,9 +765,8 @@
 	.flow-badge:hover {
 		border-color: rgba(20, 184, 166, 0.4);
 		box-shadow:
-			0 4px 12px rgba(0, 0, 0, 0.2),
-			0 0 0 1px rgba(20, 184, 166, 0.1);
-		transform: translateY(-2px);
+			0 2px 6px rgba(0, 0, 0, 0.5),
+			0 0 0 1px rgba(20, 184, 166, 0.15);
 	}
 
 	/* Flow label - Category indicator */
@@ -671,7 +776,7 @@
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		color: var(--color-text-tertiary);
-		transition: color 200ms ease;
+		transition: color 75ms ease;
 	}
 
 	.flow-badge:hover .flow-label {
@@ -685,7 +790,7 @@
 		font-family: "IBM Plex Mono", monospace;
 		color: var(--color-text-secondary);
 		letter-spacing: 0.025em;
-		transition: color 200ms ease;
+		transition: color 75ms ease;
 	}
 
 	.flow-badge:hover .flow-tech {
@@ -927,8 +1032,6 @@
 		font-weight: 500;
 		color: var(--color-accent);
 		background-color: rgba(39, 39, 42, 0.6);
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
 		padding: 0.125rem 0.375rem;
 		border-radius: 0.25rem;
 		border: 1px solid rgba(63, 63, 70, 0.3);

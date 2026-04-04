@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import leandroImg from '@src/assets/img/leandro-img.png';
+import leandroImg from '@src/assets/img/leandro-img.avif';
 import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
 ---
@@ -51,6 +51,8 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
       const heroSection = document.querySelector('.about-hero-line');
       if (heroSection) {
+        // Ensure content is visible immediately, animation is just a nice effect
+        heroSection.classList.add('visible');
         observer.observe(heroSection);
       }
     }
@@ -60,7 +62,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
   </script>
 
   <div class='container'>
-    <main class='prose text-lg prose-invert max-w-4xl'>
+    <main class='prose text-lg prose-invert max-w-4xl' style='view-transition-name: sobre-page;'>
       <article>
         <!-- Name with badge and intro -->
         <div class='mb-12'>
@@ -88,15 +90,15 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
               <!-- Role badges row -->
               <div class='flex flex-wrap items-center gap-4 mb-5'>
-                <span class='work-badge'>
-                  DevOps & Platform Engineer
+                <span class='cv-label'>
+                  DevOps <span class='text-[var(--color-accent)]'>|</span> Platform Engineer
                 </span>
               </div>
 
               <!-- Career Narrative -->
               <div class='about-hero-line mb-6'>
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
-                  Sou um Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud native utilizando AWS, Terraform e CI/CD, estruturando pipelines e infraestruturas que priorizam previsibilidade, escalabilidade e facilidade de uso para times de desenvolvimento.
+                  Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud native utilizando AWS, Terraform e CI/CD, estruturando pipelines e infraestruturas que priorizam previsibilidade, escalabilidade e facilidade de uso para times de desenvolvimento.
                 </p>
 
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
@@ -161,13 +163,13 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
               </div>
 
               <!-- Content -->
-              <div class='relative group/pegasus'>
+              <div class='relative group/'>
                 <!-- Header -->
                 <div class='flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-2'>
                   <h3 class='font-bold text-xl text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
                     Pegasus EE
                   </h3>
-                  <span class='text-sm text-zinc-400'>Full-Stack Developer (Node.js) & DevOps</span>
+                  <span class='text-sm text-zinc-400'>DevOps Engineer</span>
                 </div>
 
                 <!-- Meta -->
@@ -194,21 +196,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 </ul>
 
                 <!-- Tech Stack - Horizontal scroll on mobile -->
-                <div class='flex flex-wrap items-center gap-2'>
-                  <span class='text-xs font-mono text-zinc-500 shrink-0'>Stack:</span>
-                  <div class='flex flex-wrap gap-1.5'>
-                    <span class='skill-badge'>Node.js</span>
-                    <span class='skill-badge'>REST API</span>
-                    <span class='skill-badge'>Linux</span>
-                    <span class='skill-badge'>Bash</span>
-                    <span class='skill-badge'>Git</span>
-                    <span class='skill-badge'>OWASP</span>
-                    <span class='skill-badge'>RBAC</span>
-                    <span class='skill-badge'>GitHub Actions</span>
-                    <span class='skill-badge'>Nginx</span>
-                    <span class='skill-badge'>Ansible</span>
-                  </div>
-                </div>
+                <!-- Removed: skill badges section -->
               </div>
             </div>
 
@@ -240,31 +228,20 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 <ul class='space-y-2.5 mb-4'>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Participei da implantação da solução BigID em ambientes on-premise, estruturada em 1 VM dedicada ao MongoDB e 4 VMs para o core da aplicação, com workloads orquestrados via Kubernetes e configuração inicial de Service Mesh (Istio).</span>
+                    <span>Participei da implantação da solução BigID em ambientes on-premise, estruturada em 1 VM dedicada ao MongoDB e 4 VMs para o core da aplicação, com workloads orquestrados via Kubernetes.</span>
                   </li>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Apoiei a implantação do BigID em ambiente governamental utilizando OpenShift na AWS (EKS), colaborandando na configuração de clusters, integração com Active Directory (LDAP), pipelines CI/CD (Azure DevOps) e provisionamento via CloudFormation.</span>
+                    <span>Apoiei a implantação do BigID em ambiente governamental utilizando OpenShift na AWS, colaborandando na configuração de clusters, integração com Active Directory (LDAP), pipelines CI/CD e provisionamento via CloudFormation.</span>
                   </li>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Contribuí para observabilidade e segurança dos ambientes Kubernetes, realizando monitoramento com Prometheus e gestão de acessos por meio de RBAC e SCC, além de padronização de deploys com GitOps (Argo CD).</span>
+                    <span>Contribuí para a observabilidade e segurança de ambientes Kubernetes, implementando controle de acesso com RBAC e SCC, integração com Prometheus para métricas e monitoramento, e padronização de deploys através de GitOps com Argo CD, garantindo consistência, rastreabilidade e maior confiabilidade nas entregas.</span>
                   </li>
                 </ul>
 
                 <!-- Tech Stack -->
-                <div class='flex flex-wrap items-center gap-2'>
-                  <span class='text-xs font-mono text-zinc-500 shrink-0'>Stack:</span>
-                  <div class='flex flex-wrap gap-1.5'>
-                    <span class='skill-badge'>BigID</span>
-                    <span class='skill-badge'>Kubernetes</span>
-                    <span class='skill-badge'>OpenShift</span>
-                    <span class='skill-badge'>Prometheus</span>
-                    <span class='skill-badge'>RabbitMQ</span>
-                    <span class='skill-badge'>MongoDB</span>
-                    <span class='skill-badge'>Argo CD</span>
-                  </div>
-                </div>
+                <!-- Removed: skill badges section -->
               </div>
             </div>
           </div>
