@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { PROJECTS as projects } from '../domains/portfolio/projects';
 import ProjectList from '../components/ProjectList.astro'
 
-const top3Projects = projects.slice(0, 2);
+const top3Projects = projects.slice(0, 1);
 ---
 
 <BaseLayout title={SITE_TITLE + ' - ' + SITE_TAGLINE} description={SITE_DESCRIPTION}>
@@ -14,25 +14,34 @@ const top3Projects = projects.slice(0, 2);
 			<div class='max-w-4xl mb-20'>
 				<!-- Name, Seniority Micro-signal, and Keywords -->
 				<div class='flex-1 min-w-0 pt-1'>
-					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-100 font-mono mb-3'>
+					<h1 class='text-4xl sm:text-5xl font-bold text-zinc-100 font-mono mb-6 tracking-wide'>
 						Leandro de Oliveira Barbosa
 					</h1>
 
-					<!-- Role Badge - Enhanced glassmorphism -->
-					<div class='mb-4'>
-						<span class='work-badge'>
-							DevOps & Platform Engineer
-						</span>
-					</div>
+					<!-- Role + Intro Row -->
+					<div class='flex flex-wrap items-start gap-4 mb-6'>
+						<!-- Kubernetes ConfigMap Resource -->
+						<div class="kube-resource" role="status" aria-label="Professional role">
+							<pre><code><span class="kube-comment"># ConfigMap - Profile</span>
+<span class="kube-keyword">kind</span>: <span class="kube-string">ConfigMap</span>
+<span class="kube-keyword">metadata</span>:
+  <span class="kube-key">name</span>: <span class="kube-string">leandro-profile</span>
+<span class="kube-keyword">data</span>:
+  <span class="kube-key">role</span>: <span class="kube-string">DevOps & Platform Engineer</span>
+  <span class="kube-key">focus</span>: <span class="kube-string">Automation, IDP, Cloud Native</span>
+  <span class="kube-key">status</span>: <span class="kube-string">open_to_work</span></code></pre>
+						</div>
 
-			<!-- Introduction - Enhanced visual hierarchy -->
-			<div class='mb-6'>
-				<p class='text-lg sm:text-xl leading-relaxed text-zinc-200 max-w-[65ch] mb-4'>
-					<span class='text-[var(--color-accent)]'>Desenvolvo plataformas de nuvem</span> com foco em automação e pipelines que aceleram o ciclo de entrega e melhoram a experiência do desenvolvedor.
-				<a href='/sobre/' class='inline-flex items-center gap-1 ml-2 text-xs font-mono text-zinc-300 hover:text-[var(--color-accent)] transition-all duration-200 no-underline opacity-70 hover:opacity-100 hover:translate-x-0.5'>
-					<span class='text-[var(--color-accent)]'>cat</span> sobre.md <span class='text-zinc-400'>→</span>
-				</a>
-				</p>
+						<!-- Introduction Text -->
+						<div class='flex-1 min-w-[200px] pt-0'>
+							<p class='text-lg sm:text-xl leading-relaxed text-zinc-200 max-w-[65ch]'>
+								<span class='text-[var(--color-accent)]'>Desenvolvo plataformas de nuvem</span> com foco em automação e pipelines que aceleram o ciclo de entrega e melhoram a experiência do desenvolvedor.
+							</p>
+							<a href='/sobre/' class='inline-flex items-center gap-1 mt-4 text-xs font-mono text-zinc-300 hover:text-[var(--color-accent)] transition-all duration-200 no-underline opacity-70 hover:opacity-100 group'>
+								<span class='text-[var(--color-accent)]'>cat</span> sobre.md <svg class='transition-transform duration-200 group-hover:translate-x-1' xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='m12 5 7 7-7 7'/></svg>
+							</a>
+						</div>
+					</div>
 
 				<!-- Key Stack - Flowchart Style -->
 				<div class='skill-flowchart mb-4' role='list' aria-label='Tech stack flowchart'>
@@ -94,17 +103,20 @@ const top3Projects = projects.slice(0, 2);
 
 
 
-
 			</div>
 
 			<!-- Projects - Markdown Style Header -->
 			<div class='mb-12'>
 				<div class='flex justify-between items-center gap-2 mb-6'>
-					<h2 class='text-xl font-mono font-bold text-zinc-100'>## Projetos</h2>
+					<h2 class='text-xl font-mono font-bold text-zinc-100'>## Projeto em Destaque</h2>
+					<a href='/projetos/' class='inline-flex items-center gap-1 text-xs font-mono text-zinc-400 hover:text-[var(--color-accent)] transition-all duration-200 no-underline opacity-70 hover:opacity-100 group'>
+						<span>Ver todos os projetos</span>
+						<svg class='transition-transform duration-200 group-hover:translate-x-1' xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+							<path d='M5 12h14'/><path d='m12 5 7 7-7 7'/>
+						</svg>
+					</a>
 				</div>
-				<ProjectList projects={top3Projects} featured={true} horizontal={true}/>
-			</div
-
+				<ProjectList projects={top3Projects} featured={true} horizontal={true}/></div
 
 
 

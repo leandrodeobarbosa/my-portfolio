@@ -2,7 +2,7 @@
 // StructuredData.astro - JSON-LD Structured Data for SEO
 // Implements Person, BlogPosting, and Website schemas optimized for E-E-A-T
 
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_OG_LOCALE } from '../../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 
 interface Props {
   type: 'website' | 'person' | 'about' | 'projects';
@@ -18,10 +18,7 @@ const {
   type,
   title,
   description,
-  image,
   slug,
-  pubDate,
-  updatedDate
 } = Astro.props;
 
 // Site-wide values

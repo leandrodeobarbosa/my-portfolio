@@ -6,11 +6,9 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-
     "check": "astro check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-
     "ci:check": "pnpm run lint && pnpm run check && pnpm run build"
   },
   "dependencies": {

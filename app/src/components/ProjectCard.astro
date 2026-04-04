@@ -13,36 +13,13 @@ interface Props {
 
 const { project, variant = 'secondary' } = Astro.props;
 
-const techIcons: Record<string, string> = {
-  fedora: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fedora/fedora-original.svg',
-  terminal: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-plain.svg',
-  bash: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg',
-  shell: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg',
-  javascript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
-  js: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
-  typescript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
-  ts: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
-  docker: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
-  kubernetes: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg',
-  k8s: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg',
-  terraform: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg',
-  prometheus: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg',
-  grafana: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg',
-  githubactions: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg',
-  actions: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/githubactions/githubactions-original.svg',
-  aws: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg',
-  'aws-dark': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg',
-  oci: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg',
-  astro: 'https://api.iconify.design/skill-icons:astro.svg',
-  tailwind: 'https://img.icons8.com/color/48/tailwindcss.png',
-  html: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
-  css: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+// Tech icons mapping - disabled to remove external CDN dependencies
+// Use text labels instead of external icon images
+const techIcons: Record<string, null> = {
+  // All icons disabled - use project.tags for tech display
 };
 
-// Icons that should keep original colors in dark mode
-const keepOriginalColors = ['typescript', 'ts', 'docker', 'astro', 'tailwind', 'html', 'css', 'kubernetes', 'k8s', 'terraform', 'prometheus', 'grafana', 'aws', 'oci', 'oracle', 'fedora', 'javascript', 'js', 'githubactions', 'actions'];
-
-const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconName.toLowerCase());
+// Tech icons disabled - use project.tags instead
 ---
 
 <article
@@ -93,7 +70,7 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
           )}
           {project.badge && (
             <a href={project.badge.link} target="_blank" rel="noopener noreferrer" class="project-card__badge" aria-label={project.badge.label}>
-              <img src={project.badge.imageUrl} alt={project.badge.label} loading="lazy" />
+              <img src={project.badge.imageUrl} alt={project.badge.label} loading="lazy" width="88" height="22" style="display: inline-block; height: 22px; width: auto;" />
             </a>
           )}
         </h3>
@@ -116,7 +93,7 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
                 width={20}
                 height={20}
                 alt={iconName}
-                class={`project-card__tech-icon ${shouldKeepColor(iconName) ? '' : 'invert'}`}
+                class="project-card__tech-icon"
                 loading="lazy"
               />
             ) : null;
@@ -163,12 +140,12 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
                 <div class="project-card__terminal-line">
                   <span class="project-card__terminal-prompt">$</span>
                   <span class="project-card__terminal-key">status:</span>
-                  <span class="project-card__terminal-value">app + infra + ci/cd</span>
+                  <span class="project-card__terminal-value">aws + terraform + ci/cd (drift detection)</span>
                 </div>
                 <div class="project-card__terminal-line">
                   <span class="project-card__terminal-prompt">$</span>
                   <span class="project-card__terminal-key">next:</span>
-                  <span class="project-card__terminal-value">cli, templates, delivery engine</span>
+                  <span class="project-card__terminal-value">cli, templates, self-service engine</span>
                 </div>
               </>
             ) : (
@@ -441,7 +418,7 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.98) 100%);
     border-radius: 0.625rem;
     overflow: hidden;
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', 'Source Code Pro', monospace;
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
     font-size: 0.75rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -555,6 +532,10 @@ const shouldKeepColor = (iconName: string) => keepOriginalColors.includes(iconNa
     gap: 0.25rem;
     font-size: 0.8125rem;
     font-weight: 500;
+    font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    font-feature-settings: 'liga' 1, 'calt' 1;
+    -webkit-font-feature-settings: 'liga' 1, 'calt' 1;
+    -moz-font-feature-settings: 'liga' 1, 'calt' 1;
     color: var(--color-accent);
     text-decoration: none;
     transition: color 200ms ease;

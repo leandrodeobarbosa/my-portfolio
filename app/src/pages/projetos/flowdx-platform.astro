@@ -3,70 +3,133 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-	title="FlowDX Platform"
-	description="Plataforma Interna de Desenvolvedor (IDP) focada em self-service para provisionamento de infraestrutura e entrega de aplicações."
-	type='projects'
-	slug='/projetos/flowdx-platform'
+  title="FlowDX Platform"
+  description="Plataforma Interna de Desenvolvedor (IDP) focada em self-service para provisionamento de infraestrutura e entrega de aplicações."
+  type='projects'
+  slug='/projetos/flowdx-platform'
 >
-  <div class='container'>
+  <div class='containers'>
     <div class='flex gap-8 lg:gap-12'>
       <!-- Left Sidebar Navigation -->
       <nav class='hidden lg:block w-48 shrink-0'>
-        <div class='sticky top-24'>
+        <div class='sticky top-24 h-screen flex flex-col justify-center'>
 
-          <ul class='space-y-2 border-l border-zinc-800'>
+          <ul class='space-y-4 border-l border-zinc-800 py-8'>
             <li>
               <a
-                href='#overview'
-                class='nav-link block py-1.5 pl-4 text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
-                data-section='overview'
+                href='#context'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='context'
               >
-                Overview
+                Contexto
               </a>
             </li>
             <li>
               <a
                 href='#current-state'
-                class='nav-link block py-1.5 pl-4 text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
                 data-section='current-state'
               >
-                Current State
+                Estado Atual
+              </a>
+            </li>
+            <li>
+              <a
+                href='#technical-snapshot'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='technical-snapshot'
+              >
+                Technical Snapshot
               </a>
             </li>
             <li>
               <a
                 href='#current-architecture'
-                class='nav-link block py-1.5 pl-4 text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
                 data-section='current-architecture'
               >
-                Current Architecture
+                Diagrama de Contexto
+              </a>
+            </li>
+            <li>
+              <a
+                href='#architecture-highlights'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='architecture-highlights'
+              >
+                Destaques
+              </a>
+            </li>
+            <li>
+              <a
+                href='#container-ops'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='container-ops'
+              >
+                Container & Ops
+              </a>
+            </li>
+            <li>
+              <a
+                href='#gaps'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='gaps'
+              >
+                O que Falta
+              </a>
+            </li>
+            <li>
+              <a
+                href='#target-architecture'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='target-architecture'
+              >
+                Arquitetura-Alvo
               </a>
             </li>
             <li>
               <a
                 href='#evolution-roadmap'
-                class='nav-link block py-1.5 pl-4 text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
                 data-section='evolution-roadmap'
               >
-                Evolution / Roadmap
+                Roadmap
               </a>
             </li>
             <li>
               <a
-                href='#flowdx-components'
-                class='nav-link block py-1.5 pl-4 text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
-                data-section='flowdx-components'
+                href='#repository-structure'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='repository-structure'
               >
-                FlowDX Components
+                Estrutura
+              </a>
+            </li>
+            <li>
+              <a
+                href='#principles'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='principles'
+              >
+                Princípios
               </a>
             </li>
             <li>
               <a
                 href='#purpose'
-                class='nav-link block py-1.5 pl-4 text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
                 data-section='purpose'
               >
-                Purpose
+                Por Que Existe
+              </a>
+            </li>
+            <li>
+              <a
+                href='#evidence'
+                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
+                data-section='evidence'
+              >
+                Evidências
               </a>
             </li>
           </ul>
@@ -74,7 +137,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </nav>
 
       <!-- Main Content -->
-      <main class='max-w-4xl flex-1 min-w-0'>
+      <main class='max-w-4xl flex-1 min-w-0 px-4 sm:px-6 lg:px-8 mx-auto w-full'>
 
         <!-- Header -->
         <div class='mb-10 bg-zinc-900/80 border border-zinc-800 rounded-lg p-6' transition:name='project-header-flowdx-platform'>
@@ -88,36 +151,36 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             FlowDX Platform
           </h1>
           <p class='text-base sm:text-lg leading-relaxed text-zinc-300 max-w-[65ch]'>
-            Plataforma Interna de Desenvolvedor (IDP) focada em self-service para provisionamento de infraestrutura e entrega de aplicações.
+            Plataforma interna de desenvolvedor (IDP) em evolução, construída sobre uma base real em AWS com Terraform e CI/CD, com foco em padronização, automação e self-service.
           </p>
         </div>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
 
-        <!-- Overview -->
-        <section id='overview' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Overview</h2>
+        <!-- Context -->
+        <section id='context' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Contexto</h2>
           <div class='space-y-4 text-zinc-300 text-base leading-relaxed'>
             <p>
-              FlowDX Platform é uma iniciativa de plataforma interna que visa simplificar e padronizar o ciclo de vida de aplicações, desde o provisionamento de infraestrutura até a entrega contínua em produção.
+              A FlowDX Platform nasce como um projeto autoral voltado a demonstrar, de forma prática, competências em Platform Engineering, Infrastructure as Code, automação de delivery e experiência do desenvolvedor.
             </p>
             <p>
-              O projeto nasce da necessidade de reduzir a fricção entre equipes de desenvolvimento e operações, oferecendo abstrações claras e workflows automatizados que permitem que desenvolvedores foquem no que importa: entregar valor através de software.
+              O objetivo não é criar um produto comercial nem reinventar ferramentas já consolidadas. O foco é construir uma plataforma com narrativa clara, arquitetura coerente e valor real de engenharia, mostrando como uma base funcional pode evoluir para um modelo de self-service mais maduro.
             </p>
             <p>
-              A plataforma é construída sobre princípios de GitOps, Infrastructure as Code e observabilidade, garantindo que cada entrega seja rastreável, reproduzível e auditável.
+              Hoje, o projeto já possui uma fundação funcional: um workload de referência com deploy automatizado em AWS, provisionamento via Terraform e integração contínua/entrega contínua com GitHub Actions.
             </p>
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
 
         <!-- Current State -->
         <section id='current-state' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Current State</h2>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Estado Atual</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
-              O projeto está em fase inicial de desenvolvimento, com um workload de referência já funcionando e servindo como base para validação de conceitos e arquitetura.
+              O estado atual da FlowDX Platform não é conceitual: ele já é executável e utilizável como base real.
             </p>
 
             <!-- Terminal Status Block -->
@@ -126,7 +189,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <span class='w-2.5 h-2.5 rounded-full bg-red-500/80'></span>
                 <span class='w-2.5 h-2.5 rounded-full bg-yellow-500/80'></span>
                 <span class='w-2.5 h-2.5 rounded-full bg-green-500/80'></span>
-                <span class='ml-auto text-xs font-mono text-zinc-500'>flowdx-status</span>
+                <span class='ml-auto text-xs font-mono text-zinc-500'>foundation-v0</span>
               </div>
               <div class='p-4 font-mono text-sm space-y-2'>
                 <div class='flex items-start gap-2'>
@@ -137,125 +200,437 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <div class='flex items-start gap-2'>
                   <span class='text-green-400'>$</span>
                   <span class='text-yellow-400'>status:</span>
-                  <span class='text-zinc-300'>app + infra + ci/cd</span>
+                  <span class='text-zinc-300'>AWS + Terraform + CI/CD + drift detection</span>
                 </div>
                 <div class='flex items-start gap-2'>
                   <span class='text-green-400'>$</span>
                   <span class='text-yellow-400'>next:</span>
-                  <span class='text-zinc-300'>cli, templates, delivery engine</span>
+                  <span class='text-zinc-300'>CLI, templates, self-service engine</span>
                 </div>
               </div>
             </div>
 
-            <div class='grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8'>
+            <h3 class='text-base font-semibold text-zinc-200 mt-8 mb-4'>O que já existe hoje</h3>
+
+            <div class='grid grid-cols-1 sm:grid-cols-2 gap-4'>
               <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
-                <div class='text-xs font-mono text-zinc-500 uppercase tracking-wider mb-1'>Application</div>
-                <div class='text-sm text-zinc-200'>Node.js API com deploy automatizado</div>
+                <div class='text-xs font-mono text-zinc-500 uppercase tracking-wider mb-1'>Aplicação</div>
+                <div class='text-sm text-zinc-200'>Workload frontend moderno com Astro + TypeScript</div>
               </div>
               <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
-                <div class='text-xs font-mono text-zinc-500 uppercase tracking-wider mb-1'>Infrastructure</div>
-                <div class='text-sm text-zinc-200'>AWS (S3, CloudFront, Route53, ACM)</div>
+                <div class='text-xs font-mono text-zinc-500 uppercase tracking-wider mb-1'>Infraestrutura</div>
+                <div class='text-sm text-zinc-200'>AWS com S3, CloudFront, Route 53 e ACM</div>
               </div>
               <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
-                <div class='text-xs font-mono text-zinc-500 uppercase tracking-wider mb-1'>CI/CD</div>
-                <div class='text-sm text-zinc-200'>GitHub Actions + Terraform</div>
+                <div class='text-xs font-mono text-zinc-500 uppercase tracking-wider mb-1'>Delivery</div>
+                <div class='text-sm text-zinc-200'>Deploy automatizado via GitHub Actions</div>
+              </div>
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
+                <div class='text-xs font-mono text-zinc-500 uppercase tracking-wider mb-1'>Governance</div>
+                <div class='text-sm text-zinc-200'>Terraform como fonte de verdade + drift detection</div>
+              </div>
+            </div>
+
+            <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30 mt-4'>
+              <p class='text-sm text-zinc-400'>
+                <span class='text-zinc-200 font-medium'>Foundation v0:</span> uma base real, já operante, que valida decisões de arquitetura e cria o ponto de partida para a evolução da plataforma.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+
+        <!-- Technical Snapshot -->
+        <section id='technical-snapshot' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Technical Snapshot</h2>
+          <div class='space-y-6'>
+            <p class='text-zinc-300 text-base leading-relaxed'>
+              Componentes já validados e operacionais na fundação atual.
+            </p>
+
+            <div class='grid grid-cols-1 md:grid-cols-2 gap-6 mt-6'>
+              <!-- Application -->
+              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+                <div class='flex items-center gap-2 mb-3'>
+                  <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>Application</h3>
+                </div>
+                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
+                  Workload frontend moderno com Astro + TypeScript.
+                </p>
+                <div class='flex flex-wrap gap-1.5'>
+                  <span class='skill-badge'>Astro</span>
+                  <span class='skill-badge'>TypeScript</span>
+                </div>
+              </div>
+
+              <!-- Infrastructure -->
+              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+                <div class='flex items-center gap-2 mb-3'>
+                  <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>Infrastructure</h3>
+                </div>
+                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
+                  AWS com S3, CloudFront, Route 53 e ACM.
+                </p>
+                <div class='flex flex-wrap gap-1.5'>
+                  <span class='skill-badge'>AWS</span>
+                  <span class='skill-badge'>Terraform</span>
+                  <span class='skill-badge'>IaC</span>
+                </div>
+              </div>
+
+              <!-- Delivery -->
+              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+                <div class='flex items-center gap-2 mb-3'>
+                  <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>Delivery</h3>
+                </div>
+                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
+                  Deploy automatizado via GitHub Actions.
+                </p>
+                <div class='flex flex-wrap gap-1.5'>
+                  <span class='skill-badge'>GitHub Actions</span>
+                  <span class='skill-badge'>CI/CD</span>
+                </div>
+              </div>
+
+              <!-- Governance -->
+              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+                <div class='flex items-center gap-2 mb-3'>
+                  <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>Governance</h3>
+                </div>
+                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
+                  Terraform como fonte de verdade e drift detection como mecanismo de controle.
+                </p>
+                <div class='flex flex-wrap gap-1.5'>
+                  <span class='skill-badge'>Terraform</span>
+                  <span class='skill-badge'>Drift Detection</span>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
 
         <!-- Current Architecture -->
         <section id='current-architecture' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Current Architecture</h2>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Diagrama de Contexto</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
-              A arquitetura atual segue um padrão simples mas robusto, projetado para ser escalável e mantível. Cada componente é tratado como código, permitindo versionamento e auditoria completa.
+              A FlowDX é uma experiência de alta performance e baixa latência (Edge Computing). A arquitetura atual foi desenhada para ser simples, reproduzível e fácil de evoluir. O mono-repo concentra aplicação, infraestrutura e automação.
             </p>
 
-            <!-- Architecture Diagram (ASCII-style) -->
-            <div class='bg-zinc-900/80 border border-zinc-800 rounded-lg p-6 font-mono text-sm'>
-              <div class='text-zinc-500 mb-4 text-xs uppercase tracking-wider'>// Architecture Overview</div>
+            <!-- Architecture Diagram (SVG) -->
+            <div class='bg-zinc-900/80 border border-zinc-800 rounded-lg p-6 overflow-hidden'>
+              <div class='text-zinc-500 mb-4 text-xs uppercase tracking-wider'>// Diagrama de Contexto</div>
+              <img
+                src='/Diagram_Level_1.svg'
+                alt='Fluxo de Entrega - Diagrama de Contexto'
+                class='w-full h-auto'
+              />
+            </div>
+
+          </div>
+        </section>
+
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+
+
+        <!-- Architecture Highlights v0 -->
+        <section id='architecture-highlights' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Destaques da Arquitetura (v0 Foundation)</h2>
+          <div class='space-y-6'>
+            <!-- Edge-First Delivery -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Edge-First Delivery</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                A utilização do AWS CloudFront não é apenas para cache; é uma decisão de design para garantir baixa latência e alta performance global.
+                O workload Astro é servido a partir da Edge Location mais próxima do usuário, otimizando o TTFB (Time to First Byte).
+              </p>
+            </div>
+
+            <!-- Segurança por Design (OAC) -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Segurança por Design (OAC)</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                Diferente de setups tradicionais onde o bucket S3 fica exposto, implementei o Origin Access Control (OAC).
+                Isso garante que a origem seja privada e que o conteúdo seja acessível estritamente através da CDN, com permissões de leitura assinadas.
+              </p>
+            </div>
+
+            <!-- Estratégia de Monorepo -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Estratégia de Monorepo</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                Centralizei Aplicação, Infraestrutura (IaC) e Automação em um único repositório.
+                Isso estabelece a "Single Source of Truth" (Fonte Única da Verdade),
+                permitindo que mudanças no contrato de infraestrutura e no código do app sejam validadas em um ciclo de entrega unificado.
+              </p>
+            </div>
+
+            <!-- Arquitetura Evolutiva -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Arquitetura Evolutiva</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                Este setup foi desenhado para ser simples e reprodutível.
+                O que hoje é um workload de referência manual, amanhã servirá como o Blueprint (molde) para os templates de Self-Service da FlowDX,
+                facilitando a transição para um modelo de IDP (Internal Developer Platform).
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+
+        <!-- Container & Ops -->
+        <section id='container-ops' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Container & Ops</h2>
+          <div class='space-y-6'>
+            <p class='text-zinc-300 text-base leading-relaxed'>
+              A camada de operações da FlowDX é construída sobre práticas robustas de segurança, automação e governança.
+              Cada decisão de design foi orientada para eliminar fragilidade e garantir operação confiável.
+            </p>
+
+            <!-- Container Diagram (SVG) -->
+            <div class='bg-zinc-900/80 border border-zinc-800 rounded-lg p-6 overflow-hidden'>
+              <div class='text-zinc-500 mb-4 text-xs uppercase tracking-wider'>// Container & Ops</div>
+              <img
+                src='/Diagram_Level_2.excalidraw.svg'
+                alt='Container & Ops - Diagrama de Operações'
+                class='w-full h-auto'
+              />
+            </div>
+
+            <!-- Keyless Security (OIDC) -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Segurança Keyless (OIDC)</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                Estabeleci uma relação de confiança federada entre GitHub Actions e AWS via OIDC.
+                Com isso, eliminei o uso de chaves estáticas (Access Keys), reduzindo a superfície de ataque e o risco de vazamento de credenciais.
+              </p>
+            </div>
+
+            <!-- Least Privilege -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Privilégio Mínimo (Least Privilege)</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                Segmentei a operação em IAM Roles granulares. Utilizo a infra-provisioner para gestão do ciclo de vida dos recursos
+                e a app-deployer com permissões restritas a S3 Sync e invalidação de cache, garantindo isolamento entre aplicação e infraestrutura.
+              </p>
+            </div>
+
+            <!-- Terraform Backend -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Estado com Terraform Backend</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                Implementei um backend remoto robusto utilizando S3 para armazenamento seguro do tfstate e DynamoDB para State Locking.
+                Essa configuração evita concorrência e garante a integridade do estado durante execuções paralelas.
+              </p>
+            </div>
+
+            <!-- Drift Detection -->
+            <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
+              <div class='flex items-center gap-2 mb-3'>
+                <span class='text-[var(--color-accent)] font-mono text-lg'>▸</span>
+                <h3 class='text-sm font-mono font-semibold text-zinc-100'>Detecção de Drift</h3>
+              </div>
+              <p class='text-sm text-zinc-400 leading-relaxed'>
+                Configurei um workflow dedicado de Drift Detection. Esta rotina diária valida se a infraestrutura real condiz com o código,
+                assegurando que o meu repositório seja sempre a Única Fonte da Verdade (SSOT) e alertando sobre alterações manuais indevidas.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+
+        <!-- Gaps -->
+        <section id='gaps' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## O que ainda falta construir</h2>
+          <div class='space-y-6'>
+            <p class='text-zinc-300 text-base leading-relaxed'>
+              A FlowDX Platform ainda não chegou ao estágio de self-service completo.
+              O que existe hoje é a base sobre a qual essa experiência será construída.
+              A evolução esperada é transformar esse fluxo ainda assistido em uma experiência mais padronizada,
+              automatizada e orientada por templates.
+            </p>
+
+            <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6'>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-red-500 font-mono text-lg'>—</span>
+                <span class='text-sm text-zinc-300'>Ausência de CLI para geração de projetos</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-red-500 font-mono text-lg'>—</span>
+                <span class='text-sm text-zinc-300'>Ausência de templates reutilizáveis</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-red-500 font-mono text-lg'>—</span>
+                <span class='text-sm text-zinc-300'>Ausência de engine de delivery mais abstrata</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-red-500 font-mono text-lg'>—</span>
+                <span class='text-sm text-zinc-300'>Ausência de experiência self-service</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-red-500 font-mono text-lg'>—</span>
+                <span class='text-sm text-zinc-300'>Ausência de camada explícita de plataforma</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+
+        <!-- Target Architecture -->
+        <section id='target-architecture' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Visão de Evolução</h2>
+          <div class='space-y-6'>
+            <p class='text-zinc-300 text-base leading-relaxed'>
+              A visão da FlowDX é evoluir de uma base funcional para uma plataforma que permita criar e publicar serviços com baixo atrito,
+              usando abstrações claras e workflows padronizados.
+            </p>
+
+            <!-- Example Command -->
+            <div class='bg-zinc-900/80 border border-zinc-800 rounded-lg overflow-hidden'>
+              <div class='flex items-center gap-2 px-4 py-2.5 bg-zinc-800/50 border-b border-zinc-800'>
+                <span class='w-2.5 h-2.5 rounded-full bg-red-500/80'></span>
+                <span class='w-2.5 h-2.5 rounded-full bg-yellow-500/80'></span>
+                <span class='w-2.5 h-2.5 rounded-full bg-green-500/80'></span>
+                <span class='ml-auto text-xs font-mono text-zinc-500'>target-experience</span>
+              </div>
+              <div class='p-4 font-mono text-sm'>
+                <div class='flex items-start gap-2'>
+                  <span class='text-green-400'>$</span>
+                  <span class='text-zinc-300'>flowdx create static-app foo</span>
+                </div>
+              </div>
+            </div>
+
+            <p class='text-zinc-300 text-base leading-relaxed mt-4'>
+              Esse comando deve representar a intenção do desenvolvedor, enquanto a plataforma cuida da geração, provisionamento e entrega.
+            </p>
+
+            <!-- Target Architecture Diagram (ASCII-style) -->
+            <div class='bg-zinc-900/80 border border-zinc-800 rounded-lg p-6 font-mono text-sm mt-6'>
+              <div class='text-zinc-500 mb-4 text-xs uppercase tracking-wider'>// Target Architecture</div>
               <pre class='text-zinc-300 overflow-x-auto text-xs leading-relaxed'>
 {`┌─────────────────────────────────────────────────────────────┐
-│                     GitHub Repository                        │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
-│  │   Source      │  │  Infra (IaC) │  │   CI/CD      │       │
-│  │   Code        │  │  Terraform   │  │   Actions    │       │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘       │
-└─────────┼─────────────────┼─────────────────┼────────────────┘
-          │                 │                 │
-          ▼                 ▼                 ▼
+│                    flowdx CLI                                 │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                      AWS Cloud                               │
+│                  Platform Engine                               │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │
+│  │  Templates │  │   Policy   │  │  Pipeline  │            │
+│  │static-app   │  │ Guardrails  │  │  Delivery  │            │
+│  └─────┬─────┘  └──────┬────┘  └──────┬────┘            │
+└────────┼───────────────┼──────────────┼──────────────────┘
+         │               │              │
+         ▼               ▼              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                      AWS Cloud                             │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
-│  │     S3       │  │  CloudFront  │  │   Route53    │       │
-│  │   (Static)   │  │     (CDN)    │  │    (DNS)     │       │
+│  │     S3       │  │  CloudFront  │  │   Route53   │       │
+│  │ (Generated)  │  │    (CDN)    │  │ (Subdomain) │       │
 │  └──────────────┘  └──────────────┘  └──────────────┘       │
+│  ┌──────────────┐                                           │
+│  │     ACM      │                                           │
+│  │  (TLS)      │                                           │
+│  └──────────────┘                                           │
 └─────────────────────────────────────────────────────────────┘`}
               </pre>
             </div>
 
             <div class='space-y-3 mt-6'>
               <div class='flex items-start gap-3 text-sm text-zinc-300'>
-                <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                <span><span class='text-zinc-100 font-medium'>Source Code:</span> Aplicação principal em Node.js/TypeScript</span>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span><span class='text-zinc-100 font-medium'>Criação padronizada</span> de serviços</span>
               </div>
               <div class='flex items-start gap-3 text-sm text-zinc-300'>
-                <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                <span><span class='text-zinc-100 font-medium'>Infrastructure:</span> Provisionamento via Terraform com state remoto</span>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span><span class='text-zinc-100 font-medium'>Provisionamento</span> sem exposição desnecessária da complexidade</span>
               </div>
               <div class='flex items-start gap-3 text-sm text-zinc-300'>
-                <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                <span><span class='text-zinc-100 font-medium'>CI/CD:</span> Pipelines automatizados com GitHub Actions</span>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span><span class='text-zinc-100 font-medium'>Automação de delivery</span> como capacidade de plataforma</span>
               </div>
               <div class='flex items-start gap-3 text-sm text-zinc-300'>
-                <span class='text-[var(--color-accent)] mt-0.5'>▸</span>
-                <span><span class='text-zinc-100 font-medium'>Delivery:</span> Deploy estático via S3 + CloudFront</span>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span><span class='text-zinc-100 font-medium'>Consistência</span> entre workloads</span>
+              </div>
+              <div class='flex items-start gap-3 text-sm text-zinc-300'>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span><span class='text-zinc-100 font-medium'>Melhor experiência</span> para quem consome a plataforma</span>
               </div>
             </div>
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
 
-        <!-- Evolution / Roadmap -->
+        <!-- Evolution Roadmap -->
         <section id='evolution-roadmap' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Evolution / Roadmap</h2>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Roadmap de Evolução</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
-              A evolução da plataforma segue um caminho incremental, onde cada fase entrega valor tangível enquanto constrói a base para funcionalidades futuras.
+              A evolução é incremental e intencional. Cada fase entrega valor real sem bloquear a próxima.
             </p>
 
             <!-- Timeline -->
             <div class='relative pl-6 border-l border-zinc-800 space-y-8'>
               <!-- Phase 1 -->
               <div class='relative'>
-                <div class='absolute -left-[25px] w-3 h-3 rounded-full bg-[var(--color-accent)] border-2 border-zinc-900'></div>
+                <div class='absolute -left-[25px] w-3 h-3 rounded-full bg-green-500 border-2 border-zinc-900'></div>
                 <div class='pb-2'>
                   <div class='flex items-center gap-3 mb-2'>
-                    <span class='text-xs font-mono text-[var(--color-accent)] uppercase tracking-wider'>Phase 1</span>
+                    <span class='text-xs font-mono text-green-500 uppercase tracking-wider'>Phase 1</span>
                     <span class='text-xs font-mono text-zinc-500'>Current</span>
                   </div>
-                  <h3 class='text-base font-semibold text-zinc-100 mb-2'>Foundation & Reference Workload</h3>
+                  <h3 class='text-base font-semibold text-zinc-100 mb-2'>Foundation v0</h3>
                   <p class='text-sm text-zinc-400 leading-relaxed'>
-                    Estabelecimento da arquitetura base, workload de referência funcional e pipelines CI/CD automatizados.
+                    Base real já existente: Workload de referência em produção-like setup, Terraform como infraestrutura declarativa, CI/CD automatizado e Drift detection diária.
                   </p>
                 </div>
               </div>
 
               <!-- Phase 2 -->
               <div class='relative'>
-                <div class='absolute -left-[25px] w-3 h-3 rounded-full bg-zinc-700 border-2 border-zinc-900'></div>
+                <div class='absolute -left-[25px] w-3 h-3 rounded-full bg-yellow-500 border-2 border-zinc-900'></div>
                 <div class='pb-2'>
                   <div class='flex items-center gap-3 mb-2'>
-                    <span class='text-xs font-mono text-zinc-500 uppercase tracking-wider'>Phase 2</span>
+                    <span class='text-xs font-mono text-yellow-500 uppercase tracking-wider'>Phase 2</span>
                     <span class='text-xs font-mono text-zinc-600'>Planned</span>
                   </div>
-                  <h3 class='text-base font-semibold text-zinc-100 mb-2'>CLI & Project Templates</h3>
+                  <h3 class='text-base font-semibold text-zinc-100 mb-2'>Platform Building Blocks</h3>
                   <p class='text-sm text-zinc-400 leading-relaxed'>
-                    Desenvolvimento de CLI para scaffolding de projetos e templates padronizados para diferentes tipos de workload.
+                    Primeiras primitivas reutilizáveis: padronização da estrutura do mono-repo, extração de módulos e templates, início da CLI e primeiros fluxos de scaffolding.
                   </p>
                 </div>
               </div>
@@ -268,9 +643,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                     <span class='text-xs font-mono text-zinc-500 uppercase tracking-wider'>Phase 3</span>
                     <span class='text-xs font-mono text-zinc-600'>Future</span>
                   </div>
-                  <h3 class='text-base font-semibold text-zinc-100 mb-2'>Delivery Engine & Self-Service Portal</h3>
+                  <h3 class='text-base font-semibold text-zinc-100 mb-2'>Self-Service Experience</h3>
                   <p class='text-sm text-zinc-400 leading-relaxed'>
-                    Motor de entrega automatizada e portal web para self-service completo de infraestrutura e deployments.
+                    Experiência orientada por intenção: comando para criação de workloads, geração automática de estrutura, provisionamento e entrega integrados, subdomínios dinâmicos e padronizados.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Phase 4 -->
+              <div class='relative'>
+                <div class='absolute -left-[25px] w-3 h-3 rounded-full bg-zinc-700 border-2 border-zinc-900'></div>
+                <div class='pb-2'>
+                  <div class='flex items-center gap-3 mb-2'>
+                    <span class='text-xs font-mono text-zinc-500 uppercase tracking-wider'>Phase 4</span>
+                    <span class='text-xs font-mono text-zinc-600'>Future</span>
+                  </div>
+                  <h3 class='text-base font-semibold text-zinc-100 mb-2'>Runtime Expansion</h3>
+                  <p class='text-sm text-zinc-400 leading-relaxed'>
+                    Evolução do ecossistema de execução: introdução de Kubernetes como runtime adicional, aprendizado inicial com Docker e clusters locais como kind/k3s, evolução posterior para EKS.
                   </p>
                 </div>
               </div>
@@ -278,135 +668,128 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
 
-        <!-- FlowDX Components -->
-        <section id='flowdx-components' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## FlowDX Components</h2>
+        <!-- Repository Structure -->
+        <section id='repository-structure' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Estrutura do Repositório</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
-              A plataforma é composta por módulos independentes que podem ser evoluídos e versionados de forma isolada.
+              Embora organizado como mono-repo, o projeto é estruturado de forma lógica para separar responsabilidades e permitir evolução independente das partes.
             </p>
 
-            <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-              <!-- Component 1 -->
-              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
-                <div class='flex items-center gap-2 mb-3'>
-                  <span class='text-[var(--color-accent)] font-mono text-lg'>⬡</span>
-                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>flowdx-app</h3>
-                </div>
-                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
-                  Aplicação de referência que serve como workload de validação para toda a plataforma.
+            <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6'>
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
+                <div class='text-xs font-mono text-[var(--color-accent)] uppercase tracking-wider mb-2'>/app</div>
+                <p class='text-sm text-zinc-300'>
+                  Contém o workload de referência utilizado para validar o fluxo de entrega e as decisões de arquitetura.
                 </p>
-                <div class='flex flex-wrap gap-1.5'>
-                  <span class='skill-badge'>Node.js</span>
-                  <span class='skill-badge'>TypeScript</span>
-                  <span class='skill-badge'>Astro</span>
-                </div>
               </div>
 
-              <!-- Component 2 -->
-              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
-                <div class='flex items-center gap-2 mb-3'>
-                  <span class='text-[var(--color-accent)] font-mono text-lg'>⬡</span>
-                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>flowdx-infra</h3>
-                </div>
-                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
-                  Módulos Terraform reutilizáveis para provisionamento de infraestrutura AWS.
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
+                <div class='text-xs font-mono text-[var(--color-accent)] uppercase tracking-wider mb-2'>/infra</div>
+                <p class='text-sm text-zinc-300'>
+                  Define a infraestrutura em AWS utilizando Terraform, incluindo recursos como S3, CloudFront, Route 53 e ACM.
                 </p>
-                <div class='flex flex-wrap gap-1.5'>
-                  <span class='skill-badge'>Terraform</span>
-                  <span class='skill-badge'>AWS</span>
-                  <span class='skill-badge'>IaC</span>
-                </div>
               </div>
 
-              <!-- Component 3 -->
-              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
-                <div class='flex items-center gap-2 mb-3'>
-                  <span class='text-[var(--color-accent)] font-mono text-lg'>⬡</span>
-                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>flowdx-pipelines</h3>
-                </div>
-                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
-                  Workflows GitHub Actions padronizados para CI/CD e automação de deploy.
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
+                <div class='text-xs font-mono text-[var(--color-accent)] uppercase tracking-wider mb-2'>/pipelines</div>
+                <p class='text-sm text-zinc-300'>
+                  Responsável pelos workflows de CI/CD com GitHub Actions, incluindo validações, deploy e detecção de drift.
                 </p>
-                <div class='flex flex-wrap gap-1.5'>
-                  <span class='skill-badge'>GitHub Actions</span>
-                  <span class='skill-badge'>CI/CD</span>
-                  <span class='skill-badge'>Automation</span>
-                </div>
               </div>
 
-              <!-- Component 4 -->
-              <div class='p-5 border border-zinc-800 rounded-lg bg-zinc-900/30 hover:border-zinc-700 transition-colors duration-200'>
-                <div class='flex items-center gap-2 mb-3'>
-                  <span class='text-[var(--color-accent)] font-mono text-lg'>⬡</span>
-                  <h3 class='text-sm font-mono font-semibold text-zinc-100'>flowdx-cli</h3>
-                </div>
-                <p class='text-sm text-zinc-400 leading-relaxed mb-3'>
-                  Ferramenta de linha de comando para scaffolding e gerenciamento de projetos.
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/30'>
+                <div class='text-xs font-mono text-[var(--color-accent)] uppercase tracking-wider mb-2'>/platform</div>
+                <p class='text-sm text-zinc-300'>
+                  Espaço destinado às capacidades de plataforma, como templates reutilizáveis, lógica de geração de projetos e automações mais abstratas. <span class='text-zinc-500'>(em evolução)</span>
                 </p>
-                <div class='flex flex-wrap gap-1.5'>
-                  <span class='skill-badge'>CLI</span>
-                  <span class='skill-badge'>Node.js</span>
-                  <span class='skill-badge'>Planned</span>
+              </div>
+            </div>
+
+            <p class='text-sm text-zinc-400 mt-4'>
+              Essa organização permite manter tudo no mesmo repositório sem comprometer clareza ou evolução, ao mesmo tempo em que facilita entendimento, versionamento e experimentação.
+            </p>
+          </div>
+        </section>
+
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+
+        <!-- Architecture Principles -->
+        <section id='principles' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Princípios de Arquitetura</h2>
+          <div class='space-y-6'>
+            <p class='text-zinc-300 text-base leading-relaxed'>
+              A FlowDX Platform segue alguns princípios centrais que guiam todas as decisões de design e evolução.
+            </p>
+
+            <div class='space-y-4 mt-6'>
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <div class='flex items-center gap-2 mb-2'>
+                  <span class='text-[var(--color-accent)] font-mono'>01</span>
+                  <h3 class='text-sm font-semibold text-zinc-100'>Abstração sem perda de controle</h3>
                 </div>
+                <p class='text-sm text-zinc-400'>
+                  A plataforma esconde complexidade operacional, mas mantém rastreabilidade, versionamento e governança.
+                </p>
+              </div>
+
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <div class='flex items-center gap-2 mb-2'>
+                  <span class='text-[var(--color-accent)] font-mono'>02</span>
+                  <h3 class='text-sm font-semibold text-zinc-100'>Infraestrutura como código</h3>
+                </div>
+                <p class='text-sm text-zinc-400'>
+                  Tudo que é relevante deve ser declarativo, auditável e reproduzível.
+                </p>
+              </div>
+
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <div class='flex items-center gap-2 mb-2'>
+                  <span class='text-[var(--color-accent)] font-mono'>03</span>
+                  <h3 class='text-sm font-semibold text-zinc-100'>Evolução incremental</h3>
+                </div>
+                <p class='text-sm text-zinc-400'>
+                  O projeto parte de uma base real e evolui por camadas, em vez de tentar nascer completo.
+                </p>
+              </div>
+
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <div class='flex items-center gap-2 mb-2'>
+                  <span class='text-[var(--color-accent)] font-mono'>04</span>
+                  <h3 class='text-sm font-semibold text-zinc-100'>Self-service com guardrails</h3>
+                </div>
+                <p class='text-sm text-zinc-400'>
+                  O objetivo é dar autonomia sem abrir mão de padrão e controle.
+                </p>
+              </div>
+
+              <div class='p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <div class='flex items-center gap-2 mb-2'>
+                  <span class='text-[var(--color-accent)] font-mono'>05</span>
+                  <h3 class='text-sm font-semibold text-zinc-100'>Mono-repo com desacoplamento lógico</h3>
+                </div>
+                <p class='text-sm text-zinc-400'>
+                  A escolha do mono-repo favorece coesão, visibilidade e evolução coordenada entre app, infraestrutura e automação.
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
 
         <!-- Purpose -->
         <section id='purpose' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Purpose</h2>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Por que esse projeto existe</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
-              FlowDX Platform existe para resolver problemas reais de entrega de software, ao mesmo tempo que serve como um laboratório prático para explorar e aplicar conceitos modernos de engenharia de plataforma.
+              A FlowDX Platform existe para resolver problemas reais de entrega de software e, ao mesmo tempo, servir como demonstração prática de capacidade técnica.
             </p>
-
-            <div class='space-y-4'>
-              <div class='flex items-start gap-3'>
-                <span class='text-[var(--color-accent)] mt-1 font-mono'>01</span>
-                <div>
-                  <h3 class='text-sm font-semibold text-zinc-100 mb-1'>Reduzir Fricção</h3>
-                  <p class='text-sm text-zinc-400 leading-relaxed'>
-                    Eliminar barreiras entre desenvolvimento e operações através de abstrações claras e workflows automatizados.
-                  </p>
-                </div>
-              </div>
-
-              <div class='flex items-start gap-3'>
-                <span class='text-[var(--color-accent)] mt-1 font-mono'>02</span>
-                <div>
-                  <h3 class='text-sm font-semibold text-zinc-100 mb-1'>Padronizar Entregas</h3>
-                  <p class='text-sm text-zinc-400 leading-relaxed'>
-                    Criar padrões reutilizáveis que garantam consistência e qualidade em todos os deployments.
-                  </p>
-                </div>
-              </div>
-
-              <div class='flex items-start gap-3'>
-                <span class='text-[var(--color-accent)] mt-1 font-mono'>03</span>
-                <div>
-                  <h3 class='text-sm font-semibold text-zinc-100 mb-1'>Acelerar Ciclo de Entrega</h3>
-                  <p class='text-sm text-zinc-400 leading-relaxed'>
-                    Permitir que equipes entreguem software mais rápido com confiança e segurança.
-                  </p>
-                </div>
-              </div>
-
-              <div class='flex items-start gap-3'>
-                <span class='text-[var(--color-accent)] mt-1 font-mono'>04</span>
-                <div>
-                  <h3 class='text-sm font-semibold text-zinc-100 mb-1'>Aprendizado Contínuo</h3>
-                  <p class='text-sm text-zinc-400 leading-relaxed'>
-                    Servir como plataforma de experimentação para tecnologias e práticas modernas de engenharia.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <p class='text-zinc-300 text-base leading-relaxed'>
+              Ela mostra não apenas a capacidade de implantar uma aplicação na AWS, mas também a capacidade de transformar esse fluxo em uma base de plataforma, com visão de longo prazo e decisões arquiteturais conscientes.
+            </p>
 
             <!-- Terminal Quote -->
             <div class='bg-zinc-900/80 border border-zinc-800 rounded-lg overflow-hidden mt-8'>
@@ -426,62 +809,196 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </div>
         </section>
 
+        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+
+        <!-- Technical Evidence -->
+        <section id='evidence' class='mb-16 scroll-mt-24'>
+          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Evidências Técnicas</h2>
+          <div class='space-y-6'>
+            <p class='text-zinc-300 text-base leading-relaxed'>
+              O projeto apresenta um conjunto de decisões e implementações que podem ser observadas diretamente ao longo da estrutura e dos fluxos definidos.
+            </p>
+
+            <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6'>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span class='text-sm text-zinc-300'>Infraestrutura provisionada e versionada com Terraform</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span class='text-sm text-zinc-300'>Recursos reais em AWS integrados ao fluxo de entrega</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span class='text-sm text-zinc-300'>Pipeline de CI/CD com validação de aplicação e infraestrutura</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span class='text-sm text-zinc-300'>Rotina de detecção de drift automatizada</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span class='text-sm text-zinc-300'>Organização em mono-repo com separação lógica</span>
+              </div>
+              <div class='flex items-start gap-3 p-4 border border-zinc-800 rounded-lg bg-zinc-900/20'>
+                <span class='text-green-500 mt-0.5'>✓</span>
+                <span class='text-sm text-zinc-300'>Evolução planejada com base em fundação já operante</span>
+              </div>
+            </div>
+
+            <p class='text-sm text-zinc-400 mt-6'>
+              Esses elementos estão refletidos tanto na estrutura do repositório quanto no fluxo de entrega implementado, permitindo análise direta da abordagem adotada.
+            </p>
+          </div>
+        </section>
+
       </main>
     </div>
   </div>
 </BaseLayout>
 
 <script>
-  // Intersection Observer for active navigation state
-  const observerOptions = {
-    root: null,
-    rootMargin: '-100px 0px -66% 0px',
-    threshold: 0
-  };
+  // @ts-nocheck
+  // Store references for cleanup
+  // eslint-disable-next-line no-unused-vars
+  var scrollObserver = null;
+  // eslint-disable-next-line no-unused-vars
+  var scrollHandler = null;
+  // eslint-disable-next-line no-unused-vars
+  var scrollTimeout = null;
+  var isInitialized = false;
 
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
+  function cleanupScrollSpy() {
+    // Disconnect IntersectionObserver
+    if (scrollObserver) {
+      scrollObserver.disconnect();
+      scrollObserver = null;
+    }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(link => {
-          link.classList.remove('text-zinc-100', 'border-[var(--color-accent)]');
-          link.classList.add('text-zinc-400', 'border-transparent');
-        });
-        const activeLink = document.querySelector(`.nav-link[data-section="${id}"]`);
-        if (activeLink) {
-          activeLink.classList.remove('text-zinc-400', 'border-transparent');
-          activeLink.classList.add('text-zinc-100', 'border-[var(--color-accent)]');
+    // Remove scroll event listener
+    if (scrollHandler && scrollTimeout) {
+      window.removeEventListener('scroll', scrollHandler);
+      clearTimeout(scrollTimeout);
+      scrollHandler = null;
+      scrollTimeout = null;
+    }
+
+    isInitialized = false;
+  }
+
+  function initScrollSpy() {
+    // Prevent multiple initializations
+    if (isInitialized) {
+      cleanupScrollSpy();
+    }
+
+    // Intersection Observer for active navigation state
+    var observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -80% 0px',
+      threshold: 0
+    };
+
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav-link');
+    var activeId = '';
+
+    // Function to update active nav link
+    function setActiveLink(id) {
+      navLinks.forEach(function(link) {
+        link.classList.remove('active');
+      });
+      var activeLink = document.querySelector('.nav-link[data-section="' + id + '"]');
+      if (activeLink) activeLink.classList.add('active');
+      activeId = id;
+    }
+
+    scrollObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          if (id && id !== activeId) setActiveLink(id);
         }
-      }
+      });
+    }, observerOptions);
+
+    sections.forEach(function(section) {
+      scrollObserver.observe(section);
     });
-  }, observerOptions);
 
-  sections.forEach(section => {
-    observer.observe(section);
-  });
+    // Set initial active link based on current scroll position
+    function updateInitialActiveLink() {
+      var scrollPos = window.scrollY + window.innerHeight / 2;
+      var found = false;
+      sections.forEach(function(section) {
+        if (found) return;
+        var rect = section.getBoundingClientRect();
+        var top = rect.top + window.scrollY;
+        var bottom = top + rect.height;
+        if (scrollPos >= top && scrollPos < bottom) {
+          var id = section.getAttribute('id');
+          if (id && id !== activeId) setActiveLink(id);
+          found = true;
+        }
+      });
+    }
 
-  // Smooth scroll with offset for anchor links
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href')?.slice(1);
-      if (targetId) {
-        const targetSection = document.getElementById(targetId);
+    // Run initial check after page load
+    setTimeout(updateInitialActiveLink, 100);
+
+    // Smooth scroll with offset for anchor links
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var targetId = link.getAttribute('href');
+        if (!targetId) return;
+        var targetIdClean = targetId.slice(1);
+        var targetSection = document.getElementById(targetIdClean);
         if (targetSection) {
-          targetSection.scrollIntoView({ behavior: 'smooth' });
+          var offset = 150;
+          var top = targetSection.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+          setActiveLink(targetIdClean);
         }
-      }
+      });
     });
-  });
+
+    // Update active link on scroll with debounce
+    scrollHandler = function() {
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateInitialActiveLink, 50);
+    };
+    window.addEventListener('scroll', scrollHandler);
+
+    isInitialized = true;
+  }
+
+  // Handle View Transitions - cleanup and re-initialize
+  document.addEventListener('astro:page-load', function() {
+    cleanupScrollSpy();
+    initScrollSpy();
+  }, { once: false });
+
+  // Also run on initial page load
+  if (document.readyState === 'complete') {
+    initScrollSpy();
+  } else {
+    window.addEventListener('load', function() {
+      initScrollSpy();
+    }, { once: true });
+  }
 </script>
 
 <style>
   /* Navigation active state transition */
   .nav-link {
     transition: color 200ms ease, border-color 200ms ease;
+  }
+
+  /* Active navigation state */
+  .nav-link.active {
+    color: var(--color-accent, #22c55e) !important;
+    border-color: var(--color-accent, #22c55e) !important;
   }
 
   /* Scroll margin for sections to account for sticky header */
