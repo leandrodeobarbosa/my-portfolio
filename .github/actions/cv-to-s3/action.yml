@@ -1,0 +1,55 @@
+name: "Deploy CV"
+description: "file version with hash and upload file"
+
+inputs:
+  cv_dir:
+    description: "Directory containing the cv file"
+    required: true
+  cv_file:
+    description: "CV file name"
+    required: true
+  bucket:
+    description: "bucket name"
+    required: true
+
+outputs:
+  hash:
+    description: "SHA256 hash of the CV file"
+    value: ${{ steps.hash.outputs.HASH }}
+  versioned_filename:
+    description: "Versioned filename with hash"
+    value: ${{ steps.upload.outputs.VERSIONED_FILENAME }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate hash
+      id: hash
+      shell: bash
+      run: |
+        HASH=$(sha256sum "${{ inputs.cv_dir }}/${{ inputs.cv_file }}" | awk '{ print $1 }' | cut -c1-12)
+        echo "HASH=$HASH" >> "$GITHUB_OUTPUT"
+        echo "Hash gerado: $HASH"
+
+    - name: Upload versioned CV
+      id: upload
+      shell: bash
+      run: |
+        BASENAME="${{ inputs.cv_file }}"
+        BASENAME="${BASENAME%.pdf}"
+        VERSIONED_FILENAME="${BASENAME}_${{ steps.hash.outputs.HASH }}.pdf"
+        echo "VERSIONED_FILENAME=$VERSIONED_FILENAME" >> "$GITHUB_OUTPUT"
+
+        cp "${{ inputs.cv_dir }}/${{ inputs.cv_file }}" \
+           "${{ inputs.cv_dir }}/${VERSIONED_FILENAME}"
+
+        aws s3 cp "${{ inputs.cv_dir }}/${VERSIONED_FILENAME}" \
+          "s3://${{ inputs.bucket }}/cv/${VERSIONED_FILENAME}" \
+          --cache-control "public, max-age=31536000, immutable"
+
+    - name: Upload alias CV
+      shell: bash
+      run: |
+        aws s3 cp "${{ inputs.cv_dir }}/${{ inputs.cv_file }}" \
+          "s3://${{ inputs.bucket }}/cv/${{ inputs.cv_file }}" \
+          --cache-control "max-age=0, must-revalidate"

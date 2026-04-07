@@ -1,0 +1,34 @@
+name: Deploy CV
+
+on:
+  push:
+    branches: [feat/devops-driven]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN_CI_INFRA }}
+          aws-region: us-east-1
+
+      - name: Debug files
+        run: ls -R
+
+      - name: Deploy CV
+        uses: ./.github/actions/cv-to-s3
+        with:
+          cv_dir: app/public/cv
+          cv_file: Leandro-Barbosa-DevOps-CV.pdf
+          bucket: ${{vars.BUCKET_NAME}}
