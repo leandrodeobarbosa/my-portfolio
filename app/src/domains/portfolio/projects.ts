@@ -30,17 +30,11 @@ export const PROJECTS: Project[] = [
 		status: 'WIP'
 	},
 	{
-		name: 'Fedora Sway',
-		description: 'A customized Fedora Linux rice with Sway window manager',
-		demoLink: '#',
-		tags: ['Linux', 'Rice'],
-		techIcons: []
-	},
-	{
-		name: 'Container Orchestration',
-		description: 'Kubernetes cluster setup and management for production workloads with auto-scaling and monitoring.',
-		demoLink: '#',
-		tags: ['DevOps', 'Orchestration'],
+		name: 'fedora-workstation-as-code',
+		description:
+			'Provisionamento automatizado de ambiente Linux focado em infraestrutura como código (IaC) para o desktop. Utiliza uma abordagem de dotfiles versionados e scripts de automação para garantir um ambiente de desenvolvimento reprodutível, otimizado para performance com Sway WM e Wayland.',
+		demoLink: 'https://github.com/leandrodeobarbosa/fedora-workstation-as-code',
+		tags: [],
 		techIcons: []
 	}
 ];
