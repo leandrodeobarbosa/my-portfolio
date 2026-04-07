@@ -46,20 +46,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             </li>
             <li>
               <a
-                href='#architecture-highlights'
-                class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
-                data-section='architecture-highlights'
-              >
-                Destaques
-              </a>
-            </li>
-            <li>
-              <a
                 href='#container-ops'
                 class='nav-link block py-2 pl-4 text-base text-zinc-400 hover:text-zinc-100 transition-colors duration-200 border-l-2 border-transparent hover:border-zinc-600'
                 data-section='container-ops'
               >
-                Container & Ops
+                Digrama de Contêiner
               </a>
             </li>
             <li>
@@ -413,7 +404,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 class='w-full h-auto'
               />
             </div>
-            <section id='architecture-highlights' class='mb-16 scroll-mt-24'>
+          </div>
+        </section>
+
+        <!-- Container Ops Highlights -->
+        <section id='container-ops-highlights' class='mb-16 scroll-mt-24'>
           <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Destaques da Arquitetura (nível de contêiner)</h2>
           <div class='space-y-6'>
             <!-- Keyless Security (OIDC) -->
@@ -804,132 +799,178 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <script>
   // @ts-nocheck
-  // Store references for cleanup
-  // eslint-disable-next-line no-unused-vars
-  var scrollObserver = null;
-  // eslint-disable-next-line no-unused-vars
-  var scrollHandler = null;
-  // eslint-disable-next-line no-unused-vars
-  var scrollTimeout = null;
+  var observer = null;
   var isInitialized = false;
 
-  function cleanupScrollSpy() {
-    // Disconnect IntersectionObserver
-    if (scrollObserver) {
-      scrollObserver.disconnect();
-      scrollObserver = null;
+  function cleanup() {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
     }
-
-    // Remove scroll event listener
-    if (scrollHandler && scrollTimeout) {
-      window.removeEventListener('scroll', scrollHandler);
-      clearTimeout(scrollTimeout);
-      scrollHandler = null;
-      scrollTimeout = null;
-    }
-
     isInitialized = false;
   }
 
-  function initScrollSpy() {
-    // Prevent multiple initializations
+  function init() {
     if (isInitialized) {
-      cleanupScrollSpy();
+      cleanup();
     }
 
-    // Intersection Observer for active navigation state
-    var observerOptions = {
-      root: null,
-      rootMargin: '-20% 0px -80% 0px',
-      threshold: 0
-    };
-
-    var sections = document.querySelectorAll('section[id]');
     var navLinks = document.querySelectorAll('.nav-link');
-    var activeId = '';
 
-    // Function to update active nav link
-    function setActiveLink(id) {
+    if (navLinks.length === 0) return;
+
+    // Get the section IDs that have corresponding nav links
+    var validSectionIds = [];
+    navLinks.forEach(function(link) {
+      var sectionId = link.getAttribute('data-section');
+      if (sectionId) validSectionIds.push(sectionId);
+    });
+
+    // Only query sections that have nav links (filter out sections like architecture-highlights)
+    var validSections = [];
+    validSectionIds.forEach(function(id) {
+      var section = document.getElementById(id);
+      if (section) validSections.push(section);
+    });
+
+    if (validSections.length === 0) return;
+
+    // Get the nav link for a section id
+    function getNavLink(id) {
+      return document.querySelector('.nav-link[data-section="' + id + '"]');
+    }
+
+    // Set active nav link
+    function setActive(id) {
       navLinks.forEach(function(link) {
         link.classList.remove('active');
       });
-      var activeLink = document.querySelector('.nav-link[data-section="' + id + '"]');
-      if (activeLink) activeLink.classList.add('active');
-      activeId = id;
+      var link = getNavLink(id);
+      if (link) link.classList.add('active');
     }
 
-    scrollObserver = new IntersectionObserver(function(entries) {
+    // Find which section is currently most visible in the viewport
+    function getCurrentSection() {
+      var scrollY = window.scrollY;
+      var centerY = scrollY + window.innerHeight / 2;
+      var bestSection = null;
+      var bestScore = -Infinity;
+
+      validSections.forEach(function(section) {
+        var rect = section.getBoundingClientRect();
+        var top = rect.top + scrollY;
+        var bottom = top + rect.height;
+        var height = rect.height;
+
+        if (height <= 0) return;
+
+        // Calculate overlap score - prefer sections where viewport center is inside the section
+        var score;
+        if (centerY >= top && centerY < bottom) {
+          // Center is inside this section - give it highest priority
+          score = 2;
+        } else if (centerY < top) {
+          // Section is below viewport center
+          score = 1;
+        } else {
+          // Section is above viewport center - still active but lower priority
+          score = 0;
+        }
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestSection = section.getAttribute('id');
+        }
+      });
+
+      return bestSection;
+    }
+
+    // Use IntersectionObserver with a reading zone in the middle of viewport
+    var options = {
+      root: null,
+      // The intersection zone is from 20% to 80% of viewport height
+      // A section becomes "active" when it enters this zone
+      rootMargin: '-20% 0px -20% 0px',
+      threshold: 0
+    };
+
+    observer = new IntersectionObserver(function(entries) {
+      // Find the entry that is intersecting and is highest in the viewport
+      var intersectingEntries = [];
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          var id = entry.target.getAttribute('id');
-          if (id && id !== activeId) setActiveLink(id);
+          intersectingEntries.push(entry);
         }
       });
-    }, observerOptions);
 
-    sections.forEach(function(section) {
-      scrollObserver.observe(section);
+      if (intersectingEntries.length > 0) {
+        // Sort by vertical position (lowest = highest on page = first in DOM)
+        intersectingEntries.sort(function(a, b) {
+          return a.boundingClientRect.top - b.boundingClientRect.top;
+        });
+        var topEntry = intersectingEntries[0];
+        var id = topEntry.target.getAttribute('id');
+        if (id && validSectionIds.indexOf(id) !== -1) {
+          setActive(id);
+        }
+      }
+    }, options);
+
+    validSections.forEach(function(section) {
+      observer.observe(section);
     });
 
-    // Set initial active link based on current scroll position
-    function updateInitialActiveLink() {
-      var scrollPos = window.scrollY + window.innerHeight / 2;
-      var found = false;
-      sections.forEach(function(section) {
-        if (found) return;
-        var rect = section.getBoundingClientRect();
-        var top = rect.top + window.scrollY;
-        var bottom = top + rect.height;
-        if (scrollPos >= top && scrollPos < bottom) {
-          var id = section.getAttribute('id');
-          if (id && id !== activeId) setActiveLink(id);
-          found = true;
-        }
-      });
-    }
+    // Set initial active link after a short delay
+    setTimeout(function() {
+      var id = getCurrentSection();
+      if (id) setActive(id);
+    }, 150);
 
-    // Run initial check after page load
-    setTimeout(updateInitialActiveLink, 100);
-
-    // Smooth scroll with offset for anchor links
+    // Handle click on nav links for smooth scroll
     navLinks.forEach(function(link) {
       link.addEventListener('click', function(e) {
         e.preventDefault();
-        var targetId = link.getAttribute('href');
-        if (!targetId) return;
-        var targetIdClean = targetId.slice(1);
-        var targetSection = document.getElementById(targetIdClean);
-        if (targetSection) {
+        var href = link.getAttribute('href');
+        if (!href) return;
+        var targetId = href.substring(1);
+        var target = document.getElementById(targetId);
+        if (target) {
           var offset = 150;
-          var top = targetSection.getBoundingClientRect().top + window.scrollY - offset;
+          var rect = target.getBoundingClientRect();
+          var top = rect.top + window.scrollY - offset;
           window.scrollTo({ top: top, behavior: 'smooth' });
-          setActiveLink(targetIdClean);
+          setActive(targetId);
         }
       });
     });
 
-    // Update active link on scroll with debounce
-    scrollHandler = function() {
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(updateInitialActiveLink, 50);
-    };
-    window.addEventListener('scroll', scrollHandler);
+    // Update on scroll with throttling
+    var scrollTimer = null;
+    window.addEventListener('scroll', function() {
+      if (scrollTimer) return;
+      scrollTimer = setTimeout(function() {
+        scrollTimer = null;
+        var id = getCurrentSection();
+        if (id) setActive(id);
+      }, 50);
+    }, { passive: true });
 
     isInitialized = true;
   }
 
-  // Handle View Transitions - cleanup and re-initialize
+  // Re-initialize on view transitions
   document.addEventListener('astro:page-load', function() {
-    cleanupScrollSpy();
-    initScrollSpy();
+    cleanup();
+    init();
   }, { once: false });
 
-  // Also run on initial page load
+  // Initialize on page load
   if (document.readyState === 'complete') {
-    initScrollSpy();
+    init();
   } else {
     window.addEventListener('load', function() {
-      initScrollSpy();
+      init();
     }, { once: true });
   }
 </script>
