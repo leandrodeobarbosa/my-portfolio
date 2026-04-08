@@ -34,12 +34,12 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 		/>
 	</head>
 	<body
-		class="bg-bg-primary text-text-primary antialiased font-sans pt-16"
+		class="bg-bg-primary text-text-primary antialiased font-sans pt-16 min-h-screen flex flex-col w-full overflow-x-hidden"
 	>
 		<Header/>
-		<div class='py-8 min-h-[calc(100vh-160px)]'>
+		<main class='flex-1 w-full flex flex-col py-8 min-h-[calc(100vh-160px)]'>
 			<slot />
-		</div>
+		</main>
 		<Footer />
 	</body>
 </html>
