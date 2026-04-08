@@ -1,0 +1,46 @@
+/* View Transition - Terminal-style effect for FlowDX Platform */
+::view-transition-old(project-title-flowdx-platform),
+::view-transition-new(project-title-flowdx-platform) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(project-title-flowdx-platform) {
+  animation-name: terminal-fade-out;
+}
+
+::view-transition-new(project-title-flowdx-platform) {
+  animation-name: terminal-fade-in;
+}
+
+@keyframes terminal-fade-out {
+  0% { opacity: 1; filter: blur(0); transform: scale(1); }
+  50% { opacity: 0.5; filter: blur(1px); transform: scale(0.98); }
+  100% { opacity: 0; filter: blur(2px); transform: scale(0.95); }
+}
+
+@keyframes terminal-fade-in {
+  0% { opacity: 0; filter: blur(2px); transform: scale(0.95); }
+  50% { opacity: 0.5; filter: blur(1px); transform: scale(0.98); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+
+/* View Transition - Global navigation (200ms) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::view-transition-old(root) { animation-name: global-fade-out; }
+::view-transition-new(root) { animation-name: global-fade-in; }
+
+@keyframes global-fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes global-fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

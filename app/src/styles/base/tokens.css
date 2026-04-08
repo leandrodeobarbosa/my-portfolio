@@ -1,0 +1,20 @@
+@layer base {
+	:root {
+		--color-bg-primary: #0A0A0B;
+		--color-bg-secondary: #18181B;
+		--color-bg-tertiary: #27272A;
+		--color-border: #3F3F46;
+		--color-border-subtle: #27272A;
+		--color-text-primary: #FFFFFF;
+		--color-text-secondary: #D4D4D8;
+		--color-text-tertiary: #A1A1AA;
+		--color-accent: #14B8A6;
+		--color-accent-hover: #0D9488;
+		--color-code-bg: #27272A;
+		--color-code-text: #FAFAFA;
+		--color-success: #4ADE80;
+		--color-warning: #FACC15;
+		--color-error: #F87171;
+		-webkit-tap-highlight-color: transparent;
+	}
+}

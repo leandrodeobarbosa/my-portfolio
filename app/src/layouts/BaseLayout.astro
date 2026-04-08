@@ -19,7 +19,7 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 ---
 
 <!doctype html>
-<html lang='en'>
+<html lang='en' class='scroll-smooth'>
 	<head>
 		<BaseHead title={title} description={description} image={image} />
 		<ClientRouter />
@@ -34,7 +34,7 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 		/>
 	</head>
 	<body
-		class="bg-[var(--color-bg-primary)] bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] pt-16"
+		class="bg-bg-primary text-text-primary antialiased font-sans pt-16"
 	>
 		<Header/>
 		<div class='py-8 min-h-[calc(100vh-160px)]'>
