@@ -1,7 +1,9 @@
 import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tailwind from 'eslint-plugin-tailwindcss';
 
 export default [
+	...tailwind.configs['flat/recommended'],
 	{ ignores: ['.astro/**', 'dist/**', 'node_modules/**'] },
 	{
 		files: ['**/*.{js,ts}'],
