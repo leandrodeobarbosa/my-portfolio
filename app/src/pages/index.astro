@@ -14,88 +14,34 @@ const top3Projects = projects.slice(0, 1);
 			<div class='max-w-4xl mb-20'>
 				<!-- Name, Seniority Micro-signal, and Keywords -->
 				<div class='flex-1 min-w-0 pt-1'>
-					<h1 class='text-4xl sm:text-5xl font-bold text-zinc-100 font-mono mb-6 tracking-wide'>
+					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-100 font-mono mb-6 tracking-wide'>
 						Leandro de Oliveira Barbosa
 					</h1>
 
 					<!-- Role + Intro Row -->
 					<div class='flex flex-wrap items-start gap-4 mb-6'>
-						<!-- Kubernetes ConfigMap Resource -->
-						<div class="kube-resource" role="status" aria-label="Professional role">
-							<pre><code><span class="kube-comment"># ConfigMap - Profile</span>
-<span class="kube-keyword">kind</span>: <span class="kube-string">ConfigMap</span>
-<span class="kube-keyword">metadata</span>:
-  <span class="kube-key">name</span>: <span class="kube-string">leandro-profile</span>
-<span class="kube-keyword">data</span>:
-  <span class="kube-key">role</span>: <span class="kube-string">DevOps & Platform Engineer</span>
-  <span class="kube-key">focus</span>: <span class="kube-string">Automation, IDP, Cloud Native</span>
-  <span class="kube-key">status</span>: <span class="kube-string">ready_for_production</span></code></pre>
-						</div>
-
 						<!-- Introduction Text -->
-						<div class='flex-1 min-w-[200px] pt-0'>
-							<p class='text-lg sm:text-xl leading-relaxed text-zinc-200 max-w-[65ch]'>
-								<span class='text-[var(--color-accent)]'>Desenvolvo plataformas de nuvem</span> com foco em automação e pipelines que aceleram o ciclo de entrega e melhoram a experiência do desenvolvedor.
+						<div class='flex-1 min-w-[200px] pt-0 -mt-1'>
+							<p class='text-xl sm:text-2xl leading-relaxed text-zinc-200 max-w-[65ch]'>
+								<span class='text-[var(--color-accent)]'>DevOps Engineer</span> com foco em automação, CI/CD e construção de plataformas Cloud Native.
 							</p>
-							<a href='/sobre/' class='inline-flex items-center gap-1 mt-4 text-xs font-mono text-zinc-300 hover:text-[var(--color-accent)] transition-all duration-200 no-underline opacity-70 hover:opacity-100 group'>
-								<span class='text-[var(--color-accent)]'>cat</span> sobre.md <svg class='transition-transform duration-200 group-hover:translate-x-1' xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='m12 5 7 7-7 7'/></svg>
-							</a>
-						</div>
-					</div>
+							<p class='text-base sm:text-lg leading-relaxed text-zinc-300 max-w-[65ch] mt-3'>
+								Construo soluções que reduzem fricção no provisionamento e na entrega de serviços, com foco em confiabilidade e experiência do desenvolvedor (DX).
+								<a href='/sobre/' class='inline-flex items-center gap-1 ml-1 text-xs font-mono text-zinc-300 hover:text-[var(--color-accent)] transition-all duration-200 no-underline opacity-70 hover:opacity-100 group'>
+									<span class='text-[var(--color-accent)]'>cat</span> sobre.md <svg class='transition-transform duration-200 group-hover:translate-x-1' xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 12h14'/><path d='m12 5 7 7-7 7'/></svg>
+								</a>
+							</p>
 
-				<!-- Key Stack - Flowchart Style -->
-				<div class='skill-flowchart mb-4' role='list' aria-label='Tech stack flowchart'>
-					<div class='flow-node' role='listitem'>
-						<div class='flow-badge group'>
-							<span class='flow-label'>Cloud</span>
-							<span class='flow-tech'>AWS</span>
-						</div>
-						<div class='flow-arrow' aria-hidden='true'>
-							<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-								<path d='M5 12H19M19 12L13 6M19 12L13 18' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
-							</svg>
-						</div>
-					</div>
-					<div class='flow-node' role='listitem'>
-						<div class='flow-badge group'>
-							<span class='flow-label'>IaC</span>
-							<span class='flow-tech'>TERRAFORM</span>
-						</div>
-						<div class='flow-arrow' aria-hidden='true'>
-							<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-								<path d='M5 12H19M19 12L13 6M19 12L13 18' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
-							</svg>
-						</div>
-					</div>
-					<div class='flow-node' role='listitem'>
-						<div class='flow-badge group'>
-							<span class='flow-label'>CI/CD</span>
-							<span class='flow-tech'>GITHUB ACTIONS</span>
-						</div>
-						<div class='flow-arrow' aria-hidden='true'>
-							<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-								<path d='M5 12H19M19 12L13 6M19 12L13 18' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
-							</svg>
-						</div>
-					</div>
-					<div class='flow-node' role='listitem'>
-						<div class='flow-badge group'>
-							<span class='flow-label'>Runtime</span>
-							<span class='flow-tech'>NODE.JS</span>
-						</div>
-						<div class='flow-arrow' aria-hidden='true'>
-							<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-								<path d='M5 12H19M19 12L13 6M19 12L13 18' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
-							</svg>
-						</div>
-					</div>
-					<div class='flow-node' role='listitem'>
-						<div class='flow-badge group'>
-							<span class='flow-label'>OS</span>
-							<span class='flow-tech'>LINUX</span>
-						</div>
-					</div>
-				</div>
+							<!-- Terminal Frame -->
+							<div class='terminal-inline mt-12 max-w-2xl font-mono text-xs'>
+								<div class='terminal-line'><span class='text-zinc-500'>leandro@devops:~/ $</span> <span class='terminal-cmd'><span class='text-[#22c55e]'>flowdx</span> <span class='text-zinc-400'>up</span> <span class='text-zinc-500'>--idp-check</span></span></div>
+								<div class='terminal-output mt-1 pl-0'>
+									<div class='terminal-line'><span class='text-[#22c55e] font-semibold'>[infra]</span> <span class='terminal-success'>AWS EKS cluster is healthy</span><span class='terminal-region'> (us-east-1)</span></div>
+									<div class='terminal-line'><span class='text-[#22c55e] font-semibold'>[iac]</span> <span class='terminal-success'>Terraform state in sync</span><span class='terminal-drift'> (0 drifts)</span></div>
+									<div class='terminal-line'><span class='text-[#22c55e] font-semibold'>[sec]</span> OIDC &amp; Keyless Auth: <span class='terminal-success'>Active</span></div>
+									<div class='terminal-line'><span class='text-[#22c55e] font-semibold'>[status]</span> <span class='terminal-ready'>Platform ready for self-service</span></div>
+								</div>
+							</div>
 
 
 			</div>
@@ -106,7 +52,7 @@ const top3Projects = projects.slice(0, 1);
 			</div>
 
 			<!-- Projects - Markdown Style Header -->
-			<div class='mb-12'>
+			<div class='mb-12 mt-24'>
 				<div class='flex justify-between items-center gap-2 mb-6'>
 					<h2 class='text-xl font-mono font-bold text-zinc-100'>## Projeto em Destaque</h2>
 					<a href='/projetos/' class='inline-flex items-center gap-1 text-xs font-mono text-zinc-400 hover:text-[var(--color-accent)] transition-all duration-200 no-underline opacity-70 hover:opacity-100 group'>
