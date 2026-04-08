@@ -58,7 +58,7 @@ const techIcons: Record<string, null> = {
         </div>
 
         <h3 class="project-card__title" transition:name={`project-title-${project.name.toLowerCase().replace(/\s+/g, '-')}`}>
-          {(project.name === 'FlowDX Platform' || project.name === 'FlowDX App' || project.name === 'fedora-workstation-as-code') ? (
+          {(project.name === 'FlowDX App') ? (
             <span>{project.name}</span>
           ) : (
             <a href={project.demoLink} {...(project.demoLink.startsWith('/') ? {} : { target: '_blank', rel: project.demoLinkRel || 'noopener noreferrer' })} class="project-card__link">
@@ -104,8 +104,8 @@ const techIcons: Record<string, null> = {
       {/* Footer Section - Actions */}
       <footer class="project-card__footer">
         {project.demoLink && (
-          <a href={project.demoLink} {...(project.demoLink.startsWith('/') ? {} : { target: '_blank', rel: project.demoLinkRel || 'noopener noreferrer' })} class:list={["project-card__action", project.name === 'FlowDX Platform' && "project-card__action--flowdx"]}>
-            <span>{project.name === 'FlowDX Platform' ? 'FlowDX Platform — Technical Overview' : project.name === 'FlowDX App' ? 'FlowDX App — Architecture Overview' : 'fedora-workstation-as-code — Setup'}</span>
+          <a href={project.demoLink} {...(project.demoLink.startsWith('/') ? {} : { target: '_blank', rel: project.demoLinkRel || 'noopener noreferrer' })} class="project-card__action">
+            <span>{project.name === 'FlowDX Platform' ? 'Technical Design Document (TDD)' : 'View Project'}</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
             </svg>
@@ -120,88 +120,33 @@ const techIcons: Record<string, null> = {
     </div>
 
     {/* Right Column: Terminal */}
-    {(project.name === 'FlowDX Platform' || project.name === 'FlowDX App' || project.name === 'fedora-workstation-as-code') && (
-      <div class:list={["project-card__terminal-wrapper", project.name === 'FlowDX Platform' && "project-card__terminal-wrapper--flowdx"]}>
+    {(project.name === 'FlowDX App') && (
+      <div class="project-card__terminal-wrapper">
         <div class="project-card__terminal">
           <div class="project-card__terminal-header">
             <span class="project-card__terminal-dot"></span>
             <span class="project-card__terminal-dot"></span>
             <span class="project-card__terminal-dot"></span>
-            <span class="project-card__terminal-title">
-              {project.name === 'FlowDX Platform' ? 'flowdx-status' : project.name === 'FlowDX App' ? 'flowdx-app' : 'fedora-ws'}
-            </span>
+            <span class="project-card__terminal-title">flowdx-app</span>
           </div>
           <div class="project-card__terminal-body">
-            {project.name === 'FlowDX Platform' ? (
-              <>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">reference:</span>
-                  <span class="project-card__terminal-value">FlowDX App (production-like workload)</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">status:</span>
-                  <span class="project-card__terminal-value">aws + terraform + ci/cd (drift detection)</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">next:</span>
-                  <span class="project-card__terminal-value">cli, templates, self-service engine</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">focus:</span>
-                  <span class="project-card__terminal-value">golden paths & developer experience</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">stack:</span>
-                  <span class="project-card__terminal-value">aws + terraform + kubernetes</span>
-                </div>
-              </>
-            ) : project.name === 'FlowDX App' ? (
-              <>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">stack:</span>
-                  <span class="project-card__terminal-value">Node.js + TypeScript + Astro</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">deploy:</span>
-                  <span class="project-card__terminal-value">AWS S3 + CloudFront</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">ci/cd:</span>
-                  <span class="project-card__terminal-value">GitHub Actions</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">type:</span>
-                  <span class="project-card__terminal-value">immutable / silverblue approach</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">wm:</span>
-                  <span class="project-card__terminal-value">sway + waybar (wayland native)</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">provision:</span>
-                  <span class="project-card__terminal-value">bash automation</span>
-                </div>
-                <div class="project-card__terminal-line">
-                  <span class="project-card__terminal-prompt">$</span>
-                  <span class="project-card__terminal-key">focus:</span>
-                  <span class="project-card__terminal-value">security & developer productivity</span>
-                </div>
-              </>
-            )}
+            <>
+              <div class="project-card__terminal-line">
+                <span class="project-card__terminal-prompt">$</span>
+                <span class="project-card__terminal-key">stack:</span>
+                <span class="project-card__terminal-value">Node.js + TypeScript + Astro</span>
+              </div>
+              <div class="project-card__terminal-line">
+                <span class="project-card__terminal-prompt">$</span>
+                <span class="project-card__terminal-key">deploy:</span>
+                <span class="project-card__terminal-value">AWS S3 + CloudFront</span>
+              </div>
+              <div class="project-card__terminal-line">
+                <span class="project-card__terminal-prompt">$</span>
+                <span class="project-card__terminal-key">ci/cd:</span>
+                <span class="project-card__terminal-value">GitHub Actions</span>
+              </div>
+            </>
           </div>
         </div>
       </div>
@@ -224,25 +169,13 @@ const techIcons: Record<string, null> = {
     height: 100%;
   }
 
-  .project-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--color-accent), transparent);
-    opacity: 0;
-    transition: opacity 200ms ease;
-  }
-
-  .project-card:hover::before {
-    opacity: 1;
+  .project-card {
+    outline: 1px solid transparent;
   }
 
   .project-card:hover {
-    border-color: var(--color-accent);
-    border-width: 0.5px;
+    border-color: var(--color-border-subtle);
+    outline-color: var(--color-accent);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
     transform: translateY(-2px);
   }
@@ -449,10 +382,6 @@ const techIcons: Record<string, null> = {
     padding-top: 0.75rem;
   }
 
-  .project-card__terminal-wrapper--flowdx {
-    padding-top: 0.75rem;
-  }
-
   /* Terminal block */
   .project-card__terminal {
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.98) 100%);
@@ -569,11 +498,6 @@ const techIcons: Record<string, null> = {
   /* When card has terminal, align footer with terminal body */
   .project-card:has(.project-card__terminal-wrapper) .project-card__footer {
     padding-top: 1.5rem;
-  }
-
-  /* Align FlowDX Platform link with fedora card */
-  .project-card__action--flowdx {
-    margin-top: 1rem;
   }
 
   .project-card__action {

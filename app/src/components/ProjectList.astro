@@ -87,20 +87,10 @@ for (let i = 0; i < projects.length; i += 2) {
     /* Odd number of projects: full-width on mobile, half on tablet+ */
   }
 
-  /* Featured card gets subtle visual emphasis */
+    /* Featured card gets subtle visual emphasis */
   @media (min-width: 640px) {
-    .projects-grid[data-featured="true"] .projects-grid__row:first-child .projects-grid__item:first-child {
-      position: relative;
-    }
-
     .projects-grid[data-featured="true"] .projects-grid__row:first-child .projects-grid__item:first-child::before {
-      content: '';
-      position: absolute;
-      inset: -0.5rem;
-      border-radius: 0.5rem;
-      background: linear-gradient(135deg, var(--color-accent) 0%, transparent 100%);
-      opacity: 0.05;
-      pointer-events: none;
+      display: none;
     }
   }
 

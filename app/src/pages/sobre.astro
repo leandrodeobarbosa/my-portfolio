@@ -30,31 +30,96 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
       border: none;
       padding: 0;
     }
+
+    /* Mobile responsiveness */
+    @media (max-width: 640px) {
+      .about-photo {
+        width: 120px !important;
+        height: 120px !important;
+        border-radius: 16px !important;
+      }
+
+      .about-name {
+        font-size: 1.5rem !important;
+      }
+
+      .prose {
+        font-size: 1rem !important;
+        padding: 0 0.75rem;
+      }
+
+      .about-content {
+        padding: 0 !important;
+        gap: 1rem !important;
+      }
+
+      /* Compact timeline on mobile */
+      .timeline-entry {
+        padding-left: 1.5rem !important;
+      }
+
+      .timeline-dot {
+        width: 20px !important;
+        height: 20px !important;
+      }
+
+      /* Stack flex containers vertically on mobile */
+      .flex-col-sm {
+        flex-direction: column !important;
+      }
+
+      /* Adjust heading sizes */
+      h2 {
+        font-size: 1.1rem !important;
+      }
+
+      /* Adjust spacing */
+      .mb-12 {
+        margin-bottom: 2rem !important;
+      }
+
+      /* Stack role badges */
+      .role-badges {
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+      }
+
+      /* Adjust CV button */
+      .cv-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Reduce animation on reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .about-hero-line {
+        transition: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 
   <script>
     function initAboutAnimations() {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const lines = document.querySelectorAll('.about-hero-line');
-              lines.forEach((line) => {
-                line.classList.add('visible');
-              });
-              observer.disconnect();
-            }
-          });
-        },
-        { threshold: 0.2 }
-      );
-
-      const heroSection = document.querySelector('.about-hero-line');
-      if (heroSection) {
-        // Ensure content is visible immediately, animation is just a nice effect
-        heroSection.classList.add('visible');
-        observer.observe(heroSection);
+      // Use requestIdleCallback for better performance on mobile
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+          triggerAnimation();
+        });
+      } else {
+        setTimeout(triggerAnimation, 100);
       }
+    }
+
+    function triggerAnimation() {
+      const lines = document.querySelectorAll('.about-hero-line:not(.visible)');
+      if (lines.length === 0) return;
+
+      lines.forEach((line) => {
+        line.classList.add('visible');
+      });
     }
 
     document.addEventListener('DOMContentLoaded', initAboutAnimations);
@@ -67,24 +132,29 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
         <!-- Name with badge and intro -->
         <div class='mb-12'>
           <div class='flex flex-col sm:flex-row sm:items-start gap-8'>
-            <!-- Photo -->
-            <img 
-              src={leandroImg.src} 
+            <!-- Photo - Using Astro Image for optimization -->
+            <Image
+              src={leandroImg}
               alt='Leandro de Oliveira Barbosa'
-              width='140'
-              height='140'
+              width={140}
+              height={140}
+              quality={90}
+              format='webp'
+              widths={[120, 140, 280]}
+              sizes='(max-width: 640px) 120px, (max-width: 1024px) 140px, 140px'
+              class='about-photo'
               style='display: block; width: 140px; height: 140px; border-radius: 20px; object-fit: cover; object-position: center top; border: 2px solid rgba(20, 184, 166, 0.5);'
             />
 
             <!-- Name, badge, and intro content -->
-            <div class='flex-1 min-w-0 pt-1'>
+            <div class='about-content flex-1 min-w-0 pt-1'>
               <!-- Name - Primary hero element -->
-              <h1 class='about-hero-line text-3xl sm:text-4xl font-bold text-zinc-50 font-mono mb-3 sm:mb-4'>
+              <h1 class='about-hero-line about-name text-3xl sm:text-4xl font-bold text-zinc-50 font-mono mb-3 sm:mb-4'>
                 Leandro de Oliveira Barbosa
               </h1>
 
               <!-- Role badges row -->
-              <div class='flex flex-wrap items-center gap-4 mb-5'>
+              <div class='role-badges flex flex-wrap items-center gap-4 mb-5'>
                 <span class='cv-label'>
                   DevOps <span class='text-[var(--color-accent)]'>|</span> Platform Engineer
                 </span>
@@ -93,27 +163,27 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
               <!-- Career Narrative -->
               <div class='about-hero-line mb-6'>
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
-                  Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud native utilizando AWS, Terraform e CI/CD, estruturando pipelines e infraestruturas que priorizam previsibilidade, escalabilidade e facilidade de uso para times de desenvolvimento.
+                  Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud-native na AWS utilizando Terraform e CI/CD, estruturando pipelines e infraestruturas que priorizam previsibilidade, escalabilidade e facilidade de uso para times de desenvolvimento.
                 </p>
 
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
-                  Minha abordagem combina automação com uma mentalidade orientada a plataforma, buscando reduzir fricções no ciclo de entrega por meio de padrões, templates e boas práticas embutidas nos processos. Aplico princípios de confiabilidade inspirados em práticas de SRE e foco na construção de ambientes observáveis e consistentes.
+                  Minha abordagem combina automação com uma mentalidade orientada a plataforma, reduzindo fricção no ciclo de entrega por meio de padrões, templates e boas práticas embutidas nos processos. Aplico princípios de confiabilidade inspirados em SRE, com foco na construção de ambientes observáveis e consistentes.
                 </p>
 
                 <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch]'>
-                  Atualmente, estou evoluindo o <a href='/projetos/flowdx-platform' class='text-[var(--color-accent)] hover:underline'>FlowDX Platform</a>, um projeto de plataforma interna que integra workloads e padronizações de entrega, com foco em golden paths e templates de execução com Docker e Kubernetes, criando uma base prática para evolução em arquitetura de plataformas e experiência do desenvolvedor.
+                  Atualmente evoluo o <a href='/projetos/flowdx-platform' class='text-[var(--color-accent)] hover:underline'>FlowDX Platform</a>, uma plataforma interna em AWS com Terraform e CI/CD, focada em self-service, golden paths e melhor experiência para desenvolvedores.
                 </p>
               </div>
 
 <!-- CV Download -->
-              <a href='/cv/LeandrodeO_Barbosa_CV_DevOps.pdf' download class='group inline-flex items-center gap-2.5 px-4 py-2.5 font-mono text-sm border border-[var(--color-border-subtle)] text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-200 no-underline'>
+              <a href='/cv/LeandrodeO_Barbosa_CV_DevOps.pdf' download class='cv-button group inline-flex items-center gap-2.5 px-4 py-2.5 font-mono text-sm border border-[var(--color-border-subtle)] text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-200 no-underline'>
                 <svg class='w-[18px] h-[18px] transition-transform duration-200 group-hover:-translate-y-0.5' xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' x1='12' y1='15' y2='3'/></svg>
                 [ Download CV ]
               </a>
 
               <!-- Open to Opportunities - Subtle inline indicator -->
               <p class='mt-6 font-mono text-sm text-zinc-400'>
-                <span class='text-[var(--color-accent)]'>Aberto a oportunidades</span> em DevOps, Platform Engineering e SRE, com foco em ambientes colaborativos e orientados a boas práticas.
+                <span class='text-[var(--color-accent)]'>Aberto a oportunidades</span> em DevOps, Platform Engineering e SRE.
               </p>
             </div>
           </div>
@@ -141,7 +211,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle)] mb-12' />
+        <hr class='border-t border-[var(--color-border-subtle)] mb-4' />
 
         <!-- Professional Experience Section -->
         <section class='mb-12'>
@@ -151,9 +221,9 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
             <div class='absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[var(--color-accent)] to-[var(--color-accent)]/30'></div>
 
             <!-- Job Entry -->
-            <div class='relative pl-10 pb-10 group last:pb-0'>
+            <div class='timeline-entry relative pl-10 pb-10 group last:pb-0'>
               <!-- Timeline dot -->
-              <div class='absolute left-0 top-1 w-6 h-6 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/30 group-hover/pegasus:scale-110 transition-transform duration-300'>
+              <div class='timeline-dot absolute left-0 top-1 w-6 h-6 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/30 group-hover:scale-110 transition-transform duration-300'>
                 <div class='w-2 h-2 rounded-full bg-white/90'></div>
               </div>
 
@@ -178,15 +248,19 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 <ul class='space-y-2.5 mb-4'>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Desenvolvimento e manutenção de aplicações Node.js (APIs REST e integrações com serviços corporativos).</span>
+                    <span>Implementei a migração de uma arquitetura baseada em VMs (Docker) para uma arquitetura serverless na AWS (API Gateway, Lambda, DynamoDB e S3), reduzindo custos em 16% com garantias de eficiência operacional, segurança e alta disponibilidade.</span>
                   </li>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Automação de deploys e suporte a ambientes Linux, incluindo scripts Bash e versionamento com Git.</span>
+                    <span>Automatizei deploys e rotinas operacionais com Bash, Linux e GitHub Actions.</span>
                   </li>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Apoio em tarefas de infraestrutura e troubleshooting, colaborandando em pipelines e rotinas operacionais.</span>
+                    <span>Gerenciei infraestrutura na AWS utilizando Terraform, criando módulos reutilizáveis e padronizando ambientes (dev/prod).</span>
+                  </li>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
+                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
+                    <span>Configurei monitoramento, logs e alertas com CloudWatch, melhorando a observabilidade e reduzindo o tempo de resposta a incidentes.</span>
                   </li>
                 </ul>
 
@@ -196,9 +270,9 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
             </div>
 
             <!-- Job Entry -->
-            <div class='relative pl-10 pb-0 group'>
+            <div class='timeline-entry relative pl-10 pb-0 group'>
               <!-- Timeline dot -->
-              <div class='absolute left-0 top-1 w-6 h-6 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/30 group-hover/every:scale-110 transition-transform duration-300'>
+              <div class='timeline-dot absolute left-0 top-1 w-6 h-6 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/30 group-hover:scale-110 transition-transform duration-300'>
                 <div class='w-2 h-2 rounded-full bg-white/90'></div>
               </div>
 
@@ -209,7 +283,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                   <h3 class='font-bold text-xl text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
                     Every CyberSecurity
                   </h3>
-                  <span class='text-sm text-zinc-400'>Analista DevOps/Platform</span>
+                  <span class='text-sm text-zinc-400'>Analista DevOps</span>
                 </div>
 
                 <!-- Meta -->
@@ -223,15 +297,19 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 <ul class='space-y-2.5 mb-4'>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Participei da implantação da solução BigID em ambientes on-premise, estruturada em 1 VM dedicada ao MongoDB e 4 VMs para o core da aplicação, com workloads orquestrados via Kubernetes.</span>
+                    <span>Atuei na implantação do BigID em cluster Kubernetes (5 nodes), suportando +10 microsserviços em ambiente distribuído.</span>
                   </li>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Apoiei a implantação do BigID em ambiente governamental utilizando OpenShift na AWS, colaborandando na configuração de clusters, integração com Active Directory (LDAP), pipelines CI/CD e provisionamento via CloudFormation.</span>
+                    <span>Apoiei a implantação em ambiente governamental na AWS com OpenShift, incluindo configuração de cluster e estratégias de deploy.</span>
                   </li>
                   <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
                     <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Contribuí para a observabilidade e segurança de ambientes Kubernetes, implementando controle de acesso com RBAC e SCC, integração com Prometheus para métricas e monitoramento, e padronização de deploys através de GitOps com Argo CD, garantindo consistência, rastreabilidade e maior confiabilidade nas entregas.</span>
+                    <span>Deploy contínuo via ArgoCD (GitOps) em ambiente OpenShift na AWS(EC2).</span>
+                  </li>
+                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
+                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
+                    <span>Criação e manutenção de Helm charts e manifestos Kubernetes.</span>
                   </li>
                 </ul>
 
