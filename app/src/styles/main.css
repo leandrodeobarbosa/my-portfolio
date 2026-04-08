@@ -1,6 +1,5 @@
 @import './base/tokens.css';
 @import './base/transitions.css';
-@import './legacy-components.css';
 
 @tailwind base;
 @tailwind components;
