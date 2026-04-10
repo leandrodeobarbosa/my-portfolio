@@ -8,6 +8,9 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "portfolio_static_
   bucket = aws_s3_bucket.portfolio_static_site.id
 
   rule {
+    bucket_key_enabled       = false
+    blocked_encryption_types = ["NONE"]
+
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
     }
