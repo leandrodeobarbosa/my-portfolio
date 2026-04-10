@@ -25,9 +25,6 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
-      - name: Debug files
-        run: ls -R
-
       - name: Deploy CV
         uses: ./.github/actions/cv-to-s3
         with:

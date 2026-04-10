@@ -49,6 +49,9 @@ override.tf.json
 # Arquivo de crash
 crash.log
 
+# Plans
+plans
+
 # CLI config local
 .terraformrc
 terraform.rc
