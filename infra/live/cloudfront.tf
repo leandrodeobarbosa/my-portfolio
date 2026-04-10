@@ -30,7 +30,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
 
     function_association {
       event_type   = "viewer-request"
-      function_arn = var.cloudfront_function_arn
+      function_arn = aws_cloudfront_function.url_rewrite.arn
     }
   }
 
