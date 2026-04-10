@@ -132,60 +132,60 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
         <!-- Name with badge and intro -->
         <div class='mb-12'>
           <div class='flex flex-col sm:flex-row sm:items-start gap-8'>
-            <!-- Photo - Using Astro Image for optimization -->
             <Image
               src={leandroImg}
               alt='Leandro de Oliveira Barbosa'
-              width={140}
-              height={140}
-              quality={90}
+              width={328}
+              height={328}
+              quality={100}
               format='webp'
-              widths={[120, 140, 280]}
-              sizes='(max-width: 640px) 120px, (max-width: 1024px) 140px, 140px'
-              class='about-photo'
-              style='display: block; width: 140px; height: 140px; border-radius: 20px; object-fit: cover; object-position: center top; border: 2px solid rgba(20, 184, 166, 0.5);'
+              class='about-photo shrink-0 overflow-hidden !m-0'
+              style='display: block; width: 164px; height: 164px; border-radius: 12px; object-fit: cover; object-position: center top; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 0 0 2px rgba(24, 24, 27, 1), 0 0 0 3px rgba(20, 184, 166, 0.25);'
             />
 
             <!-- Name, badge, and intro content -->
-            <div class='about-content flex-1 min-w-0 pt-1'>
-              <!-- Name - Primary hero element -->
-              <h1 class='about-hero-line about-name text-3xl sm:text-4xl font-bold text-zinc-50 font-mono mb-3 sm:mb-4'>
-                Leandro de Oliveira Barbosa
-              </h1>
-
-              <!-- Role badges row -->
-              <div class='role-badges flex flex-wrap items-center gap-4 mb-5'>
-                <span class='cv-label'>
-                  DevOps <span class='text-[var(--color-accent)]'>|</span> Platform Engineer
-                </span>
+            <header class='about-content flex-1 min-w-0 pt-0 flex flex-col gap-5'>
+              <!-- Name & Role -->
+              <div class='flex flex-col gap-2'>
+                <h1 class='about-hero-line about-name text-3xl sm:text-4xl font-bold text-zinc-100 font-mono tracking-wide !mt-0'>
+                  Leandro de Oliveira Barbosa
+                </h1>
+                <div class='flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-zinc-500 py-0.5 sm:ml-1'>
+                  // DevOps | Platform Engineer
+                </div>
               </div>
 
               <!-- Career Narrative -->
-              <div class='about-hero-line mb-6'>
-                <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
-                  Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud-native na AWS utilizando Terraform e CI/CD, estruturando pipelines e infraestruturas que priorizam previsibilidade, escalabilidade e facilidade de uso para times de desenvolvimento.
+              <div class='about-hero-line flex flex-col gap-4 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[65ch] mt-2'>
+                <p>
+                  Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud-native na AWS utilizando Terraform e CI/CD, priorizando previsibilidade e facilidade de uso para os times de desenvolvimento.
                 </p>
-
-                <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch] mb-4'>
-                  Minha abordagem combina automação com uma mentalidade orientada a plataforma, reduzindo fricção no ciclo de entrega por meio de padrões, templates e boas práticas embutidas nos processos. Aplico princípios de confiabilidade inspirados em SRE, com foco na construção de ambientes observáveis e consistentes.
+                <p>
+                  Minha abordagem adota uma mentalidade orientada a plataforma: reduzo fricções no ciclo de entrega através de padrões e templates organizados. Aplico princípios de confiabilidade inspirados em SRE, com foco na construção de ambientes altamente observáveis.
                 </p>
-
-                <p class='text-base sm:text-lg leading-[1.75] text-zinc-300 max-w-[65ch]'>
-                  Atualmente evoluo o <a href='/projetos/flowdx-platform' class='text-[var(--color-accent)] hover:underline'>FlowDX Platform</a>, uma plataforma interna em AWS com Terraform e CI/CD, focada em self-service, golden paths e melhor experiência para desenvolvedores.
+                <p>
+                  Atualmente evoluo o <a href='/projetos/flowdx-platform' class='!bg-transparent hover:!bg-transparent !border-none hover:!border-none !shadow-none outline-none ring-0 no-underline decoration-transparent hover:decoration-transparent text-[var(--color-accent)] hover:text-[var(--color-accent)]/80 transition-colors'>FlowDX Platform</a>, uma plataforma interna construída em modelo IaC focada em self-service e golden paths excelentes.
                 </p>
               </div>
 
-<!-- CV Download -->
-              <a href='/cv/LeandrodeO_Barbosa_CV_DevOps.pdf' download class='cv-button group inline-flex items-center gap-2.5 px-4 py-2.5 font-mono text-sm border border-[var(--color-border-subtle)] text-zinc-400 hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-200 no-underline'>
-                <svg class='w-[18px] h-[18px] transition-transform duration-200 group-hover:-translate-y-0.5' xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' x1='12' y1='15' y2='3'/></svg>
-                [ Download CV ]
-              </a>
-
-              <!-- Open to Opportunities - Subtle inline indicator -->
-              <p class='mt-6 font-mono text-sm text-zinc-400'>
-                <span class='text-[var(--color-accent)]'>Aberto a oportunidades</span> em DevOps, Platform Engineering e SRE.
-              </p>
-            </div>
+              <!-- Call to Action & Status -->
+              <div class='about-hero-line mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-6'>
+                <p class='m-0 font-mono text-xs text-zinc-500 flex items-center gap-2'>
+                  <span class='relative flex h-2 w-2'>
+                    <span class='animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-40'></span>
+                    <span class='relative inline-flex rounded-full h-2 w-2 bg-[var(--color-accent)] opacity-80'></span>
+                  </span>
+                  Aberto a oportunidades SRE/DevOps
+                </p>
+                
+                <a href='/cv/LeandrodeO_Barbosa_CV_DevOps.pdf' download class='no-underline inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-zinc-900/40 border border-zinc-800 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300 font-mono text-sm text-zinc-400 hover:text-[var(--color-accent)] group'>
+                  <span class='text-[var(--color-accent)] opacity-80 group-hover:opacity-100'>$ curl</span> -O LeandrodeO_Barbosa_CV_DevOps.pdf
+                  <svg class='transition-transform duration-300 group-hover:translate-y-0.5' xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                    <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' x1='12' y1='15' y2='3'/>
+                  </svg>
+                </a>
+              </div>
+            </header>
           </div>
         </div>
 
@@ -197,12 +197,12 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
           <div class='space-y-4'>
             <!-- Oracle OCI Certification -->
             <a href='https://catalog-education.oracle.com/pls/certview/sharebadge?id=5DC65FD63A2330B5A7116E8EDD416E22DAFC4BB89EF9F91039D0751FAEB91832' target='_blank' rel='noopener noreferrer' class='group block no-underline py-2'>
-              <h3 class='text-sm font-mono font-semibold uppercase tracking-wider text-[var(--color-accent)] mb-2'>
-                Oracle Cloud Infrastructure
-              </h3>
-              <p class='font-semibold text-base text-zinc-100 mb-1'>Oracle Cloud Infrastructure Fundamentals</p>
-              <p class='text-sm text-zinc-400 flex items-center gap-2'>
-                <span>Oracle • 2025</span>
+              <h3 class='font-semibold text-base text-zinc-100 mb-0.5 group-hover:text-[var(--color-accent)] transition-colors'>Oracle Cloud Infrastructure Fundamentals</h3>
+              <p class='text-xs font-mono uppercase tracking-wider text-zinc-600 mb-2'>
+                Oracle
+              </p>
+              <p class='text-sm text-zinc-500 flex items-center gap-2'>
+                <span>2025</span>
                 <span class='opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs text-[var(--color-accent)]'>
                   [ Verify <svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/><polyline points='15 3 21 3 21 9'/><line x1='10' x1='14' x2='21' y2='3'/></svg> ]
                 </span>
@@ -239,7 +239,10 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
                 <!-- Meta -->
                 <div class='flex flex-wrap items-center gap-3 mb-4'>
-                  <span class='work-badge'>Remoto</span>
+                  <span class='inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium font-mono bg-teal-500/10 border border-teal-500/20 rounded-md text-teal-400 transition-all duration-200 tracking-wide hover:bg-teal-500/15 hover:border-teal-500/35 hover:-translate-y-[1px] group/wb'>
+                    <span class='w-1.5 h-1.5 rounded-full bg-teal-400 opacity-70 transition-opacity group-hover/wb:opacity-100 shrink-0'></span>
+                    Remoto
+                  </span>
                   <span class='text-xs text-zinc-500 font-mono'>Fev/2022 – Mar/2025</span>
                   <span class='text-xs text-[var(--color-accent)] font-semibold'>▸ 3 anos</span>
                 </div>
@@ -288,7 +291,10 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
                 <!-- Meta -->
                 <div class='flex flex-wrap items-center gap-3 mb-4'>
-                  <span class='work-badge'>Híbrido</span>
+                  <span class='inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium font-mono bg-teal-500/10 border border-teal-500/20 rounded-md text-teal-400 transition-all duration-200 tracking-wide hover:bg-teal-500/15 hover:border-teal-500/35 hover:-translate-y-[1px] group/wb'>
+                    <span class='w-1.5 h-1.5 rounded-full bg-teal-400 opacity-70 transition-opacity group-hover/wb:opacity-100 shrink-0'></span>
+                    Híbrido
+                  </span>
                   <span class='text-xs text-zinc-500 font-mono'>Nov/2023 – Dez/2024</span>
                   <span class='text-xs text-[var(--color-accent)] font-semibold'>▸ 1 ano</span>
                 </div>

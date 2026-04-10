@@ -19,7 +19,7 @@ module.exports = {
 	endOfLine: 'auto',
 	importOrderSeparation: true,
 	importOrderSortSpecifiers: true,
-	plugins: ['prettier-plugin-astro'],
+	plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
 	overrides: [
 		{
 			files: '*.astro',
