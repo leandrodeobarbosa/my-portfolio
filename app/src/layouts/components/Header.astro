@@ -479,4 +479,7 @@ const menu = NAV_ROUTES.map((route) => ({
 
 	// Initialize
 	initMobileMenu();
+
+	// Re-initialize after navigation (View Transitions)
+	document.addEventListener('astro:after-swap', initMobileMenu);
 </script>

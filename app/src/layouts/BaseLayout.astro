@@ -4,6 +4,7 @@ import BaseHead from './components/BaseHead.astro';
 import StructuredData from './components/StructuredData.astro';
 import Header from './components/Header.astro';
 import Footer from './components/Footer.astro';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
 	title: string;
@@ -32,6 +33,7 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 			pubDate={pubDate}
 			updatedDate={updatedDate}
 		/>
+		<ClientRouter />
 	</head>
 	<body
 		class="bg-bg-primary text-text-primary antialiased font-sans pt-16 min-h-screen flex flex-col w-full overflow-x-hidden"
