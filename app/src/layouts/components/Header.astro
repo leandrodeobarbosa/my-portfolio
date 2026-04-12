@@ -377,11 +377,11 @@ const menu = NAV_ROUTES.map((route) => ({
 	// Ensure dark mode is always active
 	document.documentElement.classList.add('dark');
 
-	// Store references for cleanup
-	let menuToggleHandler = null;
-	let escapeKeyHandler = null;
-	let outsideClickHandler = null;
-	let scrollHandler = null;
+	// Store references for cleanup with proper types
+	let menuToggleHandler: (() => void) | null = null;
+	let escapeKeyHandler: ((e: KeyboardEvent) => void) | null = null;
+	let outsideClickHandler: ((e: MouseEvent) => void) | null = null;
+	let scrollHandler: (() => void) | null = null;
 	let isMenuInitialized = false;
 
 	function cleanupMobileMenu() {
@@ -390,11 +390,11 @@ const menu = NAV_ROUTES.map((route) => ({
 
 		if (!mobileMenuBtn || !mobileMenu) return;
 
-		// Remove event listeners
-		mobileMenuBtn.removeEventListener('click', menuToggleHandler);
-		document.removeEventListener('keydown', escapeKeyHandler);
-		document.removeEventListener('click', outsideClickHandler);
-		window.removeEventListener('scroll', scrollHandler);
+		// Remove event listeners safely
+		if (menuToggleHandler) mobileMenuBtn.removeEventListener('click', menuToggleHandler);
+		if (escapeKeyHandler) document.removeEventListener('keydown', escapeKeyHandler);
+		if (outsideClickHandler) document.removeEventListener('click', outsideClickHandler);
+		if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
 
 		// Reset state
 		mobileMenuBtn.classList.remove('open');
@@ -424,17 +424,18 @@ const menu = NAV_ROUTES.map((route) => ({
 		}
 
 		function toggleMobileMenu() {
+      if (!mobileMenuBtn || !mobileMenu) return;
 			const isOpen = mobileMenuBtn.classList.toggle('open');
 			mobileMenu.classList.toggle('open', isOpen);
-			mobileMenuBtn.setAttribute('aria-expanded', isOpen);
-			mobileMenu.setAttribute('aria-hidden', !isOpen);
+			mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+			mobileMenu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
 		}
 
 		menuToggleHandler = toggleMobileMenu;
 		mobileMenuBtn.addEventListener('click', menuToggleHandler);
 
 		// Close mobile menu on escape key
-		escapeKeyHandler = (e) => {
+		escapeKeyHandler = (e: KeyboardEvent) => {
 			if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
 				mobileMenuBtn.classList.remove('open');
 				mobileMenu.classList.remove('open');
@@ -446,10 +447,10 @@ const menu = NAV_ROUTES.map((route) => ({
 		document.addEventListener('keydown', escapeKeyHandler);
 
 		// Close mobile menu when clicking outside
-		outsideClickHandler = (e) => {
+		outsideClickHandler = (e: MouseEvent) => {
 			if (mobileMenu.classList.contains('open') &&
-				!mobileMenu.contains(e.target) &&
-				!mobileMenuBtn.contains(e.target)) {
+				!mobileMenu.contains(e.target as Node) &&
+				!mobileMenuBtn.contains(e.target as Node)) {
 				mobileMenuBtn.classList.remove('open');
 				mobileMenu.classList.remove('open');
 				mobileMenuBtn.setAttribute('aria-expanded', 'false');
