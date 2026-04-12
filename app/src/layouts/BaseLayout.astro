@@ -1,5 +1,5 @@
 ---
-import { ClientRouter } from 'astro:transitions';
+
 import BaseHead from './components/BaseHead.astro';
 import StructuredData from './components/StructuredData.astro';
 import Header from './components/Header.astro';
@@ -22,7 +22,7 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 <html lang='en' class='scroll-smooth'>
 	<head>
 		<BaseHead title={title} description={description} image={image} />
-		<ClientRouter />
+
 		<StructuredData
 			type={type}
 			title={title}

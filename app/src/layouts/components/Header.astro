@@ -487,10 +487,4 @@ const menu = NAV_ROUTES.map((route) => ({
 
 	// Initialize on first load
 	document.addEventListener('DOMContentLoaded', initMobileMenu);
-
-	// Re-initialize after View Transitions DOM swap - cleanup first
-	document.addEventListener('astro:after-swap', function() {
-		cleanupMobileMenu();
-		initMobileMenu();
-	});
 </script>

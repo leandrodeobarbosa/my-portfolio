@@ -23,7 +23,6 @@ const techIcons: Record<string, null> = {
 ---
 
 <article
-  transition:name={`project-${project.name.toLowerCase().replace(/\s+/g, '-')}`}
   class:list={[
   'project-card',
   variant === 'featured' && 'project-card--featured',
@@ -57,7 +56,7 @@ const techIcons: Record<string, null> = {
           )}
         </div>
 
-        <h3 class="project-card__title" transition:name={`project-title-${project.name.toLowerCase().replace(/\s+/g, '-')}`}>
+        <h3 class="project-card__title">
           {(project.name === 'FlowDX App') ? (
             <span>{project.name}</span>
           ) : (
