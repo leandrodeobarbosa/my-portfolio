@@ -15,6 +15,7 @@ export default defineConfig({
 		}
 	},
 	integrations: [mdx(), sitemap(), tailwind()],
+	prefetch: true,
 	markdown: {
 		extendDefaultPlugins: true,
 		rehypePlugins: [
