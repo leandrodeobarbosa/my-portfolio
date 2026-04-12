@@ -1,7 +1,7 @@
 /* View Transition - Terminal-style effect for FlowDX Platform */
 ::view-transition-old(project-title-flowdx-platform),
 ::view-transition-new(project-title-flowdx-platform) {
-  animation-duration: 300ms;
+  animation-duration: 150ms;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -28,7 +28,7 @@
 /* View Transition - Global navigation (200ms) */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 200ms;
+  animation-duration: 90ms;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
