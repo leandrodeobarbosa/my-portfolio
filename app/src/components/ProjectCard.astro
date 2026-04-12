@@ -1,9 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import type { Project } from '../domains/portfolio/projects'
 import { kFormatter } from '../utils'
-import GithubWhite from '@src/assets/img/github-mark-white.svg';
-import GithubBlack from '@src/assets/img/github-mark.svg';
+import SocialIcons from './SocialIcons.astro';
 
 interface Props {
   project: Project;
@@ -49,8 +47,7 @@ const techIcons: Record<string, null> = {
               class="project-card__stars"
               aria-label={`${project.stargazers_count} stars on GitHub`}
             >
-              <Image src={GithubBlack} height={14} class="hidden" alt="" />
-              <Image src={GithubWhite} height={14} class="hidden block" alt="" />
+              <SocialIcons icon="github" class="w-3.5 h-3.5" />
               <span>{kFormatter(project.stargazers_count)}</span>
             </a>
           )}
