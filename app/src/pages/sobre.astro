@@ -123,6 +123,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
     }
 
     document.addEventListener('DOMContentLoaded', initAboutAnimations);
+    document.addEventListener('astro:after-swap', initAboutAnimations);
   </script>
 
   <div class='container'>
