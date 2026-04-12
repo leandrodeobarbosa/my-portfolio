@@ -1,12 +1,6 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import { Image } from 'astro:assets';
-import GithubWhite from '@src/assets/img/github-mark-white.svg';
-import GithubBlack from '@src/assets/img/github-mark.svg';
-import LinkedinWhite from '@src/assets/img/linkedin-white.svg';
-import LinkedinBlack from '@src/assets/img/linkedin.svg';
-import XWhite from '@src/assets/img/x-white.svg';
-import XBlack from '@src/assets/img/x.svg';
+import SocialIcons from '../../components/SocialIcons.astro';
 import { NAV_ROUTES } from '@src/domains/navigation/routes';
 
 // Menu built from domain (Single Source of Truth)
@@ -160,16 +154,13 @@ const menu = NAV_ROUTES.map((route) => ({
 
 				<!-- Social Icons: Larger touch targets for accessibility -->
 				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)]/30 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://github.com/leandrodeobarbosa' target='_blank' aria-label='GitHub'>
-					<Image class='w-5 h-5 hidden opacity-70 hover:opacity-100 transition-opacity' src={GithubBlack} width={20} height={20} alt='Github logo' />
-					<Image class='w-5 h-5 block opacity-70 hover:opacity-100 transition-opacity' src={GithubWhite} width={20} height={20} alt='Github logo' />
+					<SocialIcons icon="github" class="w-4 h-4 text-white hover:text-teal-400 transition-colors" />
 				</a>
 				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)]/30 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://linkedin.com/in/leandrodeobarbosa' target='_blank' aria-label='LinkedIn'>
-					<Image class='w-5 h-5 hidden opacity-70 hover:opacity-100 transition-opacity' src={LinkedinBlack} width={20} height={20} alt='LinkedIn logo' />
-					<Image class='w-5 h-5 block opacity-70 hover:opacity-100 transition-opacity' src={LinkedinWhite} width={20} height={20} alt='LinkedIn logo' />
+					<SocialIcons icon="linkedin" class="w-4 h-4 text-white hover:text-teal-400 transition-colors" />
 				</a>
 				<a class='p-2.5 rounded-lg hover:bg-[var(--color-bg-secondary)]/30 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2' href='https://x.com/le_deobarbosa' target='_blank' aria-label='X/Twitter'>
-					<Image class='w-5 h-5 hidden opacity-70 hover:opacity-100 transition-opacity' src={XBlack} width={20} height={20} alt='X logo' />
-					<Image class='w-5 h-5 block opacity-70 hover:opacity-100 transition-opacity' src={XWhite} width={20} height={20} alt='X logo' />
+					<SocialIcons icon="x" class="w-4 h-4 text-white hover:text-teal-400 transition-colors" />
 				</a>
 
 			</div>
@@ -382,7 +373,7 @@ const menu = NAV_ROUTES.map((route) => ({
 	}
 </style>
 
-<script is:inline>
+<script>
 	// Ensure dark mode is always active
 	document.documentElement.classList.add('dark');
 
@@ -485,6 +476,6 @@ const menu = NAV_ROUTES.map((route) => ({
 		isMenuInitialized = true;
 	}
 
-	// Initialize on first load
-	document.addEventListener('DOMContentLoaded', initMobileMenu);
+	// Initialize
+	initMobileMenu();
 </script>
