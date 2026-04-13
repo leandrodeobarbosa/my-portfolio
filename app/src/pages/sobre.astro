@@ -31,63 +31,73 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
       padding: 0;
     }
 
-    /* Mobile responsiveness */
+    .about-prose {
+      max-width: 100%;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .timeline-entry {
+      padding-left: 2.5rem;
+    }
+
+    .timeline-dot {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .experience-block {
+      max-width: 60ch;
+    }
+
+    .experience-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .experience-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 0.75rem;
+      align-items: start;
+      margin: 0;
+      text-align: left;
+    }
+
+    .experience-item + .experience-item {
+      margin-top: 0.75rem;
+    }
+
+    .experience-marker {
+      color: var(--color-accent);
+      margin-top: 0.15rem;
+      line-height: 1;
+    }
+
+    .experience-text {
+      min-width: 0;
+    }
+
     @media (max-width: 640px) {
       .about-photo {
-        width: 120px !important;
-        height: 120px !important;
-        border-radius: 16px !important;
+        width: 7.5rem !important;
+        height: 7.5rem !important;
+        border-radius: 1rem !important;
       }
 
-      .about-name {
-        font-size: 1.5rem !important;
-      }
-
-      .prose {
-        font-size: 1rem !important;
-        padding: 0 0.75rem;
-      }
-
-      .about-content {
-        padding: 0 !important;
-        gap: 1rem !important;
-      }
-
-      /* Compact timeline on mobile */
       .timeline-entry {
-        padding-left: 1.5rem !important;
+        padding-left: 2rem;
+        padding-bottom: 2rem;
       }
 
       .timeline-dot {
-        width: 20px !important;
-        height: 20px !important;
+        width: 1.25rem;
+        height: 1.25rem;
       }
 
-      /* Stack flex containers vertically on mobile */
-      .flex-col-sm {
-        flex-direction: column !important;
-      }
-
-      /* Adjust heading sizes */
-      h2 {
-        font-size: 1.1rem !important;
-      }
-
-      /* Adjust spacing */
-      .mb-12 {
-        margin-bottom: 2rem !important;
-      }
-
-      /* Stack role badges */
-      .role-badges {
-        flex-direction: column !important;
-        gap: 0.5rem !important;
-      }
-
-      /* Adjust CV button */
-      .cv-button {
-        width: 100%;
-        justify-content: center;
+      .experience-item {
+        column-gap: 0.625rem;
       }
     }
 
@@ -119,11 +129,11 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
   </script>
 
   <div class='container'>
-    <main class='prose text-lg prose-invert max-w-4xl'>
+    <article class='about-prose prose prose-invert max-w-4xl'>
       <article>
         <!-- Name with badge and intro -->
-        <div class='mb-12'>
-          <div class='flex flex-col sm:flex-row sm:items-start gap-8'>
+        <div class='mb-10 sm:mb-12'>
+          <div class='flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8'>
             <Image
               src={leandroImg}
               alt='Leandro de Oliveira Barbosa'
@@ -139,16 +149,16 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
             <header class='about-content flex-1 min-w-0 pt-0 flex flex-col gap-5'>
               <!-- Name & Role -->
               <div class='flex flex-col gap-2'>
-                <h1 class='about-hero-line about-name text-3xl sm:text-4xl font-bold text-zinc-100 font-mono tracking-wide !mt-0'>
+                <h1 class='about-hero-line about-name !mt-0 text-3xl font-bold text-zinc-100 font-mono tracking-wide leading-tight text-balance sm:text-4xl'>
                   Leandro de Oliveira Barbosa
                 </h1>
-                <div class='flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-zinc-500 py-0.5 sm:ml-1'>
+                <div class='flex flex-wrap items-center gap-2 py-0.5 font-mono text-xs uppercase tracking-widest text-zinc-500 sm:ml-1'>
                   // DevOps | Platform Engineer
                 </div>
               </div>
 
               <!-- Career Narrative -->
-              <div class='about-hero-line flex flex-col gap-4 text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[65ch] mt-2'>
+              <div class='about-hero-line measure-text mt-2 flex flex-col gap-4 text-base leading-relaxed text-zinc-400 sm:text-lg'>
                 <p>
                   Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud-native na AWS utilizando Terraform e CI/CD, priorizando previsibilidade e facilidade de uso para os times de desenvolvimento.
                 </p>
@@ -161,8 +171,8 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
               </div>
 
               <!-- Call to Action & Status -->
-              <div class='about-hero-line mt-4 flex flex-col sm:flex-row items-start sm:items-center gap-6'>
-                <p class='m-0 font-mono text-xs text-zinc-500 flex items-center gap-2'>
+              <div class='about-hero-line mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6'>
+                <p class='m-0 flex items-center gap-2 font-mono text-xs text-zinc-500'>
                   <span class='relative flex h-2 w-2'>
                     <span class='animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-40'></span>
                     <span class='relative inline-flex rounded-full h-2 w-2 bg-[var(--color-accent)] opacity-80'></span>
@@ -170,8 +180,8 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                   Aberto a oportunidades SRE/DevOps
                 </p>
                 
-                <a href='/cv/Leandro-Barbosa-DevOps-CV.pdf' download class='no-underline inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-zinc-900/40 border border-zinc-800 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300 font-mono text-sm text-zinc-400 hover:text-[var(--color-accent)] group'>
-                  <span class='text-[var(--color-accent)] opacity-80 group-hover:opacity-100'>$ curl</span> -O Leandro-Barbosa-DevOps-CV.pdf
+                <a href='/cv/Leandro-Barbosa-DevOps-CV.pdf' download class='cv-button no-underline inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-md border border-zinc-800 bg-zinc-900/40 px-3 py-2 font-mono text-sm text-zinc-400 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/80 hover:text-[var(--color-accent)] group'>
+                  <span class='text-[var(--color-accent)] opacity-80 group-hover:opacity-100'>$ curl</span> -O cv.pdf
                   <svg class='transition-transform duration-300 group-hover:translate-y-0.5' xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
                     <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' x1='12' y1='15' y2='3'/>
                   </svg>
@@ -185,7 +195,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
         <!-- Certifications Section -->
         <section class='mb-12'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Certificações</h2>
+          <h2 class='section-heading mb-6 sm:mb-8'>## Certificações</h2>
           <div class='space-y-4'>
             <!-- Oracle OCI Certification -->
             <a href='https://catalog-education.oracle.com/pls/certview/sharebadge?id=5DC65FD63A2330B5A7116E8EDD416E22DAFC4BB89EF9F91039D0751FAEB91832' target='_blank' rel='noopener noreferrer' class='group block no-underline py-2'>
@@ -207,30 +217,30 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
         <!-- Professional Experience Section -->
         <section class='mb-12'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Experiência Profissional</h2>
+          <h2 class='section-heading mb-6 sm:mb-8'>## Experiência Profissional</h2>
           <div class='relative'>
             <!-- Timeline line -->
-            <div class='absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-[var(--color-accent)] to-[var(--color-accent)]/30'></div>
+            <div class='absolute bottom-2 left-[9px] top-2 w-0.5 bg-gradient-to-b from-[var(--color-accent)] to-[var(--color-accent)]/30 sm:left-[11px]'></div>
 
             <!-- Job Entry -->
-            <div class='timeline-entry relative pl-10 pb-10 group last:pb-0'>
+            <div class='timeline-entry group relative pb-10 last:pb-0'>
               <!-- Timeline dot -->
               <div class='timeline-dot absolute left-0 top-1 w-6 h-6 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/30 group-hover:scale-110 transition-transform duration-300'>
                 <div class='w-2 h-2 rounded-full bg-white/90'></div>
               </div>
 
               <!-- Content -->
-              <div class='relative group/'>
+              <div class='experience-block relative group/'>
                 <!-- Header -->
-                <div class='flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-2'>
-                  <h3 class='font-bold text-xl text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
+                <div class='mb-2 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-3'>
+                  <h3 class='text-lg font-bold text-zinc-100 transition-colors duration-300 group-hover:text-[var(--color-accent)] sm:text-xl'>
                     Pegasus EE
                   </h3>
                   <span class='text-sm text-zinc-400'>DevOps Engineer</span>
                 </div>
 
                 <!-- Meta -->
-                <div class='flex flex-wrap items-center gap-3 mb-4'>
+                <div class='mb-4 flex flex-wrap items-center gap-2 sm:gap-3'>
                   <span class='inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium font-mono bg-teal-500/10 border border-teal-500/20 rounded-md text-teal-400 transition-all duration-200 tracking-wide hover:bg-teal-500/15 hover:border-teal-500/35 hover:-translate-y-[1px] group/wb'>
                     <span class='w-1.5 h-1.5 rounded-full bg-teal-400 opacity-70 transition-opacity group-hover/wb:opacity-100 shrink-0'></span>
                     Remoto
@@ -240,22 +250,22 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 </div>
 
                 <!-- Description -->
-                <ul class='space-y-2.5 mb-4'>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Implementei a migração de uma arquitetura baseada em VMs (Docker) para uma arquitetura serverless na AWS (API Gateway, Lambda, DynamoDB e S3), reduzindo custos em 16% com garantias de eficiência operacional, segurança e alta disponibilidade.</span>
+                <ul class='experience-list mb-4'>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Implementei a migração de uma arquitetura baseada em VMs (Docker) para uma arquitetura serverless na AWS (API Gateway, Lambda, DynamoDB e S3), reduzindo custos em 16% com garantias de eficiência operacional, segurança e alta disponibilidade.</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Automatizei deploys e rotinas operacionais com Bash, Linux e GitHub Actions.</span>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Automatizei deploys e rotinas operacionais com Bash, Linux e GitHub Actions.</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Gerenciei infraestrutura na AWS utilizando Terraform, criando módulos reutilizáveis e padronizando ambientes (dev/prod).</span>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Gerenciei infraestrutura na AWS utilizando Terraform, criando módulos reutilizáveis e padronizando ambientes (dev/prod).</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Configurei monitoramento, logs e alertas com CloudWatch, melhorando a observabilidade e reduzindo o tempo de resposta a incidentes.</span>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Configurei monitoramento, logs e alertas com CloudWatch, melhorando a observabilidade e reduzindo o tempo de resposta a incidentes.</span>
                   </li>
                 </ul>
 
@@ -272,7 +282,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
               </div>
 
               <!-- Content -->
-              <div class='relative group/every'>
+              <div class='experience-block relative group/every'>
                 <!-- Header -->
                 <div class='flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 mb-2'>
                   <h3 class='font-bold text-xl text-zinc-100 group-hover:text-[var(--color-accent)] transition-colors duration-300'>
@@ -292,22 +302,22 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 </div>
 
                 <!-- Description -->
-                <ul class='space-y-2.5 mb-4'>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Atuei na implantação do BigID em cluster Kubernetes (5 nodes), suportando +10 microsserviços em ambiente distribuído.</span>
+                <ul class='experience-list mb-4'>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Atuei na implantação do BigID em cluster Kubernetes (5 nodes), suportando +10 microsserviços em ambiente distribuído.</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Apoiei a implantação em ambiente governamental na AWS com OpenShift, incluindo configuração de cluster e estratégias de deploy.</span>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Apoiei a implantação em ambiente governamental na AWS com OpenShift, incluindo configuração de cluster e estratégias de deploy.</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Deploy contínuo via ArgoCD (GitOps) em ambiente OpenShift na AWS(EC2).</span>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Deploy contínuo via ArgoCD (GitOps) em ambiente OpenShift na AWS(EC2).</span>
                   </li>
-                  <li class='flex items-start gap-3 text-sm text-zinc-300 leading-relaxed'>
-                    <span class='text-[var(--color-accent)] mt-0.5 shrink-0'>▸</span>
-                    <span>Criação e manutenção de Helm charts e manifestos Kubernetes.</span>
+                  <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
+                    <span class='experience-marker shrink-0'>▸</span>
+                    <span class='experience-text'>Criação e manutenção de Helm charts e manifestos Kubernetes.</span>
                   </li>
                 </ul>
 
@@ -318,6 +328,6 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
           </div>
         </section>
       </article>
-    </main>
+    </article>
   </div>
 </BaseLayout>

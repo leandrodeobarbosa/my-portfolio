@@ -122,30 +122,30 @@ const skillBadgeClass = "inline-flex items-center gap-1 py-[0.1875rem] px-2 text
       </nav>
 
       <!-- Main Content -->
-      <main class='max-w-4xl flex-1 min-w-0 px-4 sm:px-6 lg:px-8 mx-auto w-full'>
+      <article class='mx-auto w-full max-w-4xl min-w-0 flex-1'>
 
         <!-- Header -->
-        <div class='mb-10 bg-zinc-900/80 border border-zinc-800 rounded-lg p-6'>
-          <div class='flex items-center gap-3 mb-6 mt-2'>
+        <div class='mb-10 rounded-lg border border-zinc-800 bg-zinc-900/80 p-4 sm:p-6'>
+          <div class='mb-5 mt-1 flex flex-wrap items-center gap-3 sm:mb-6 sm:mt-2'>
             <span class='inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium font-mono bg-teal-500/10 border border-teal-500/20 rounded-md text-teal-400 transition-all duration-200 tracking-wide hover:bg-teal-500/15 hover:border-teal-500/35 hover:-translate-y-[1px] group/wb'>
               <span class='w-1.5 h-1.5 rounded-full bg-teal-400 opacity-70 transition-opacity group-hover/wb:opacity-100 shrink-0'></span>
               WIP
             </span>
             <span class='text-xs font-mono text-zinc-500'>Internal Developer Platform</span>
           </div>
-          <h1 class='text-2xl sm:text-3xl font-bold text-zinc-50 font-mono mb-3'>
+          <h1 class='mb-3 text-2xl font-bold text-zinc-50 font-mono leading-tight text-balance sm:text-3xl'>
             FlowDX Platform
           </h1>
-          <p class='text-base sm:text-lg leading-relaxed text-zinc-300 max-w-[65ch]'>
+          <p class='measure-text text-base leading-relaxed text-zinc-300 sm:text-lg'>
             Plataforma interna de desenvolvedor (IDP) em evolução, construída sobre uma base real em AWS com Terraform e CI/CD com foco em padronização, automação e self-service.
           </p>
         </div>
 
-        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+        <hr class='mb-12 border-t border-[var(--color-border-subtle)]' />
 
         <!-- Context -->
         <section id='context' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Contexto</h2>
+          <h2 class='section-heading mb-6 sm:mb-8'>## Contexto</h2>
           <div class='space-y-4 text-zinc-300 text-base leading-relaxed'>
             <p>
               A FlowDX Platform nasce como um projeto autoral voltado a demonstrar, de forma prática, competências em Platform Engineering, Infrastructure as Code (IaC),
@@ -161,11 +161,11 @@ const skillBadgeClass = "inline-flex items-center gap-1 py-[0.1875rem] px-2 text
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+        <hr class='mb-12 border-t border-[var(--color-border-subtle)]' />
 
         <!-- Current State -->
         <section id='current-state' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Estado Atual</h2>
+          <h2 class='section-heading mb-6 sm:mb-8'>## Estado Atual</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
               O estado atual da FlowDX Platform já é executável e utilizável como base real.
@@ -227,11 +227,11 @@ const skillBadgeClass = "inline-flex items-center gap-1 py-[0.1875rem] px-2 text
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+        <hr class='mb-12 border-t border-[var(--color-border-subtle)]' />
 
         <!-- System Snapshot (v0) -->
         <section id='technical-snapshot' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## System Snapshot (v0)</h2>
+          <h2 class='section-heading mb-6 sm:mb-8'>## System Snapshot (v0)</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
               Componentes já validados e operacionais na fundação atual.
@@ -303,11 +303,11 @@ const skillBadgeClass = "inline-flex items-center gap-1 py-[0.1875rem] px-2 text
           </div>
         </section>
 
-        <hr class='border-t border-[var(--color-border-subtle))] mb-12' />
+        <hr class='mb-12 border-t border-[var(--color-border-subtle)]' />
 
         <!-- Current Architecture -->
         <section id='current-architecture' class='mb-16 scroll-mt-24'>
-          <h2 class='text-xl font-mono font-bold text-zinc-100 mb-8'>## Diagrama de Contexto</h2>
+          <h2 class='section-heading mb-6 sm:mb-8'>## Diagrama de Contexto</h2>
           <div class='space-y-6'>
             <p class='text-zinc-300 text-base leading-relaxed'>
               A FlowDX é uma experiência de alta performance e baixa latência (Edge Computing). A arquitetura atual foi desenhada para ser simples, reproduzível e fácil de evoluir.
@@ -798,7 +798,7 @@ const skillBadgeClass = "inline-flex items-center gap-1 py-[0.1875rem] px-2 text
           </div>
         </section>
 
-      </main>
+      </article>
     </div>
   </div>
 </BaseLayout>

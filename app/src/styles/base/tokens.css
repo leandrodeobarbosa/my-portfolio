@@ -15,6 +15,16 @@
 		--color-success: #4ADE80;
 		--color-warning: #FACC15;
 		--color-error: #F87171;
+		--site-header-height: 4.5rem;
+		--page-gutter: 1rem;
+		--page-section-spacing: clamp(3rem, 6vw, 5rem);
 		-webkit-tap-highlight-color: transparent;
+	}
+
+	@media (min-width: 640px) {
+		:root {
+			--site-header-height: 4.75rem;
+			--page-gutter: 1.5rem;
+		}
 	}
 }

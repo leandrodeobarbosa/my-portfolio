@@ -154,7 +154,7 @@ const techIcons: Record<string, null> = {
   .project-card {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 1.25rem;
     border: 1px solid var(--color-border-subtle);
     border-radius: 0.75rem;
     transition: border-color 200ms ease, border-width 200ms ease, box-shadow 200ms ease, transform 200ms ease;
@@ -230,8 +230,8 @@ const techIcons: Record<string, null> = {
   .project-card--horizontal {
     flex-direction: row;
     align-items: flex-start;
-    gap: 1.5rem;
-    padding: 1.5rem;
+    gap: 1.25rem;
+    padding: 1.25rem;
     border-radius: 0.75rem;
   }
 
@@ -486,6 +486,7 @@ const techIcons: Record<string, null> = {
   /* Footer */
   .project-card__footer {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     padding-top: 0.5rem;
     margin-top: auto;
@@ -509,7 +510,7 @@ const techIcons: Record<string, null> = {
     color: var(--color-accent);
     text-decoration: none;
     transition: color 200ms ease;
-    white-space: nowrap;
+    white-space: normal;
   }
 
   .project-card__action:hover {
@@ -534,6 +535,10 @@ const techIcons: Record<string, null> = {
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
+    .project-card {
+      padding: 1rem;
+    }
+
     .project-card--horizontal .project-card__layout {
       flex-direction: column;
     }
@@ -545,6 +550,10 @@ const techIcons: Record<string, null> = {
     .project-card--horizontal .project-card__terminal-wrapper {
       flex: 1 1 100%;
       margin-left: 0;
+    }
+
+    .project-card__terminal-body {
+      padding: 0.875rem;
     }
   }
 
