@@ -15,7 +15,10 @@ export default defineConfig({
 		}
 	},
 	integrations: [mdx(), sitemap(), tailwind()],
-	prefetch: true,
+	prefetch: {
+		prefetchAll: true,
+		defaultStrategy: 'tap',
+	},
 	markdown: {
 		extendDefaultPlugins: true,
 		rehypePlugins: [

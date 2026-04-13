@@ -67,7 +67,7 @@ jobs:
           aws s3 sync ./dist s3://${{ vars.BUCKET_NAME }} \
             --exclude "_astro/*" \
             --delete \
-            --cache-control "public, max-age=0, must-revalidate"
+            --cache-control "public, max-age=60, stale-while-revalidate=604800"
 
       - name: Invalidate CloudFront Cache
         run: |
