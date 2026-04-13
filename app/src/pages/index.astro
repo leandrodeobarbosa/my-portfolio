@@ -9,31 +9,31 @@ const top3Projects = projects.slice(0, 1);
 
 <BaseLayout title={SITE_TITLE + ' - ' + SITE_TAGLINE} description={SITE_DESCRIPTION}>
 	<div class='container'>
-		<main>
+		<div class='page-stack'>
 			<!-- Documentation Style Hero Section -->
-			<div class='max-w-4xl mb-20'>
+			<section class='page-intro max-w-4xl'>
 				<!-- Semantic Header Container -->
-				<header class='flex flex-col gap-6 pt-2'>
+				<header class='flex flex-col gap-6 pt-1 sm:pt-2'>
 					<!-- Name -->
-					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-100 font-mono tracking-wide'>
+					<h1 class='text-3xl sm:text-4xl font-bold text-zinc-100 font-mono tracking-wide leading-tight text-balance'>
 						Leandro de Oliveira Barbosa
 					</h1>
 
 					<div class='flex flex-col gap-4'>
 						<!-- Headtitle -->
-						<h2 class='text-xl sm:text-2xl leading-relaxed text-zinc-100 max-w-[60ch] font-medium'>
+						<h2 class='measure-text text-xl sm:text-2xl leading-relaxed text-zinc-100 font-medium text-pretty'>
 							<span class='text-[var(--color-accent)]'>DevOps Engineer</span> com foco em automação, CI/CD e construção de plataformas Cloud Native.
 						</h2>
 						
 						<!-- Description -->
-						<p class='text-base sm:text-lg leading-relaxed text-zinc-400 max-w-[65ch]'>
+						<p class='measure-text text-base sm:text-lg leading-relaxed text-zinc-400 text-pretty'>
 							Construo soluções que reduzem fricção no provisionamento e na entrega de serviços, com foco em confiabilidade e experiência do desenvolvedor (DX).
 						</p>
 					</div>
 
 					<!-- Isolated CTA -->
 					<div class='mt-2'>
-						<a href='/sobre/' class='inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-zinc-900/40 border border-zinc-800 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300 font-mono text-sm text-zinc-400 hover:text-[var(--color-accent)] group'>
+						<a href='/sobre/' class='inline-flex w-full sm:w-auto items-center justify-center gap-2 px-3 py-2 rounded-md bg-zinc-900/40 border border-zinc-800 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300 font-mono text-sm text-zinc-400 hover:text-[var(--color-accent)] group'>
 							<span class='text-[var(--color-accent)] opacity-80 group-hover:opacity-100'>$ cat</span> sobre.md 
 							<svg class='transition-transform duration-300 group-hover:translate-x-1' xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
 								<path d='M5 12h14'/><path d='m12 5 7 7-7 7'/>
@@ -43,43 +43,43 @@ const top3Projects = projects.slice(0, 1);
 				</header>
 
 				<!-- Industrial Terminal Output -->
-				<div class='mt-10 max-w-2xl border border-zinc-800 bg-[#0a0a0a] rounded-sm overflow-hidden'>
+				<div class='mt-10 max-w-2xl overflow-hidden rounded-sm border border-zinc-800 bg-[#0a0a0a]'>
 					<div class='flex items-center justify-between px-4 py-1.5 border-b border-zinc-800/80 bg-zinc-900/40'>
 						<span class='text-[10px] font-mono text-zinc-500 uppercase tracking-widest'>Terminal</span>
 						<span class='text-[10px] font-mono text-zinc-600'>zsh</span>
 					</div>
-					<div class='p-5 font-mono text-[11px] sm:text-xs leading-relaxed text-zinc-400'>
+					<div class='p-4 sm:p-5 font-mono text-[11px] sm:text-xs leading-relaxed text-zinc-400'>
 						<div class='block'>
 							<span class='text-[var(--color-accent)]'>leandro@devops</span><span class='text-zinc-600'>:</span><span class='text-blue-400/80'>~</span><span class='text-zinc-500'>$</span> 
-							<span class='text-zinc-200 ml-1'>flowdx up --idp-check</span>
+							<span class='ml-1 break-all text-zinc-200'>flowdx up --idp-check</span>
 						</div>
 						<div class='mt-4 pl-0 space-y-1.5'>
 							<div class='flex gap-3'>
 								<span class='text-zinc-600 w-[50px] shrink-0'>[infra]</span> 
-								<span>AWS EKS cluster is <span class='text-zinc-300'>healthy</span> <span class='text-zinc-600'>(us-east-1)</span></span>
+								<span class='min-w-0 text-pretty'>AWS EKS cluster is <span class='text-zinc-300'>healthy</span> <span class='text-zinc-600'>(us-east-1)</span></span>
 							</div>
 							<div class='flex gap-3'>
 								<span class='text-zinc-600 w-[50px] shrink-0'>[iac]</span> 
-								<span>Terraform state in <span class='text-zinc-300'>sync</span> <span class='text-zinc-600'>(0 drifts)</span></span>
+								<span class='min-w-0 text-pretty'>Terraform state in <span class='text-zinc-300'>sync</span> <span class='text-zinc-600'>(0 drifts)</span></span>
 							</div>
 							<div class='flex gap-3'>
 								<span class='text-zinc-600 w-[50px] shrink-0'>[sec]</span> 
-								<span>OIDC &amp; Keyless Auth <span class='text-zinc-300'>enabled</span></span>
+								<span class='min-w-0 text-pretty'>OIDC &amp; Keyless Auth <span class='text-zinc-300'>enabled</span></span>
 							</div>
 							<div class='flex gap-3 pt-2 mt-2 border-t border-zinc-900'>
 								<span class='text-blue-400/70 w-[50px] shrink-0'>[info]</span> 
-								<span class='text-zinc-200'>Platform ready for self-service.</span>
+								<span class='min-w-0 text-zinc-200 text-pretty'>Platform ready for self-service.</span>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 
 			<!-- Projects - Markdown Style Header -->
-			<div class='mb-12 mt-24'>
-				<div class='flex justify-between items-center gap-4 mb-8 border-b border-zinc-800/50 pb-4'>
-					<h2 class='text-xl font-mono font-bold text-zinc-100'>## Projeto em Destaque</h2>
-					<a href='/projetos/' class='inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-zinc-900/40 border border-zinc-800 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300 font-mono text-sm text-zinc-400 hover:text-[var(--color-accent)] group'>
+			<section class='flex flex-col gap-8'>
+				<div class='flex flex-col items-start justify-between gap-4 border-b border-zinc-800/50 pb-4 sm:flex-row sm:items-center'>
+					<h2 class='section-heading'>## Projeto em Destaque</h2>
+					<a href='/projetos/' class='inline-flex w-full sm:w-auto items-center justify-center gap-2 px-3 py-2 rounded-md bg-zinc-900/40 border border-zinc-800 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all duration-300 font-mono text-sm text-zinc-400 hover:text-[var(--color-accent)] group'>
 						<span class='text-[var(--color-accent)] opacity-80 group-hover:opacity-100'>$ ls</span> ./projetos
 						<svg class='transition-transform duration-300 group-hover:translate-x-1' xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
 							<path d='M5 12h14'/><path d='m12 5 7 7-7 7'/>
@@ -87,10 +87,7 @@ const top3Projects = projects.slice(0, 1);
 					</a>
 				</div>
 				<ProjectList projects={top3Projects} featured={true} horizontal={true}/>
-			</div>
-
-
-
-		</main>
+			</section>
+		</div>
 	</div>
 </BaseLayout>

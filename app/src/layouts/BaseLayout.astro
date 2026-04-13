@@ -36,10 +36,11 @@ const { title, description, image, pubDate, updatedDate, type = 'website', slug 
 		<ClientRouter />
 	</head>
 	<body
-		class="bg-bg-primary text-text-primary antialiased font-sans pt-16 min-h-screen flex flex-col w-full overflow-x-hidden"
+		class="bg-bg-primary text-text-primary antialiased font-sans min-h-screen flex flex-col w-full overflow-x-hidden"
+		style="padding-top: var(--site-header-height);"
 	>
 		<Header/>
-		<main class='flex-1 w-full flex flex-col py-8 min-h-[calc(100vh-160px)]'>
+		<main class='page-shell flex-1 w-full flex flex-col min-h-[calc(100vh-var(--site-header-height))]'>
 			<slot />
 		</main>
 		<Footer />
