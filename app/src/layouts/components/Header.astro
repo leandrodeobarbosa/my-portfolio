@@ -477,9 +477,6 @@ const menu = NAV_ROUTES.map((route) => ({
 		isMenuInitialized = true;
 	}
 
-	// Initialize
-	initMobileMenu();
-
-	// Re-initialize after navigation (View Transitions)
-	document.addEventListener('astro:after-swap', initMobileMenu);
+	// Single source of truth for both initial load and transitions
+	document.addEventListener('astro:page-load', initMobileMenu);
 </script>
