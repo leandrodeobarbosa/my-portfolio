@@ -104,3 +104,52 @@ If a request is ambiguous, prefer the safest interpretation:
 - avoid new dependencies
 - make the smallest reasonable improvement
 - optimize for maintainability and performance
+
+## Platform Refactor Rules
+For platform, Terraform, and CI/CD refactor tasks:
+- Prefer small, reversible changes with explicit checkpoints.
+- Do not combine Terraform modularization, CI/CD contract changes, multi-environment expansion, and production DNS changes in a single step unless explicitly requested.
+- Treat production as stability-first.
+- Prefer reducing coupling, disclosure, and structural debt before adding new environments.
+- Preserve current production behavior unless the task explicitly requires behavioral change.
+- Keep diffs minimal and easy to review.
+
+## Terraform Safety Rules
+- Never modify production DNS / Hosted Zone ownership unless the task explicitly requires that exact migration.
+- Treat Route53 records and Hosted Zone data related to leandrodeobarbosa.dev as high-risk resources.
+- Prefer conservative handling for production DNS until explicit migration work is requested.
+- Do not introduce destructive changes to imported production resources without clearly calling out the risk first.
+- Prefer modularization by architectural component rather than by raw AWS service file split.
+- Keep live environment entrypoints thin and move complexity into modules.
+- Reduce unnecessary outputs.
+- Mark outputs as sensitive when appropriate.
+- Do not expose resource identifiers, ARNs, or internal topology unless required for the task.
+
+## Workflow Contract Rules
+- Keep GitHub Actions workflow contracts minimal.
+- Remove unused TF_VAR_* values when confirmed unnecessary.
+- Prefer GitHub Environment vars for non-sensitive configuration.
+- Prefer GitHub Environment secrets for sensitive configuration.
+- Do not log sensitive values.
+- Prefer separate validation workflows instead of expanding deploy workflows.
+- Do not add apply behavior to test-only workflows.
+
+## Repository Automation Boundaries
+- Do not access GitHub, GitHub APIs, repository settings, or GitHub Environments.
+- Do not trigger, invoke, or execute GitHub Actions workflows.
+- Do not assume permission to create or modify repository variables, secrets, or environments.
+- If a workflow or Terraform refactor requires a new GitHub Environment variable or secret, stop and explicitly ask the user to create it manually.
+- When such a manual step is required, provide:
+  - the exact name to create
+  - whether it should be a variable or a secret
+  - which environment(s) it belongs to
+  - a short justification
+- Continue only with local code changes that are safe without remote GitHub changes.
+
+## Refactor Execution Style
+When working on refactors:
+- first analyze the current state
+- then propose the smallest safe next step
+- then implement only that step
+- then run the minimum relevant local validation
+- then summarize what changed, what remains, and any required manual GitHub-side actions
