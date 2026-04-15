@@ -19,11 +19,6 @@ variable "bucket_name" {
   type        = string
 }
 
-variable "cloudfront_distribution_arn" {
-  description = "ARN da distribuição CloudFront"
-  type        = string
-}
-
 variable "noncurrent_version_expiration_days" {
   description = "Dias para expirar versões antigas"
   type        = number
