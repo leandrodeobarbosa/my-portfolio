@@ -10,5 +10,3 @@ domain_name = "your-domain.com"
 acm_certificate_arn = "arn:aws:acm:us-east-1:000000000000:certificate/xxxx"
 
 origin_access_control_id = "ID do Origin Access Control do CloudFront"
-
-cloudfront_function_arn = "ARN da CloudFront Function"
