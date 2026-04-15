@@ -70,7 +70,7 @@ resource "aws_s3_bucket_policy" "portfolio_static_site" {
 
         Condition = {
           ArnLike = {
-            "AWS:SourceArn" = var.cloudfront_distribution_arn
+            "AWS:SourceArn" = aws_cloudfront_distribution.portfolio.arn
           }
         }
       }
