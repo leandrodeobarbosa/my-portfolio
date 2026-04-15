@@ -14,7 +14,6 @@ permissions:
   id-token: write
   contents: read
   pull-requests: write
-  issues: write
 
 jobs:
   validate-infra:
@@ -46,7 +45,7 @@ jobs:
       - name: Cache Terraform plugins
         uses: actions/cache@v4
         with:
-          path: ./infra/live
+          path: ./infra/live/.terraform/providers
           key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
           restore-keys: |
             terraform-plugins-${{ runner.os }}-
@@ -80,47 +79,31 @@ jobs:
           fi
           exit 0
 
-      - name: Generate Plan Output
+      - name: Calculate Plan Metrics
         id: build-plan
         if: steps.plan.outputs.exit_code != '1'
         run: |
-          terraform show -no-color tfplan > tfplan.txt
-          terraform show -json tfplan > tfplan.json
+          # terraform show -json must not be persisted or printed; only aggregate metrics are derived for a safe PR comment.
+          set +x
+          set -euo pipefail
 
-          # Capture metrics
-          add=$(jq '[.resource_changes[]? | select(.change.actions | contains(["create"]))] | length' tfplan.json)
-          change=$(jq '[.resource_changes[]? | select(.change.actions | contains(["update"]))] | length' tfplan.json)
-          destroy=$(jq '[.resource_changes[]? | select(.change.actions | contains(["delete"]))] | length' tfplan.json)
+          add=$(terraform show -json tfplan | jq '[.resource_changes[]? | select(.change.actions | contains(["create"]))] | length')
+          change=$(terraform show -json tfplan | jq '[.resource_changes[]? | select(.change.actions | contains(["update"]))] | length')
+          destroy=$(terraform show -json tfplan | jq '[.resource_changes[]? | select(.change.actions | contains(["delete"]))] | length')
 
           add=${add:-0}
           change=${change:-0}
           destroy=${destroy:-0}
 
-          # Prepare truncate output for comment
           echo "add=$add" >> "$GITHUB_OUTPUT"
           echo "change=$change" >> "$GITHUB_OUTPUT"
           echo "destroy=$destroy" >> "$GITHUB_OUTPUT"
 
-
-
-          head -c 60000 tfplan.txt > tfplan-truncated.txt
-          if [ $(wc -c < tfplan.txt) -gt 60000 ]; then
-            echo "" >> tfplan-truncated.txt
-            echo "... (truncated - output exceeds GitHub comment limit)" >> tfplan-truncated.txt
-          fi
-
-          echo "plan_output<<EOF" >> "$GITHUB_ENV"
-          cat tfplan-truncated.txt >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
-
       - name: Comment Terraform Plan on PR
         if: always()
         uses: actions/github-script@v7
-        env:
-          PLAN_CONTENT: ${{steps.build-plan.outputs.body}}
         with:
           script: |
-            const { PLAN_CONTENT } = process.env;
             const COMMENT_MARKER = '<!-- terraform-plan-comment -->';
             const exitCode = parseInt('${{ steps.plan.outputs.exit_code }}') || 0;
             const add = parseInt('${{ steps.build-plan.outputs.add }}') || 0;
@@ -163,17 +146,8 @@ jobs:
               body += `| ${add} | ${change} | ${destroy} |\n\n`;
 
             if (destroy > 0) {
-              // Destaquei o aviso de destruição com negrito e itálico
               body += '> [!CAUTION]\n';
               body += '> ⚠️ **Atenção:** Este plano inclui a **DESTRUIÇÃO** de recursos. Revise com cuidado extremo.\n\n';
-            }
-
-            if (PLAN_CONTENT) {
-              body += '<details><summary>📋 Clique para expandir o output detalhado</summary>\n\n';
-              body += '```diff\n';
-              body += PLAN_CONTENT; // Sem aspas, pois já é uma variável JS segura
-              body += '\n```\n';
-              body += '</details>\n';
             }
             } else if (exitCode === 1) {
               body += '> [!IMPORTANT]\n';
@@ -213,10 +187,6 @@ jobs:
               });
             }
 
-      - name: Upload Terraform Plan
-        uses: actions/upload-artifact@v4
-        if: always() && steps.plan.outputs.exit_code != '1'
-        with:
-          name: tf-plan
-          path: infra/live/tfplan
-          retention-days: 30
+      - name: Cleanup Terraform Transient Files
+        if: always()
+        run: rm -f tfplan
