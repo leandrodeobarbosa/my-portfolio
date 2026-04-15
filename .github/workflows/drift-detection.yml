@@ -33,7 +33,6 @@ jobs:
       TF_VAR_cloudfront_distribution_arn: ${{ vars.CLOUDFRONT_DISTRIBUTION_ARN }}
       TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
       TF_VAR_origin_access_control_id: ${{ vars.ORIGIN_ACCESS_CONTROL_ID }}
-      TF_VAR_cloudfront_function_arn: ${{ vars.CLOUDFRONT_FUNCTION_ARN }}
 
     steps:
       - name: Checkout repository

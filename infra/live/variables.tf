@@ -50,8 +50,3 @@ variable "origin_access_control_id" {
   description = "ID do Origin Access Control do CloudFront"
   type        = string
 }
-
-variable "cloudfront_function_arn" {
-  description = "ARN da função CloudFront para URL rewrite"
-  type        = string
-}
