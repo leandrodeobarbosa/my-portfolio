@@ -43,6 +43,14 @@ jobs:
           terraform_version: 1.6.6
           terraform_wrapper: false
 
+      - name: Cache Terraform plugins
+        uses: actions/cache@v4
+        with:
+          path: ./infra/live/.terraform/providers
+          key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            terraform-plugins-${{ runner.os }}-
+
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -52,23 +60,36 @@ jobs:
       - name: Terraform Init & Validate
         run: |
           terraform init -input=false
-          terraform validate
+          terraform validate -no-color
 
       - name: Terraform Plan (Drift Detection)
         id: plan
         run: |
           set +e
-          terraform plan -detailed-exitcode -no-color -out=tfplan > plan_output.txt
+          terraform plan -detailed-exitcode -no-color -out=tfplan > /dev/null
           exit_code=$?
           set -e
           echo "exitcode=$exit_code" >> $GITHUB_OUTPUT
 
-          if [ "$exit_code" -eq 2 ]; then
-            echo "### ⚠️ Drift Detectado!" >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`terraform" >> $GITHUB_STEP_SUMMARY
-            grep -E "Plan:|~| \+ | - " plan_output.txt | tail -n 10 >> $GITHUB_STEP_SUMMARY
-            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+      - name: Publish Drift Summary
+        if: always()
+        run: |
+          timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          run_link="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+          echo "## Terraform Drift Detection" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Timestamp: ${timestamp}" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "${{ steps.plan.outputs.exitcode }}" = "2" ]; then
+            echo "- Status: Drift detected" >> "$GITHUB_STEP_SUMMARY"
+          elif [ "${{ steps.plan.outputs.exitcode }}" = "0" ]; then
+            echo "- Status: No drift detected" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- Status: Drift check failed" >> "$GITHUB_STEP_SUMMARY"
           fi
+
+          echo "- Run: ${run_link}" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Manage Drift Issue (Create/Comment/Resolve)
         if: always()
@@ -76,6 +97,15 @@ jobs:
         with:
           script: |
             const exitCode = "${{ steps.plan.outputs.exitcode }}";
+            const formattedDate = new Intl.DateTimeFormat('pt-BR', {
+              timeZone: 'America/Sao_Paulo',
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            }).format(new Date());
+            const runLink = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -92,14 +122,14 @@ jobs:
                   repo: context.repo.repo,
                   title: '🚨 Infrastructure Drift Detected',
                   labels: ['drift', 'terraform', 'bug'],
-                  body: `Drift detectado na execução [${context.runId}](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}).`
+                  body: `Drift detectado.\n\n- Timestamp: ${formattedDate}\n- Status: Drift detected\n- Run: [${context.runId}](${runLink})`
                 });
               } else {
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: existingIssue.number,
-                  body: `⚠️ O drift ainda persiste. Verifique a última execução: ${context.runId}`
+                  body: `⚠️ Drift still detected.\n\n- Timestamp: ${formattedDate}\n- Status: Drift detected\n- Run: [${context.runId}](${runLink})`
                 });
               }
             } else if (exitCode === '0' && existingIssue) {
@@ -107,7 +137,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: existingIssue.number,
-                body: '✅ Drift resolvido. Fechando esta issue automaticamente.'
+                body: `✅ Drift resolved.\n\n- Timestamp: ${formattedDate}\n- Status: No drift detected\n- Run: [${context.runId}](${runLink})`
               });
               await github.rest.issues.update({
                 owner: context.repo.owner,
@@ -117,18 +147,14 @@ jobs:
               });
             }
 
-      - name: Upload Terraform Plan Artifact
-        if: steps.plan.outputs.exitcode == '2'
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-plan
-          path: infra/live/tfplan
-          retention-days: 5
-
       - name: Final Status Check
         run: |
           if [ "${{ steps.plan.outputs.exitcode }}" -eq "1" ]; then exit 1; fi
           if [ "${{ steps.plan.outputs.exitcode }}" -eq "2" ]; then
-            echo "Drift detectado.Ação necessária: investigar e reconciliar o estado via Terraform."
+            echo "Drift detectado. Ação necessária: investigar e reconciliar o estado via Terraform."
             exit 1
           fi
+
+      - name: Cleanup Terraform Transient Files
+        if: always()
+        run: rm -f tfplan
