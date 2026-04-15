@@ -46,7 +46,7 @@ jobs:
       - name: Cache Terraform plugins
         uses: actions/cache@v4
         with:
-          path: ./infra/live
+          path: ./infra/live/.terraform/providers
           key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
           restore-keys: |
             terraform-plugins-${{ runner.os }}-
@@ -85,3 +85,7 @@ jobs:
         run: |
           echo "No infrastructure changes to apply"
           echo "### ✨ Infraestrutura já está atualizada." >> $GITHUB_STEP_SUMMARY
+
+      - name: Cleanup Terraform Transient Files
+        if: always()
+        run: rm -f tfplan
