@@ -25,10 +25,6 @@ jobs:
     env:
       AWS_REGION: us-east-1
       TF_IN_AUTOMATION: true
-      TF_VAR_project_name: ${{ vars.PROJECT_NAME }}
-      TF_VAR_bucket_name: ${{ vars.BUCKET_NAME }}
-      TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
-      TF_VAR_environment: ${{ vars.ENVIRONMENT }}
       TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
       TF_VAR_origin_access_control_id: ${{ vars.ORIGIN_ACCESS_CONTROL_ID }}
 
