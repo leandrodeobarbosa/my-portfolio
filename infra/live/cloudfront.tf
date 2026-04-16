@@ -15,7 +15,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
     domain_name = "${var.bucket_name}.s3.${var.aws_region}.amazonaws.com"
     origin_id   = "${var.bucket_name}-origin"
 
-    origin_access_control_id = var.origin_access_control_id
+    origin_access_control_id = aws_cloudfront_origin_access_control.portfolio_s3.id
   }
 
   default_cache_behavior {
