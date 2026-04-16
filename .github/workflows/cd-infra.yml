@@ -27,7 +27,6 @@ jobs:
       AWS_REGION: us-east-1
       TF_IN_AUTOMATION: true
       TF_VAR_acm_certificate_arn: ${{ vars.ACM_CERTIFICATE_ARN }}
-      TF_VAR_origin_access_control_id: ${{ vars.ORIGIN_ACCESS_CONTROL_ID }}
 
     steps:
       - name: Checkout repository
