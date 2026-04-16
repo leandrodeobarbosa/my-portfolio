@@ -39,6 +39,7 @@ pnpm-debug.log*
 # Variáveis sensíveis
 *.tfvars
 *.tfvars.json
+!production.auto.tfvars
 
 # Overrides
 override.tf
