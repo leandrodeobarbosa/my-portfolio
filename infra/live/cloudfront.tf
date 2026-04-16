@@ -35,7 +35,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = var.acm_certificate_arn
+    acm_certificate_arn      = aws_acm_certificate.portfolio_certificate.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
