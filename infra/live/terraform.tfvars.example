@@ -4,5 +4,3 @@ environment  = "prod"
 bucket_name = "your-bucket"
 
 domain_name = "your-domain.com"
-
-acm_certificate_arn = "arn:aws:acm:us-east-1:000000000000:certificate/xxxx"

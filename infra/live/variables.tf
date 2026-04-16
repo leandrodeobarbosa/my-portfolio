@@ -35,8 +35,3 @@ variable "domain_name" {
   description = "Domínio principal do certificado"
   type        = string
 }
-
-variable "acm_certificate_arn" {
-  description = "ARN do certificado ACM usado pelo CloudFront"
-  type        = string
-}
