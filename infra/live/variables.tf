@@ -40,8 +40,3 @@ variable "acm_certificate_arn" {
   description = "ARN do certificado ACM usado pelo CloudFront"
   type        = string
 }
-
-variable "origin_access_control_id" {
-  description = "ID do Origin Access Control do CloudFront"
-  type        = string
-}
