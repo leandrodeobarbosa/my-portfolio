@@ -1,0 +1,6 @@
+project_name = "your-project"
+environment  = "prod"
+
+bucket_name = "your-bucket"
+
+domain_name = "your-domain.com"
