@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./infra/live
+        working-directory: ./infra/environments/production
 
     env:
       AWS_REGION: us-east-1
@@ -39,13 +39,13 @@ jobs:
       - name: Cache Terraform plugins
         uses: actions/cache@v4
         with:
-          path: ./infra/live/.terraform/providers
+          path: ./infra/environments/production/.terraform/providers
           key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
           restore-keys: |
             terraform-plugins-${{ runner.os }}-
 
       - name: Terraform Format Check
-        working-directory: ./infra/live
+        working-directory: ./infra/environments/production
         run: terraform fmt -check -recursive
 
       - name: Configure AWS credentials
@@ -72,6 +72,29 @@ jobs:
             exit 1
           fi
           exit 0
+
+      - name: Debug ACM Resource Change
+        if: steps.plan.outputs.exit_code != '1'
+        run: |
+          set -euo pipefail
+
+          result=$(terraform show -json tfplan | jq '
+            .resource_changes[]?
+            | select(.address == "module.site_stack.aws_acm_certificate.portfolio_certificate")
+            | {
+                address,
+                actions: .change.actions,
+                before: .change.before,
+                after: .change.after,
+                after_unknown: .change.after_unknown
+              }
+          ')
+
+          if [ -z "$result" ] || [ "$result" = "null" ]; then
+            echo "Target resource not present in tfplan"
+          else
+            echo "$result"
+          fi
 
       - name: Calculate Plan Metrics
         id: build-plan
