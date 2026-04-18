@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./infra/live
+        working-directory: ./infra/environments/production
 
     env:
       AWS_REGION: us-east-1
@@ -39,13 +39,13 @@ jobs:
       - name: Cache Terraform plugins
         uses: actions/cache@v4
         with:
-          path: ./infra/live/.terraform/providers
+          path: ./infra/environments/production/.terraform/providers
           key: terraform-plugins-${{ runner.os }}-${{ hashFiles('**/.terraform.lock.hcl') }}
           restore-keys: |
             terraform-plugins-${{ runner.os }}-
 
       - name: Terraform Format Check
-        working-directory: ./infra/live
+        working-directory: ./infra/environments/production
         run: terraform fmt -check -recursive
 
       - name: Configure AWS credentials
