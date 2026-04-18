@@ -1,7 +1,7 @@
 output "website_url" {
-  value = "https://${var.domain_name}"
+  value = module.site_stack.website_url
 }
 
 output "www_website_url" {
-  value = "https://www.${var.domain_name}"
+  value = module.site_stack.www_website_url
 }

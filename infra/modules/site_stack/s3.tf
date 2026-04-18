@@ -37,6 +37,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "portfolio_static_site" {
       noncurrent_days = var.noncurrent_version_expiration_days
     }
   }
+
   rule {
     id     = "expire-old-cv-files"
     status = "Enabled"
