@@ -73,6 +73,29 @@ jobs:
           fi
           exit 0
 
+      - name: Debug ACM Resource Change
+        if: steps.plan.outputs.exit_code != '1'
+        run: |
+          set -euo pipefail
+
+          result=$(terraform show -json tfplan | jq '
+            .resource_changes[]?
+            | select(.address == "module.site_stack.aws_acm_certificate.portfolio_certificate")
+            | {
+                address,
+                actions: .change.actions,
+                before: .change.before,
+                after: .change.after,
+                after_unknown: .change.after_unknown
+              }
+          ')
+
+          if [ -z "$result" ] || [ "$result" = "null" ]; then
+            echo "Target resource not present in tfplan"
+          else
+            echo "$result"
+          fi
+
       - name: Calculate Plan Metrics
         id: build-plan
         if: steps.plan.outputs.exit_code != '1'
