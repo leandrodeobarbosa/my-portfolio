@@ -6,10 +6,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   is_ipv6_enabled     = true
   http_version        = "http2"
 
-  aliases = [
-    var.domain_name,
-    "www.${var.domain_name}"
-  ]
+  aliases = local.cloudfront_aliases
 
   origin {
     domain_name = "${var.bucket_name}.s3.${var.aws_region}.amazonaws.com"
@@ -35,7 +32,7 @@ resource "aws_cloudfront_distribution" "portfolio" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.portfolio_certificate.arn
+    acm_certificate_arn      = var.manage_certificate_validation ? aws_acm_certificate_validation.portfolio_certificate[0].certificate_arn : aws_acm_certificate.portfolio_certificate.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }

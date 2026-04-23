@@ -1,5 +1,5 @@
 resource "aws_cloudfront_function" "url_rewrite" {
-  name    = "mpa-url-rewrite"
+  name    = var.cloudfront_function_name
   runtime = "cloudfront-js-2.0"
   comment = "Suporte a Pretty URLs para Astro SSG no S3 (OAC)"
   publish = true

@@ -1,10 +1,11 @@
 data "aws_route53_zone" "portfolio" {
+  count        = var.route53_zone_id == null ? 1 : 0
   name         = var.domain_name
   private_zone = false
 }
 
 resource "aws_route53_record" "root_a" {
-  zone_id = data.aws_route53_zone.portfolio.zone_id
+  zone_id = local.route53_zone_id
   name    = var.domain_name
   type    = "A"
 
@@ -16,7 +17,7 @@ resource "aws_route53_record" "root_a" {
 }
 
 resource "aws_route53_record" "root_aaaa" {
-  zone_id = data.aws_route53_zone.portfolio.zone_id
+  zone_id = local.route53_zone_id
   name    = var.domain_name
   type    = "AAAA"
 
@@ -28,7 +29,8 @@ resource "aws_route53_record" "root_aaaa" {
 }
 
 resource "aws_route53_record" "www_a" {
-  zone_id = data.aws_route53_zone.portfolio.zone_id
+  count   = var.enable_www_alias ? 1 : 0
+  zone_id = local.route53_zone_id
   name    = "www.${var.domain_name}"
   type    = "A"
 
@@ -40,7 +42,8 @@ resource "aws_route53_record" "www_a" {
 }
 
 resource "aws_route53_record" "www_aaaa" {
-  zone_id = data.aws_route53_zone.portfolio.zone_id
+  count   = var.enable_www_alias ? 1 : 0
+  zone_id = local.route53_zone_id
   name    = "www.${var.domain_name}"
   type    = "AAAA"
 

@@ -3,5 +3,5 @@ output "website_url" {
 }
 
 output "www_website_url" {
-  value = "https://www.${var.domain_name}"
+  value = var.enable_www_alias ? "https://www.${var.domain_name}" : null
 }
