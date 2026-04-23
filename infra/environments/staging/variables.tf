@@ -1,6 +1,7 @@
 variable "aws_region" {
   description = "Região AWS"
   type        = string
+  default     = "us-east-1"
 }
 
 variable "project_name" {
@@ -21,11 +22,13 @@ variable "bucket_name" {
 variable "noncurrent_version_expiration_days" {
   description = "Dias para expirar versões antigas"
   type        = number
+  default     = 30
 }
 
 variable "abort_multipart_days" {
   description = "Dias para abortar uploads incompletos"
   type        = number
+  default     = 7
 }
 
 variable "domain_name" {
@@ -36,29 +39,24 @@ variable "domain_name" {
 variable "route53_zone_id" {
   description = "Zone ID do Route53 a ser usado pelos registros do site"
   type        = string
-  default     = null
 }
 
 variable "enable_www_alias" {
   description = "Habilita aliases e registros DNS para o subdomínio www"
   type        = bool
-  default     = true
 }
 
 variable "manage_certificate_validation" {
   description = "Gerencia a validação DNS do certificado ACM via Terraform"
   type        = bool
-  default     = false
 }
 
 variable "cloudfront_function_name" {
   description = "Nome da CloudFront Function de rewrite"
   type        = string
-  default     = "mpa-url-rewrite"
 }
 
 variable "origin_access_control_name" {
   description = "Nome do Origin Access Control do CloudFront"
   type        = string
-  default     = "oac-leandrodeobarbosa-portfolio.s3.us-east-1.amazona-mmuskrtrsu5"
 }
