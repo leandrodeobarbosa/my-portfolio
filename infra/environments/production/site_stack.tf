@@ -1,5 +1,10 @@
+data "aws_route53_zone" "authoritative_public" {
+  name         = "leandrodeobarbosa.dev."
+  private_zone = false
+}
+
 locals {
-  route53_zone_id               = "Z0651036AF6S0HILTEF4"
+  route53_zone_id               = data.aws_route53_zone.authoritative_public.zone_id
   enable_www_alias              = true
   manage_certificate_validation = false
   cloudfront_function_name      = "mpa-url-rewrite"
