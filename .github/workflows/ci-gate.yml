@@ -1,0 +1,221 @@
+name: CI Gate
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: ci-gate-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      app_changed: ${{ steps.detect.outputs.app_changed }}
+      infra_changed: ${{ steps.detect.outputs.infra_changed }}
+      cv_changed: ${{ steps.detect.outputs.cv_changed }}
+      pipeline_changed: ${{ steps.detect.outputs.pipeline_changed }}
+      critical_changed: ${{ steps.detect.outputs.critical_changed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed areas
+        id: detect
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          changed_files="$(mktemp)"
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" > "$changed_files"
+
+          detect_path() {
+            local pattern="$1"
+            if grep -Eq "$pattern" "$changed_files"; then
+              echo "true"
+            else
+              echo "false"
+            fi
+          }
+
+          app_changed="$(detect_path '^app/')"
+          infra_changed="$(detect_path '^infra/')"
+          cv_changed="$(detect_path '^app/public/cv/')"
+          pipeline_changed="$(detect_path '^\.github/')"
+
+          critical_changed="false"
+          if [ "$app_changed" = "true" ] || [ "$infra_changed" = "true" ] || [ "$cv_changed" = "true" ] || [ "$pipeline_changed" = "true" ]; then
+            critical_changed="true"
+          fi
+
+          {
+            echo "app_changed=$app_changed"
+            echo "infra_changed=$infra_changed"
+            echo "cv_changed=$cv_changed"
+            echo "pipeline_changed=$pipeline_changed"
+            echo "critical_changed=$critical_changed"
+          } >> "$GITHUB_OUTPUT"
+
+          {
+            echo "## CI Gate Change Detection"
+            echo ""
+            echo "- App: $app_changed"
+            echo "- Infra: $infra_changed"
+            echo "- CV: $cv_changed"
+            echo "- Pipeline: $pipeline_changed"
+            echo "- Critical: $critical_changed"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  validate-app:
+    name: Validate App
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.app_changed == 'true'
+    defaults:
+      run:
+        working-directory: ./app
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        run: npm install -g pnpm@10.30.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "pnpm"
+          cache-dependency-path: "./app/pnpm-lock.yaml"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run lint
+        run: pnpm lint
+
+      - name: Astro check
+        run: pnpm check
+
+      - name: Build project
+        run: pnpm build
+
+  validate-infra:
+    name: Validate Infra
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.infra_changed == 'true'
+    env:
+      TF_IN_AUTOMATION: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+          terraform_wrapper: false
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive infra
+
+      - name: Terraform Init Production
+        working-directory: ./infra/environments/production
+        run: terraform init -backend=false -input=false -lockfile=readonly
+
+      - name: Terraform Validate Production
+        working-directory: ./infra/environments/production
+        run: terraform validate -no-color
+
+      - name: Terraform Init Staging
+        working-directory: ./infra/environments/staging
+        run: terraform init -backend=false -input=false -lockfile=readonly
+
+      - name: Terraform Validate Staging
+        working-directory: ./infra/environments/staging
+        run: terraform validate -no-color
+
+  validate-cv:
+    name: Validate CV
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.cv_changed == 'true'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate CV file
+        run: |
+          set -euo pipefail
+
+          cv_file="app/public/cv/Leandro-Barbosa-DevOps-CV.pdf"
+
+          test -f "$cv_file"
+          test -s "$cv_file"
+
+          case "$cv_file" in
+            *.pdf) ;;
+            *) echo "CV file must be a PDF"; exit 1 ;;
+          esac
+
+          hash="$(sha256sum "$cv_file" | awk '{ print $1 }' | cut -c1-12)"
+          echo "CV hash: $hash"
+
+  validate-pipeline:
+    name: Validate Pipeline Changes
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.pipeline_changed == 'true'
+    steps:
+      - name: Confirm pipeline changes are covered
+        run: |
+          echo "Pipeline-related files changed. CI gate will remain present for required check stability."
+
+  no-critical-changes:
+    name: No Critical Changes
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.critical_changed == 'false'
+    steps:
+      - name: Skip scoped validations
+        run: |
+          echo "No app, infra, CV, or pipeline changes detected."
+
+  gate-result:
+    name: CI Gate Result
+    runs-on: ubuntu-latest
+    needs:
+      - detect-changes
+      - validate-app
+      - validate-infra
+      - validate-cv
+      - validate-pipeline
+      - no-critical-changes
+    if: always()
+    steps:
+      - name: Evaluate gate result
+        env:
+          NEEDS_JSON: ${{ toJson(needs) }}
+        run: |
+          set -euo pipefail
+
+          failed_jobs="$(echo "$NEEDS_JSON" | jq -r 'to_entries[] | select(.value.result == "failure" or .value.result == "cancelled") | .key')"
+
+          if [ -n "$failed_jobs" ]; then
+            echo "CI gate failed. Failed or cancelled jobs:"
+            echo "$failed_jobs"
+            exit 1
+          fi
+
+          echo "CI gate passed."
