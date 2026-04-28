@@ -8,3 +8,8 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"
 }
+
+variable "Hello" {
+  description = "Say Hello!"
+  type        = string
+}
