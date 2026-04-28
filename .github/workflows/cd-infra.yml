@@ -1,10 +1,7 @@
 name: CD - Infrastructure
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "infra/**"
+  workflow_dispatch:
 
 concurrency:
   group: cd-infra-${{github.ref_name}}

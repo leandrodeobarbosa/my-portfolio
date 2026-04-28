@@ -1,11 +1,7 @@
 name: CD - Application
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "app/**"
-      - "!app/**/*.md"
+  workflow_dispatch:
 
 concurrency:
   group: cd-app-${{github.ref_name}}
