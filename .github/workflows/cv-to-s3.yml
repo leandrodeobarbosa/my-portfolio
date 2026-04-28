@@ -1,10 +1,7 @@
 name: Deploy CV
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "app/public/cv/**"
+  workflow_dispatch:
 
 permissions:
   id-token: write
