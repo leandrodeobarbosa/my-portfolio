@@ -1,0 +1,32 @@
+name: CI CV Checks
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-cv:
+    name: Validate CV
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate CV file
+        run: |
+          set -euo pipefail
+
+          cv_file="app/public/cv/Leandro-Barbosa-DevOps-CV.pdf"
+
+          test -f "$cv_file"
+          test -s "$cv_file"
+
+          case "$cv_file" in
+            *.pdf) ;;
+            *) echo "CV file must be a PDF"; exit 1 ;;
+          esac
+
+          hash="$(sha256sum "$cv_file" | awk '{ print $1 }' | cut -c1-12)"
+          echo "CV hash: $hash"
