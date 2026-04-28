@@ -1,0 +1,58 @@
+name: CI Infra Checks
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform-fmt:
+    name: Terraform Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+          terraform_wrapper: false
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive infra
+
+  terraform-validate:
+    name: Terraform Validate (${{ matrix.environment }})
+    needs: terraform-fmt
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - environment: production
+            working_directory: ./infra/environments/production
+          - environment: staging
+            working_directory: ./infra/environments/staging
+
+    env:
+      TF_IN_AUTOMATION: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        working-directory: ${{ matrix.working_directory }}
+        run: terraform init -backend=false -input=false -lockfile=readonly
+
+      - name: Terraform Validate
+        working-directory: ${{ matrix.working_directory }}
+        run: terraform validate -no-color
