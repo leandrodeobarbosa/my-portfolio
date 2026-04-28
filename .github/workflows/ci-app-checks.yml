@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   validate-app:
-    name: Validate App
+    name: Run App Checks
     runs-on: ubuntu-latest
     defaults:
       run:

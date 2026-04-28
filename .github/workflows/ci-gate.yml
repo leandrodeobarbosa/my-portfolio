@@ -77,19 +77,19 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
   validate-app:
-    name: Validate App
+    name: CI App Checks
     needs: detect-changes
     if: needs.detect-changes.outputs.app_changed == 'true'
     uses: ./.github/workflows/ci-app-checks.yml
 
   validate-infra:
-    name: Validate Infra
+    name: CI Infra Checks
     needs: detect-changes
     if: needs.detect-changes.outputs.infra_changed == 'true'
     uses: ./.github/workflows/ci-infra-checks.yml
 
   validate-cv:
-    name: Validate CV
+    name: CI CV Checks
     needs: detect-changes
     if: needs.detect-changes.outputs.cv_changed == 'true'
     uses: ./.github/workflows/ci-cv-checks.yml
