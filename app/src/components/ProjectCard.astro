@@ -101,7 +101,7 @@ const techIcons: Record<string, null> = {
       <footer class="project-card__footer">
         {project.demoLink && (
           <a href={project.demoLink} {...(project.demoLink.startsWith('/') ? {} : { target: '_blank', rel: project.demoLinkRel || 'noopener noreferrer' })} class="project-card__action">
-            <span>{project.name === 'FlowDX Platform' ? 'Technical Design Document (TDD)' : 'View Project'}</span>
+            <span>{project.name === 'FlowDX Platform' ? 'FlowDX Platform Architecture' : 'View Project'}</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
             </svg>
