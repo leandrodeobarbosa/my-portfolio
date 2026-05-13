@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
 	{
 		name: 'FlowDX Platform',
 		description:
-			'Plataforma Interna de Desenvolvedor (IDP) em evolução, construída sobre uma base real em AWS com Terraform e CI/CD, com foco em evoluir para um modelo de self-service para provisionamento de infraestrutura e entrega de aplicações.',
+			'Blueprint técnico para entrega governada de workloads Cloud Native, com Platform Engineering, Terraform, GitHub Actions, Kubernetes, Gateway API e Policy-as-Code.',
 		demoLink: '/projetos/flowdx-platform',
 		tags: [],
 		status: 'WIP'

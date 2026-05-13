@@ -159,14 +159,15 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
 
               <!-- Career Narrative -->
               <div class='about-hero-line measure-text mt-2 flex flex-col gap-4 text-base leading-relaxed text-zinc-400 sm:text-lg'>
-                <p>
-                  Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em Developer Experience, automação e arquitetura de plataformas. Desenvolvo e mantenho ambientes cloud-native na AWS utilizando Terraform e CI/CD, priorizando previsibilidade e facilidade de uso para os times de desenvolvimento.
-                </p>
-                <p>
-                  Minha abordagem adota uma mentalidade orientada a plataforma: reduzo fricções no ciclo de entrega através de padrões e templates organizados. Aplico princípios de confiabilidade inspirados em SRE, com foco na construção de ambientes altamente observáveis.
-                </p>
-                <p>
-                  Atualmente evoluo o <a href='/projetos/flowdx-platform' class='!bg-transparent hover:!bg-transparent !border-none hover:!border-none !shadow-none outline-none ring-0 no-underline decoration-transparent hover:decoration-transparent text-[var(--color-accent)] hover:text-[var(--color-accent)]/80 transition-colors'>FlowDX Platform</a>, uma plataforma interna construída em modelo IaC focada em self-service, padronização e redução de fricção para times de desenvolvimento.
+                 <p>Engenheiro DevOps com base em Desenvolvimento de Software e atuação focada em automação, infraestrutura cloud, CI/CD e Kubernetes.
+                    Trabalho com ambientes Cloud Native na AWS usando Terraform, GitHub Actions e GitOps, com foco em previsibilidade, segurança operacional
+                    e melhoria contínua do ciclo de entrega.</p>
+                 <p>Minha abordagem combina operação hands-on com princípios de Platform Engineering: reduzo fricções por meio de padrões reutilizáveis, automação,
+                    observabilidade e governança.</p>
+                 <p>
+                  Atualmente evoluo o <a href='/projetos/flowdx-platform'
+                  class='!bg-transparent hover:!bg-transparent !border-none hover:!border-none !shadow-none outline-none ring-0 no-underline decoration-transparent hover:decoration-transparent text-[var(--color-accent)] hover:text-[var(--color-accent)]/80 transition-colors'>FlowDX Platform</a>,
+                  um projeto autoral focado em padronizar provisionamento, CI/CD e GitOps com Terraform, reusable workflows, Kubernetes e Policy-as-Code.
                 </p>
               </div>
 
@@ -305,7 +306,7 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                 <ul class='experience-list mb-4'>
                   <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
                     <span class='experience-marker shrink-0'>▸</span>
-                    <span class='experience-text'>Atuei na implantação do BigID em cluster Kubernetes (5 nodes), suportando +10 microsserviços em ambiente distribuído.</span>
+                    <span class='experience-text'>Atuei na implantação do BigID em cluster Kubernetes com 5 nodes, suportando mais de 10 microsserviços em ambiente distribuído.</span>
                   </li>
                   <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
                     <span class='experience-marker shrink-0'>▸</span>
@@ -313,16 +314,23 @@ import { SITE_ABOUT_DESCRIPTION } from '../consts';
                   </li>
                   <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
                     <span class='experience-marker shrink-0'>▸</span>
-                    <span class='experience-text'>Deploy contínuo via ArgoCD (GitOps) em ambiente OpenShift na AWS(EC2).</span>
+                    <span class='experience-text'>Estruturei deploy contínuo via ArgoCD em ambiente OpenShift sobre AWS EC2.</span>
                   </li>
                   <li class='experience-item text-sm text-zinc-300 leading-relaxed'>
                     <span class='experience-marker shrink-0'>▸</span>
-                    <span class='experience-text'>Criação e manutenção de Helm charts e manifestos Kubernetes.</span>
+                    <span class='experience-text'>Criei e mantive Helm charts e manifests Kubernetes para padronizar a implantação dos serviços.</span>
                   </li>
                 </ul>
 
                 <!-- Tech Stack -->
-                <!-- Removed: skill badges section -->
+                <div class='mt-5 flex flex-wrap items-center gap-2'>
+                  <span class='mr-1 font-mono text-xs uppercase tracking-wider text-zinc-500'>Stack:</span>
+                  {['Kubernetes', 'OpenShift', 'AWS', 'Helm', 'ArgoCD', 'Linux', 'GitLab CI/CD'].map((tech) => (
+                    <span class='inline-flex items-center rounded-md border border-zinc-800 bg-zinc-900/30 px-2 py-1 font-mono text-[11px] leading-none text-zinc-400'>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
